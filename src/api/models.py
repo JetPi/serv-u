@@ -12,7 +12,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=False, nullable=False)
-    userNature = db.Column(db.Enum(UserNature), nullable=False)
+    user_nature = db.Column(db.Enum(UserNature), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     # Verification
@@ -28,5 +28,6 @@ class User(db.Model):
             "email": self.email,
             "username": self.username,
             "is_active": self.is_active,
+            "user_nature": self.user_nature.name,
             # do not serialize the password, its a security breach
         }
