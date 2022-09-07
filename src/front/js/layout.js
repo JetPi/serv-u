@@ -3,6 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
+import { Signup } from "./pages/signup.jsx";
+import { Login } from "./pages/login.jsx";
+import { Colecciones } from "./pages/colecciones.jsx";
+import { Lecciones } from "./pages/lecciones.jsx";
+import { Popular } from "./pages/popular.jsx";
+import { Faq } from "./pages/faq.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -21,6 +27,12 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<Signup />} path="/signup" />
+                        <Route element={<Login />} path="/login" />
+                        <Route element={<Colecciones />} path="/collections" />
+                        <Route element={<Lecciones />} path="/lessons" />
+                        <Route element={<Popular />} path="/popular" />
+                        <Route element={<Faq />} path="/faq" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
