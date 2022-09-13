@@ -10,6 +10,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
 from flask_jwt_extended import create_access_token
 
+from werkzeug.security import generate_password_hash, check_password_hash
+from base64 import b64encode
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 api = Blueprint('api', __name__)
 
 def set_password(password, salt):
@@ -86,4 +94,5 @@ def all_user(user_id = None):
                 return jsonify(user.serialize())
             
         return jsonify({"message":"not found"}), 404
+
 
