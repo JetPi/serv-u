@@ -17,6 +17,7 @@ flask-cors = "*"
 gunicorn = "*"
 cloudinary = "*"
 flask-admin = "*"
+werkzeug = "*"
 flask-jwt-extended = "*"
 
 [requires]
