@@ -35,15 +35,15 @@ def add_user():
         username = body.get('username', None)
         email = body.get('email', None)
         password = body.get('password', None)
-        role = body.get('role', None)
-        is_active = body.get('is_active', None)
+        role = "comprador"
+        is_active = True
 
         if username is None or email is None or password is None:
             return jsonify('Send Payload'), 400
         else:
             salt = b64encode(os.urandom(32)).decode('utf-8')
             password = set_password(password, salt)
-            request_user = User(username=username, email=email, role=role, is_active=is_active, password=password, salt=salt)
+            request_user = User(username=username, email=email, role="comprador", is_active=True, password=password, salt=salt)
             db.session.add(request_user)
 
             try:
