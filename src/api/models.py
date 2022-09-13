@@ -29,4 +29,5 @@ class User(db.Model):
             "username": self.username,
             "is_active": self.is_active,
             "role": self.role.name 
+
         }

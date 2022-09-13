@@ -1,7 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: ""
+			token: "",
+			user: {
+				email: ""
+			},
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
