@@ -43,7 +43,7 @@ def add_user():
         else:
             salt = b64encode(os.urandom(32)).decode('utf-8')
             password = set_password(password, salt)
-            request_user = User(username=username, email=email, role=role, is_active=is_active, password=password, salt=salt)
+            request_user = User(username=username, email=email, role="comprador", is_active=True, password=password, salt=salt)
             db.session.add(request_user)
 
             try:

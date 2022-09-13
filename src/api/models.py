@@ -1,3 +1,4 @@
+from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
 
@@ -13,7 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, default=True)
     role = db.Column(db.Enum(Role), nullable=False)
     salt = db.Column(db.String(80), unique=False, nullable=False)    
         
@@ -27,5 +28,6 @@ class User(db.Model):
             "email": self.email,
             "username": self.username,
             "is_active": self.is_active,
-            "role": self.role.name
+            "role": self.role.name 
+
         }
