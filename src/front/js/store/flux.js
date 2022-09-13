@@ -1,19 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,32 +9,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+			// Checks if login data is valid
+			loginValidityChecker: (user) => {
+				let email = user.email
+				let password = user.password
+				if (email.trim() == "" && password.trim() == ""){
+					return true
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			//Recieves a user object and logs them in, generating a token for future authentication
+			loginUser: async (user) =>{
+				try {
+					let response = await fetch(`http://172.16.0.7:3001/api/login`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(user),
+					})
+					if (response.ok){
+						let data = await response.json()
+						setStore({token: data.token})
+						localStorage.setItem("token", data.token)
+						return true
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
 		}
 	};
 };
