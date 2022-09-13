@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b57fa5a26f1e
-Revises: 67a36642b525
-Create Date: 2022-09-12 19:35:34.971857
+Revision ID: 897c0dbef5cf
+Revises: 
+Create Date: 2022-09-13 19:35:38.768996
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b57fa5a26f1e'
-down_revision = '67a36642b525'
+revision = '897c0dbef5cf'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -22,11 +22,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('username', sa.String(length=100), nullable=False),
-    sa.Column('user_nature', sa.Enum('user', 'moderator', name='usernature'), nullable=False),
+    sa.Column('password', sa.String(length=200), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
-    sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('role', sa.Enum('comprador', 'vendedor', name='role'), nullable=False),
+    sa.Column('salt', sa.String(length=80), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('username')
     )
     # ### end Alembic commands ###
 

@@ -27,5 +27,5 @@ class User(db.Model):
             "email": self.email,
             "username": self.username,
             "is_active": self.is_active,
-            "role": self.role.email 
+            "role": self.role.name
         }

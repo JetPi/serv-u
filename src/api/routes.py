@@ -35,8 +35,8 @@ def add_user():
         username = body.get('username', None)
         email = body.get('email', None)
         password = body.get('password', None)
-        role = body.get('role', None)
-        is_active = body.get('is_active', None)
+        role = "comprador"
+        is_active = True
 
         if username is None or email is None or password is None:
             return jsonify('Send Payload'), 400
@@ -64,15 +64,17 @@ def login_user():
         email = body.get('email', None)
         password = body.get('password', None)
 
-        login_user = User.query.filter_by(email=email).one_or_none()
-
-        if login_user:
-            if check_password(login_user.password, password, login_user.salt):
-                print(check_password)
-                Coin = create_access_token(identity=login_user.id)
-                return jsonify({'token': Coin})
+        if email is not None or password is not None:
+            login_user = User.query.filter_by(email=email).one_or_none()
+            if login_user:
+                if check_password(login_user.password, password, login_user.salt):
+                    print(check_password)
+                    Coin = create_access_token(identity=login_user.id)
+                    return jsonify({'token': Coin})
+                else:
+                    return jsonify('Bad credentials'), 400
             else:
-                return jsonify('Bad credentials'), 400
+                return jsonify("Couldn't find user"), 404
         else:
             return jsonify('Bad credentials'), 400
     return jsonify('Access'), 201
