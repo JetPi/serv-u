@@ -32,7 +32,7 @@ export const Login = () => {
 			<div className="row view-fitter mt-4">
 				{/* Imagen */}
 				<div className="col-sm-12 col-md-6 d-flex justify-content-center ">
-					<img className="image-fitter" src="https://picsum.photos/700/1000" alt=""/>
+					<img className="image-fitter" src="https://picsum.photos/700/500" alt=""/>
 				</div>
 				{/* Form */}
 				<div className="col-sm-12 col-md-6 d-flex flex-column">
