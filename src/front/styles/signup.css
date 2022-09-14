@@ -1,0 +1,23 @@
+.div-logo{
+    background-color: #F0F8FF;
+    position: relative;
+}
+.div-email, .div-username, .div-password{
+    text-align: left;
+}
+.label-email, .label-username, .label-password{
+    padding-bottom: 1rem;
+}
+.img-logo{
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    margin: -15% 0 0 -25%;
+}
+.div-registrarse{
+    margin-left: 1rem;
+}
+.parrafo-password{
+    margin-top: 0.3rem;
+    color: grey;
+}
