@@ -1,8 +1,14 @@
 from email.policy import default
+from unicodedata import name
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
 
 db = SQLAlchemy()
+
+class ServiceType(Enum):
+    electricidad = "electricidad"
+    plomeria = "plomeria"
+    hogar = "hogar"
 
 class Role(Enum):
     comprador = "comprador",
@@ -29,5 +35,25 @@ class User(db.Model):
             "username": self.username,
             "is_active": self.is_active,
             "role": self.role.name 
+        }
 
+
+class Service(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.Enum(ServiceType), nullable=False)
+    home_delivery = db.Column(db.Boolean(), nullable=False, default=True)
+    location = db.Column(db.String(200), nullable=False)
+    clients = db.Column(db.String(100))
+    base_price = db.Column(db.Integer, nullable=False)
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type.name,
+            "home_delivery": self.home_delivery,
+            "location": self.location,
+            "base_price": self.base_price 
         }
