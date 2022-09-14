@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: "",
+			token: localStorage.getItem("token") || "",
 			user: {
 				email: ""
 			},
@@ -14,9 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Checks if login data is valid
 			loginValidityChecker: (user) => {
-				let email = user.email
-				let password = user.password
-				if (email.trim() == "" && password.trim() == ""){
+				if (user.email.trim() != "" && user.password.trim() != ""){
 					return true
 				}
 			},
