@@ -1,39 +1,59 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../img/logo.png"
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<div className="d-flex w-auto">
-					<Link to="/">
-						<span className="navbar-brand mb-0 h1">Home</span>
-					</Link>
+		<>
+			<nav className="navbar navbar-expand-lg navbar-light bg-light navbar-contenedor">
+				<div className="container-fluid container-navbar">
+					<div className="div-nav-logo">
+						<Link className="navbar-brand" to={`/`}>
+
+							<img src={logo}
+								alt="Logo"
+								width="240"
+								height="40"
+							/>
+
+
+						</Link>
+					</div>
+					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+					</button>
+					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" id="navbarNavDropdown">
+						<ul className="navbar-nav ">
+							<li className="nav-item dropdown">
+								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Categorías
+								</a>
+
+								<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									{/* Mientras se hace la vista de las categorías */}
+									<li><Link className="nav-link active text-center" aria-current="page" to={'/electronica'}>Electrónica</Link></li>
+									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
+									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
+								</ul>
+
+
+							</li>
+							<li className="nav-item">
+								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
+							</li>
+							<li className="nav-item">
+								<Link className="nav-link active" aria-current="page" to={'/login'}><h5>Login</h5></Link>
+							</li>
+							<li className="nav-item">
+								<Link className="nav-link active" aria-current="page" to={'/signup'}><h5>Signup</h5></Link>
+							</li>
+
+
+						</ul>
+					</div>
 				</div>
-				<div className="d-flex justify-content-between w-50">
-					<Link to="/popular">
-						<button className="btn btn-primary mx-1">Popular</button>
-					</Link>
-					<Link to="/hogar">
-						<button className="btn btn-primary mx-1">Hogar</button>
-					</Link>
-					<Link to="/electronica">
-						<button className="btn btn-primary mx-1">Electronica</button>
-					</Link>
-					<Link to="/faq">
-						<button className="btn btn-primary mx-1">FAQ</button>
-					</Link>
-				</div>
-				<div className="d-flex flex-row-reverse">
-					<Link to="/signup">
-						<button className="btn btn-primary mx-1">Signup</button>
-					</Link>
-					<Link to="/login">
-						<button className="btn btn-primary mx-1">Login</button>
-					</Link>
-					{/* <button className="btn btn-secondary mx-1">Logout</button> */}
-				</div>
-			</div>
-		</nav>
+			</nav>
+		</>
 	);
 };

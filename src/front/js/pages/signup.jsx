@@ -48,7 +48,7 @@ export const Signup = () => {
 						<div className="text-center">
 
 							<div className="col-12 my-3 div-email">
-								<label className="label-email">
+								<label className="label-email fs-5">
 									Correo:
 								</label>
 								<input
@@ -65,7 +65,7 @@ export const Signup = () => {
 						<div className="d-flex  my-3">
 
 							<div className="col-12 div-username">
-								<label className="label-username">
+								<label className="label-username fs-5">
 									Nombre de usuario:
 								</label>
 								<input
@@ -81,7 +81,7 @@ export const Signup = () => {
 						</div>
 						<div>
 							<div className="col-12 my-3 div-password">
-								<label className="label-password">
+								<label className="label-password fs-5">
 									Contraseña:									
 								</label>
 								<input
@@ -107,10 +107,10 @@ export const Signup = () => {
 						</div>
 					</form>
 					<div className="d-flex">
-						<div className="col-6">
+						<div className="col-6 fs-5">
 							<p>¿Ya te registraste?</p>
 						</div>
-						<div className="col-6">
+						<div className="col-6 fs-5">
 							<Link to={`/login`}>
 								Ingresa aquí
 							</Link>
