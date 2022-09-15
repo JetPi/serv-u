@@ -21,10 +21,11 @@ export const Signup = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-				navigate("/login")
-			}
+		if (actions.userSignup(userData)) {
+			navigate("/login")
 			return true
-		} else {
+		}
+		else {
 			return false
 		}
 
@@ -78,6 +79,8 @@ export const Signup = () => {
 						</div>
 						<div>
 							<div className="col-12 my-3 div-password">
+								<label className="label-password fs-5">
+									Contraseña:
 								</label>
 								<input
 									className="form-control"
