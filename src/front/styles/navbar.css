@@ -1,0 +1,20 @@
+.div-nav-logo{
+    margin-left: 3rem;
+}
+.div-nav-links{
+    margin-right: 3rem;
+}
+.navbar-contenedor{
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    background-color: #F0F8FF;
+    
+    
+}
+.container-navbar{
+    padding-left: 0rem;
+    padding-right: 0rem;
+    background-color: #F0F8FF;
+    padding-bottom: 0.8rem;
+    padding-top: 0.8rem;
+}
