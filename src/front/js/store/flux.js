@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email: "",
 			role: "",
 			your_services: {},
-			
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -20,38 +20,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 					user.password.trim() !== "" &&
 					(user.email.includes("@gmail.com") || user.email.includes("@outlook.com") || user.email.includes("@hotmail.com")) &&
 					user.password.length >= 8) {
-							
+
 					return true;
-		
+
 				}
-				 else {
+				else {
 					alert("Error: Datos no válidos");
 					return false;
-		
+
 				}
-		
-		
+
+
 			},
 
 			userSignup: async (user) => {
 				try {
-				  let response = await fetch(`http://localhost:3001/api/signup`, {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json"
-					},
-					body: JSON.stringify(user),
-				  });
-				  if (response.ok) {
-					return true;
+					let response = await fetch(`http://localhost:3001/api/signup`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(user),
+					});
+					if (response.ok) {
+						return true;
+					}
 				} catch (error) {
-				  console.log(`Error: ${error}`);
+					console.log(`Error: ${error}`);
 				}
-			  },
+			},
 
 			// Checks if login data is valid
 			loginValidityChecker: (user) => {
-				if (user.email.trim() != "" && user.password.trim() != ""){
+				if (user.email.trim() != "" && user.password.trim() != "") {
 					return true
 				}
 			},
@@ -60,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			//Get logged in user info
-			getUserInfo: async () =>{
+			getUserInfo: async () => {
 				let store = getStore()
 				try {
 					let response = await fetch(`http://172.16.0.7:3001/api/users/${store.user_id}`, {
@@ -69,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json",
 						},
 					})
-					if (response.ok){
+					if (response.ok) {
 						let data = await response.json()
 						setStore({
 							username: data.username,
@@ -84,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Recieves a user object and logs them in, generating a token for future authentication
-			loginUser: async (user) =>{
+			loginUser: async (user) => {
 				try {
 					let response = await fetch(`http://172.16.0.7:3001/api/login`, {
 						method: "POST",
@@ -93,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify(user),
 					})
-					if (response.ok){
+					if (response.ok) {
 						let data = await response.json()
 						setStore({
 							token: data.token,
