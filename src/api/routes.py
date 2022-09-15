@@ -2,9 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 
+
 import os 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import Service, db, User
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
@@ -96,5 +97,31 @@ def all_user(user_id = None):
                 return jsonify(user.serialize())
             
         return jsonify({"message":"not found"}), 404
+
+
+@api.route('/services', methods=['GET'])
+@api.route('/services/<int:services_id>', methods=['GET'])
+@api.route('/services/<string:search_type>', methods=['GET'])
+def get_service(services_id = None, search_type = None):
+    if request.method == 'GET':
+        if services_id is not None:
+            services = Service()
+            services = services.query.get(services_id)
+            if services:
+                return jsonify(services.serialize())
+            
+        elif search_type is not None:
+            services = Service() 
+            services = services.query.filter_by(type=search_type).all()  
+        
+        else:
+            services = Service()
+            services = services.query.all()
+
+            return jsonify(list(map(lambda item: item.serialize(), services))) , 200
+            
+        return jsonify({"message":"not found"}), 404
+
+
 
 
