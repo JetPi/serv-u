@@ -15,14 +15,3 @@
     background-size: contain;
 }
 
-.background{
-    background-color: rgb(116, 206, 168);
-    color: white;
-    border-radius: 10px;
-}
-
-.special{
-    background-color: rgb(45, 126, 92);
-    color: white;
-    border-radius: 10px;
-}
