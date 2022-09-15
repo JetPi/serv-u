@@ -3,7 +3,8 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 
-import os 
+import os
+from unicodedata import name 
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import Service, db, User
 from api.utils import generate_sitemap, APIException
@@ -123,5 +124,28 @@ def get_service(services_id = None, search_type = None):
         return jsonify({"message":"not found"}), 404
 
 
+@api.route('/services', methods=['POST'])
+def publish_service():
+    if request.method == 'POST':
+        body = request.json
+        name = body.get('name', None)
+        type = body.get('type', None)
+        location = body.get('location', None)
+        home_delivery = body.get('home_delivery', None)
+        base_price = body.get('base_price', None)
 
+        if name is None or type is None or location is None or home_delivery is None or base_price is None:
+            return jsonify('Verified your entries'), 400
+        else:
+            new_services = Service(name=name, type=type, location=location, home_delivery=home_delivery, base_price=base_price)
+            db.session.add(new_services)
 
+            try:
+                db.session.commit()
+                return jsonify(new_services.serialize()), 201
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message":f"Error {error.args}"}),500    
+        
+    return jsonify(), 201

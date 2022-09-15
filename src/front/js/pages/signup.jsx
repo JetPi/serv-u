@@ -19,16 +19,16 @@ export const Signup = () => {
 		})
 	}
 
-	const handleSubmit = async(event) =>{
+	const handleSubmit = async (event) => {
 		event.preventDefault()
-		if(actions.signupValidityChecker(userData)){
-			
-			let response= await actions.userSignup(userData)
-			if (response.ok){
+		if (actions.signupValidityChecker(userData)) {
+
+			let response = await actions.userSignup(userData)
+			if (response) {
 				navigate("/login")
 			}
 			return true
-		}else{
+		} else {
 			return false
 		}
 
@@ -38,9 +38,9 @@ export const Signup = () => {
 		<div className="container text-center mt-5">
 			<div className="d-flex ">
 				<div className="col-6 div-logo">
-					<img className="img-logo" 
+					<img className="img-logo"
 						src={logo}
-						alt="Serv-U Logo" 
+						alt="Serv-U Logo"
 					/>
 				</div>
 				<div className="col-6 text-center div-registrarse">
@@ -59,7 +59,7 @@ export const Signup = () => {
 									name="email"
 									value={userData.email}
 									onChange={handleChange}
-									
+
 								/>
 							</div>
 						</div>
@@ -83,7 +83,7 @@ export const Signup = () => {
 						<div>
 							<div className="col-12 my-3 div-password">
 								<label className="label-password">
-									Contraseña:									
+									Contraseña:
 								</label>
 								<input
 									className="form-control"
