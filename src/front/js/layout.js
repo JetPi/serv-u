@@ -8,6 +8,7 @@ import { Login } from "./pages/login.jsx";
 import { Hogar } from "./pages/hogar.jsx";
 import { Electronica } from "./pages/electronica.jsx";
 import { Popular } from "./pages/popular.jsx";
+import { Profile } from "./pages/profile.jsx";
 import { Faq } from "./pages/faq.jsx";
 import injectContext from "./store/appContext";
 
@@ -33,6 +34,7 @@ const Layout = () => {
                         <Route element={<Hogar />} path="/hogar" />
                         <Route element={<Popular />} path="/popular" />
                         <Route element={<Faq />} path="/faq" />
+                        <Route element={<Profile/>} path="/profile"/>
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

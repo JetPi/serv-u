@@ -71,7 +71,7 @@ def login_user():
                 if check_password(login_user.password, password, login_user.salt):
                     print(check_password)
                     Coin = create_access_token(identity=login_user.id)
-                    return jsonify({'token': Coin})
+                    return jsonify({'token': Coin, "user_id":login_user.id})
                 else:
                     return jsonify('Bad credentials'), 400
             else:
