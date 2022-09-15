@@ -11,8 +11,8 @@ export const Navbar = () => {
 					</Link>
 				</div>
 				<div className="d-flex justify-content-between w-50">
-					<Link to="/popular">
-						<button className="btn btn-primary mx-1">Popular</button>
+					<Link to="/profile">
+						<button className="btn btn-primary mx-1">Perfil</button>
 					</Link>
 					<Link to="/hogar">
 						<button className="btn btn-primary mx-1">Hogar</button>
