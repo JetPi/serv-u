@@ -3,10 +3,11 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 
+from ast import Or
 import os
 from unicodedata import name 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Service, db, User
+from api.models import Order, Service, db, User
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
@@ -149,3 +150,28 @@ def publish_service():
                 return jsonify({"message":f"Error {error.args}"}),500    
         
     return jsonify(), 201
+
+
+
+@api.route('/orders', methods=['GET'])
+@jwt_required()
+def get_orders():
+    user_id = get_jwt_identity() 
+    orders = Order()
+    orders = orders.query.filter_by(user_id=user_id).all()
+    print(orders)
+    if orders is None:
+        return jsonify('Empty'), 400
+    elif orders is not None:
+        orders = Order()
+        orders = orders.query.all()
+
+        return jsonify(list(map(lambda item: item.serialize(), orders))) , 200
+    else:
+        return jsonify({"message":"not found"}), 404
+    
+    
+
+
+    
+     
