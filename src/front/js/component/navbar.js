@@ -1,23 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import { Link, useResolvedPath } from "react-router-dom";
 import logo from "../../img/logo.png"
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context);
+
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light bg-light navbar-contenedor">
 				<div className="container-fluid container-navbar">
 					<div className="div-nav-logo">
 						<Link className="navbar-brand" to={`/`}>
-
 							<img src={logo}
 								alt="Logo"
 								width="240"
 								height="40"
 							/>
-
-
 						</Link>
 					</div>
 					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,27 +29,31 @@ export const Navbar = () => {
 								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Categorías
 								</a>
-
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									{/* Mientras se hace la vista de las categorías */}
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/electronica'}>Electrónica</Link></li>
+									<li><Link className="nav-link active text-center" aria-current="page" to={'/section'}>Servicios</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
 								</ul>
-
-
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
 							</li>
-							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to={'/login'}><h5>Login</h5></Link>
-							</li>
-							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to={'/signup'}><h5>Signup</h5></Link>
-							</li>
+							{store.user_id == 0 || store.token == "" ?
+								<>
+									<Link className="nav-link active" aria-current="page" to={'/login'}>
+										<h5>Login</h5>
+									</Link>
 
-
+									<Link className="nav-link active" aria-current="page" to={'/signup'}>
+										<h5>Signup</h5>
+									</Link>
+								</>
+								:
+								<Link className="nav-link active" aria-current="page" to={'/profile'}>
+									<h5>Profile</h5>
+								</Link>
+							}
 						</ul>
 					</div>
 				</div>
