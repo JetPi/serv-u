@@ -12,7 +12,7 @@ import { Post_service } from "./pages/post_service.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+
 
 
 //create your first component
@@ -32,13 +32,10 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Section />} path="/section" />
                         <Route element={<Faq />} path="/faq" />
-
                         <Route element={<Post_service />} path="/post_service" />
-
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

@@ -17,7 +17,7 @@ export const Post_service = () => {
         home_delivery: false,
         base_price: "",
         description:"",
-        owner: store.user.email
+        owner: store.email
     })
     
     
@@ -38,7 +38,9 @@ export const Post_service = () => {
 
     const handleSubmit = async(event) =>{
 		event.preventDefault()
-        if (await actions.addService(serviceData)){        
+        
+        if (await actions.addService(serviceData)){ 
+            console.log("handlesub")
             navigate("/profile")
         }
         return true					
@@ -63,10 +65,9 @@ export const Post_service = () => {
                         name="type"
                         className="form-select">
                             <option selected>Elige</option>
-                            <option>Electrónica</option>
-                            <option>Popular</option>
-                            <option>Línea blanca</option>
-                            <option>Hogar</option>
+                            <option>electricidad</option>
+                            <option>plomeria</option>
+                            <option>hogar</option>
                     </select>
                 </div>
                 <div className="col-md-6">
@@ -118,6 +119,7 @@ export const Post_service = () => {
                         onChange={handleChange}
                         name="base_price"
                     />
+                    <p className="parrafo-price">Ingresa solamente números. Ejemplo: 1234</p>
                 </div>
 
                 <div className="col-md-10">

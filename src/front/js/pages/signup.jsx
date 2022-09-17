@@ -85,7 +85,7 @@ export const Signup = () => {
 								<input
 									className="form-control"
 									placeholder="Contraseña"
-									type="text"
+									type="password"
 									name="password"
 									value={userData.password}
 									onChange={handleChange}
