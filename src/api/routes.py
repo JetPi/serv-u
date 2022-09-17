@@ -134,11 +134,12 @@ def publish_service():
         location = body.get('location', None)
         home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
+        description = body.get('description', None)
 
         if name is None or type is None or location is None or home_delivery is None or base_price is None:
             return jsonify('Verified your entries'), 400
         else:
-            new_services = Service(name=name, type=type, location=location, home_delivery=home_delivery, base_price=base_price)
+            new_services = Service(name=name, type=type, location=location, home_delivery=home_delivery, base_price=base_price, description=description)
             db.session.add(new_services)
 
             try:

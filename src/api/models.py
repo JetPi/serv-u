@@ -49,6 +49,8 @@ class Service(db.Model):
     type = db.Column(db.Enum(ServiceType), nullable=False)
     home_delivery = db.Column(db.Boolean(), nullable=False, default=True)
     location = db.Column(db.String(200), nullable=False)
+    clients = db.Column(db.String(100))
+    description = db.Column(db.String(500))
     base_price = db.Column(db.Integer, nullable=False)
     orders = db.relationship('Order', backref="service", lazy=False) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -61,6 +63,8 @@ class Service(db.Model):
             "type": self.type.name,
             "home_delivery": self.home_delivery,
             "location": self.location,
+            "base_price": self.base_price, 
+            "description": self.description,
             "base_price": self.base_price 
         }
 

@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			username: "",
 			email: "",
 			role: "",
-			your_services: {},
+			services: [],
 
 		},
 		actions: {
@@ -14,25 +14,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			//Clears user login data
+			userLogout: () => {
+				localStorage.removeItem("token"),
+					setStore({ token: "" })
+				alert("Succesfully logged out")
+			},
+
+			//Checks if the fields of signup are valid
 			signupValidityChecker: (user) => {
 				if (user.email.trim() !== "" &&
 					user.username.trim() !== "" &&
 					user.password.trim() !== "" &&
 					(user.email.includes("@gmail.com") || user.email.includes("@outlook.com") || user.email.includes("@hotmail.com")) &&
 					user.password.length >= 8) {
-
 					return true;
-
 				}
 				else {
 					alert("Error: Datos no válidos");
 					return false;
-
 				}
-
-
 			},
 
+			//Signs up a user to the database
 			userSignup: async (user) => {
 				try {
 					let response = await fetch(`http://localhost:3001/api/signup`, {
@@ -60,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Check if the user has a token?
 
 
-			//Get logged in user info
+			//Get current users info
 			getUserInfo: async () => {
 				let store = getStore()
 				try {
@@ -78,6 +83,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 							role: data.role,
 						})
 						console.log(store.username, store.email, store.role)
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			//Get user services
+			getServices: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`http://172.16.0.7:3001/api/services`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							services: data
+						})
+						console.log(store.services)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
