@@ -69,7 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getUserInfo: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://172.16.0.7:3001/api/users/${store.user_id}`, {
+					let response = await fetch(`http://localhost:3001/api/users/${store.user_id}`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -93,7 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getServices: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://172.16.0.7:3001/api/services`, {
+					let response = await fetch(`http://localhost:3001/api/services`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -114,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				try {
-					let response = await fetch(`http://172.16.0.7:3001/api/login`, {
+					let response = await fetch(`http://localhost:3001/api/login`, {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
