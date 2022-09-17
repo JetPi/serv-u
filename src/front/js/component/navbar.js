@@ -29,15 +29,12 @@ export const Navbar = () => {
 								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Categorías
 								</a>
-
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									{/* Mientras se hace la vista de las categorías */}
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/electronica'}>Electrónica</Link></li>
+									<li><Link className="nav-link active text-center" aria-current="page" to={'/section'}>Servicios</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
 								</ul>
-
-
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>

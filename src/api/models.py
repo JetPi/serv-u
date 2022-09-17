@@ -45,6 +45,7 @@ class Service(db.Model):
     home_delivery = db.Column(db.Boolean(), nullable=False, default=True)
     location = db.Column(db.String(200), nullable=False)
     clients = db.Column(db.String(100))
+    description = db.Column(db.String(500))
     base_price = db.Column(db.Integer, nullable=False)
 
 
@@ -55,5 +56,6 @@ class Service(db.Model):
             "type": self.type.name,
             "home_delivery": self.home_delivery,
             "location": self.location,
-            "base_price": self.base_price 
+            "base_price": self.base_price, 
+            "description": self.description,
         }
