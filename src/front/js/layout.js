@@ -9,10 +9,12 @@ import { Hogar } from "./pages/hogar.jsx";
 import { Electronica } from "./pages/electronica.jsx";
 import { Popular } from "./pages/popular.jsx";
 import { Faq } from "./pages/faq.jsx";
+import { Post_service } from "./pages/post_service.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -33,6 +35,7 @@ const Layout = () => {
                         <Route element={<Hogar />} path="/hogar" />
                         <Route element={<Popular />} path="/popular" />
                         <Route element={<Faq />} path="/faq" />
+                        <Route element={<Post_service />} path="/post_service" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

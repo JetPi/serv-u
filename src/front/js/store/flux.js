@@ -49,7 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				  console.log(`Error: ${error}`);
 				}
-			  },
+			},
 
 			// Checks if login data is valid
 			loginValidityChecker: (user) => {
@@ -78,6 +78,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
+				}
+			},
+
+			addService: async (serviceData) => {
+				try {
+				  let response = await fetch(`http://localhost:3001/api/services`, {
+					method: "POST",
+					headers: {
+					  "Content-Type": "application/json"
+					},
+					body: JSON.stringify(serviceData),
+				  });
+				  if (response.ok) {
+					return true;
+					
+				  }else{
+					return false;
+					}
+				  
+				} catch (error) {
+				  console.log(`Error: ${error}`);
 				}
 			},
 		}

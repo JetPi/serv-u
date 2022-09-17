@@ -27,7 +27,7 @@ export const Home = () => {
 
 				</div>
 				<div className="col-6 div-img-home">
-				<img src={servicios}
+					<img src={servicios}
 
 						alt="Imagen"
 						width="550"
