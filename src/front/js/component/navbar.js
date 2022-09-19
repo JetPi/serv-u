@@ -39,7 +39,7 @@ export const Navbar = () => {
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
 							</li>
-							{store.user_id == 0 || store.token == "" ?
+							{store.token == "" ?
 								<>
 									<Link className="nav-link active" aria-current="page" to={'/login'}>
 										<h5>Login</h5>
