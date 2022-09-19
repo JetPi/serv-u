@@ -6,17 +6,16 @@ import "../../styles/section.css";
 export const Section = () => {
     const { store, actions } = useContext(Context);
 
+    //Reference
     let initialState = "general"
     let possibleThemes = [
         "general",
-        "electrónica",
+        "electricidad",
         "hogar",
-        "plomería",
+        "plomeria",
     ]
 
-    useEffect(() => { { actions.getServices() } }, [])
-
-    //Enter section, default to popular, change useState to whatever section, traffic light style
+    //Enter section, default to general, change useState to whatever section, traffic light style
     let [theme, setTheme] = useState(initialState)
 
     const changeTheme = (new_theme) => {
@@ -27,19 +26,43 @@ export const Section = () => {
 
     return (
         <div className="container-fluid">
-            <div className="col-12 fs-1 d-flex justify-content-center">{theme}</div>
-            <div className="col-12 fs-1 d-flex justify-content-center">
-                <button type="button" onClick={() => changeTheme("hogar")} className="btn background">Cambio</button>
+            <div className="row">
+                <div className="col-12 fs-1 d-flex justify-content-center">{theme.toUpperCase()}</div>
+                {/* Generate service cards */}
+                <div className="col-9 row ">
+                    {store.services.map((element, index) => {
+                        if (theme == "general") {
+                            return (
+                                <div key={index} className="col-4 my-2">
+                                    <ServiceCard name={element.name} description={element.description} />
+                                </div>
+                            )
+                        } else {
+                            if (element.type == theme) {
+                                return (
+                                    <div key={index} className="col-4 my-2">
+                                        <ServiceCard name={element.name} description={element.description} />
+                                    </div>
+                                )
+                            }
+                        }
+                    })}
+                </div>
+                {/* List of buttons */}
+                <div className="col-3 column selection-box">
+                    <div className="col-12 text-center fs-4" style={{ "border-bottom": "1px solid black" }}>
+                        Secciones
+                    </div>
+                    <div className="col-12 my-2">
+                        {possibleThemes.map((element, index) => {
+                            return (
+                                <button key={index} type="button" onClick={() => changeTheme(element)} className="btn special my-1 mx-1">{element.toUpperCase()}</button>
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
-            <div className="col-12 row">
-                {store.services.map((element, index) => {
-                    return (
-                        <div key={index} className="col-4 my-2">
-                            <ServiceCard name={element.name} description={element.description} />
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
+
+        </div >
     )
 }

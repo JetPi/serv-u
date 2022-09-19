@@ -91,7 +91,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Get user services
 			getServices: async () => {
-				let store = getStore()
 				try {
 					let response = await fetch(`http://localhost:3001/api/services`, {
 						method: "GET",
@@ -104,7 +103,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							services: data
 						})
-						console.log(store.services)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)

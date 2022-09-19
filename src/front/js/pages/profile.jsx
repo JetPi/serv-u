@@ -6,7 +6,6 @@ export const Profile = () => {
     const { store, actions } = useContext(Context);
 
     useEffect(() => { { actions.getUserInfo() } }, [])
-    useEffect(() => { { actions.getServices() } }, [])
 
     return (
         <div className="container-fluid row mt-4">
