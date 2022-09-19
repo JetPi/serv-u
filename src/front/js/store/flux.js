@@ -2,7 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			user_id: 0,
 			username: "",
 			email: "",
 			role: "",
@@ -62,17 +61,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			//Check if the user has a token?
-
-
 			//Get current users info
 			getUserInfo: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/users/${store.user_id}`, {
+					let response = await fetch(`http://localhost:3001/api/users/single_user`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
+							"Authorization": `Bearer ${store.token}`
 						},
 					})
 					if (response.ok) {
@@ -82,7 +79,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 							email: data.email,
 							role: data.role,
 						})
-						console.log(store.username, store.email, store.role)
+						return true
+					} else {
+						console.log("uwu")
+						return false
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -123,7 +123,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						let data = await response.json()
 						setStore({
 							token: data.token,
-							user_id: data.user_id,
 						})
 						localStorage.setItem("token", data.token)
 						return true
@@ -137,22 +136,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addService: async (serviceData) => {
 				try {
-				  let response = await fetch(`http://localhost:3001/api/services`, {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json"
-					},
-					body: JSON.stringify(serviceData),
-				  });
-				  if (response.ok) {
-					return true;
-					
-				  }else{
-					return false;
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(serviceData),
+					});
+					if (response.ok) {
+						return true;
+
+					} else {
+						return false;
 					}
-				  
+
 				} catch (error) {
-				  console.log(`Error: ${error}`);
+					console.log(`Error: ${error}`);
 				}
 			},
 		}
