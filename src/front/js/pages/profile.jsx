@@ -1,11 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"
 import { Context } from "../store/appContext";
 import "../../styles/profile.css";
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
+    let navigate = useNavigate()
 
     useEffect(() => { { actions.getUserInfo() } }, [])
+    useEffect(() => {
+        {
+            if (store.username == "" || store.email == "" || (store.role != "comprador" && store.role != "vendedor")) {
+                navigate("/")
+            }
+        }
+    }, [])
 
     return (
         <div className="container-fluid row mt-4">
