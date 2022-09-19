@@ -2,7 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			user_id: 0,
 			username: "",
 			email: "",
 			role: "",
@@ -56,24 +55,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// Checks if login data is valid
-			loginValidityChecker: (user) => {
-				if (user.email.trim() != "" && user.password.trim() != "") {
-					return true
-				}
-			},
-
-			//Check if the user has a token?
-
-
 			//Get current users info
 			getUserInfo: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/users/${store.user_id}`, {
+
+					let response = await fetch(`http://localhost:3001/api/users/single_user`, {
+
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
+							"Authorization": `Bearer ${store.token}`
 						},
 					})
 					if (response.ok) {
@@ -83,30 +75,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							email: data.email,
 							role: data.role,
 						})
-						console.log(store.username, store.email, store.role)
-					}
-				} catch (error) {
-					console.log(`Error: ${error}`)
-				}
-			},
-
-			//Get user services
-			getServices: async () => {
-				let store = getStore()
-				try {
-					let response = await fetch(`http://localhost:3001/api/services`, {
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-							"Authorization": "Bearer " + store.token
-						},
-					})
-					if (response.ok) {
-						let data = await response.json()
-						setStore({
-							services: data
-						})
-						console.log(store.services)
+						return true
+					} else {
+						return false
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -116,20 +87,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				try {
+
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "GET",
+
 					let response = await fetch(`http://localhost:3001/api/login`, {
 						method: "POST",
+
 						headers: {
 							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
 						},
 						body: JSON.stringify(user),
 					})
 					if (response.ok) {
 						let data = await response.json()
+						let actions = getActions()
 						setStore({
 							token: data.token,
-							user_id: data.user_id,
 						})
 						localStorage.setItem("token", data.token)
+						actions.getUserInfo()
 						return true
 					} else {
 						return false
@@ -138,6 +116,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+
+			// Checks if login data is valid
+			loginValidityChecker: (user) => {
+				if (user.email.trim() != "" && user.password.trim() != "") {
+					return true
+				}
+			},
+
+
+
+			//Get user services
+			getServices: async () => {
+				try {
+
+					let response = await fetch(`http://localhost:3001/api/login`, {
+						method: "POST",
+
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "GET",
+
+						headers: {
+							"Content-Type": "application/json",
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							services: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
 			//Active Orders
 			getOrders: async () => {
 				let store = getStore()
@@ -160,6 +173,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			}
+
+
+			addService: async (serviceData) => {
+				try {
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(serviceData),
+					});
+					if (response.ok) {
+						return true;
+
+					} else {
+						return false;
+					}
+
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
+
 		}
 	};
 };

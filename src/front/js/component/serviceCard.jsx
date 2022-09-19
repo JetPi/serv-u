@@ -5,17 +5,14 @@ import { Link, useResolvedPath } from "react-router-dom";
 import "../../styles/serviceCard.css";
 
 export const ServiceCard = (props) => {
-    const { store, actions } = useContext(Context);
-
-    //service_id? service_url? We'll figure it out later
     const { name, description } = props
     return (
-        <div className="card" style={{ width: "18rem" }}>
-            <img src="https://picsum.photos/300/300" className="card-img-top" alt="..." />
-            <div className="card-body d-flex align-items-center flex-column">
+        <div className="card w-100 h-100" style={{ width: "18rem" }}>
+            <img src="https://picsum.photos/300/300" className="img-body" alt="..." />
+            <div className="card-body h-100 d-flex align-items-between justify-content-between flex-column">
                 <h5 className="text-center">{name}</h5>
-                <p className="card-text">{description}</p>
-                <a href="#" className="btn background">Go to service</a>
+                <p className="card-text text-center">{description}</p>
+                <a href="#" className="btn background ">Go to service</a>
             </div>
         </div>
     )

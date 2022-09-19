@@ -38,8 +38,6 @@ def add_user():
         username = body.get('username', None)
         email = body.get('email', None)
         password = body.get('password', None)
-        role = "comprador"
-        is_active = True
 
         if username is None or email is None or password is None:
             return jsonify('Send Payload'), 400
@@ -84,7 +82,6 @@ def login_user():
 
 
 @api.route('/users', methods=['GET'])
-@api.route('/users/<int:user_id>', methods=['GET'])
 def all_user(user_id = None):
     if request.method == 'GET':
         if user_id is None:
@@ -100,6 +97,16 @@ def all_user(user_id = None):
             
         return jsonify({"message":"not found"}), 404
 
+@api.route('/users/single_user', methods=['GET'])
+@jwt_required()
+def single_user():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()  
+        user = User().query.get(user_id)
+        if user:
+            return jsonify(user.serialize()), 200
+        
+    return jsonify({"message":"not found"}), 404
 
 @api.route('/services', methods=['GET'])
 @api.route('/services/<int:services_id>', methods=['GET'])
