@@ -86,10 +86,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
+				let store = getStore()
 				try {
 
-					let response = await fetch(`http://localhost:3001/api/services`, {
-						method: "GET",
+					// let response = await fetch(`http://localhost:3001/api/services`, {
+					// 	method: "GET",
 
 					let response = await fetch(`http://localhost:3001/api/login`, {
 						method: "POST",
@@ -130,8 +131,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getServices: async () => {
 				try {
 
-					let response = await fetch(`http://localhost:3001/api/login`, {
-						method: "POST",
+					// let response = await fetch(`http://localhost:3001/api/login`, {
+					// 	method: "POST",
 
 					let response = await fetch(`http://localhost:3001/api/services`, {
 						method: "GET",
@@ -172,7 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			}
+			},
 
 
 			addService: async (serviceData) => {
