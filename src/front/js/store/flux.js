@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			username: "",
 			email: "",
 			role: "",
+			orders: [],
 			services: [],
 
 		},
@@ -58,7 +59,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getUserInfo: async () => {
 				let store = getStore()
 				try {
+
 					let response = await fetch(`http://localhost:3001/api/users/single_user`, {
+
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -84,10 +87,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				try {
+
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "GET",
+
 					let response = await fetch(`http://localhost:3001/api/login`, {
 						method: "POST",
+
 						headers: {
 							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
 						},
 						body: JSON.stringify(user),
 					})
@@ -120,8 +129,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Get user services
 			getServices: async () => {
 				try {
+
+					let response = await fetch(`http://localhost:3001/api/login`, {
+						method: "POST",
+
 					let response = await fetch(`http://localhost:3001/api/services`, {
 						method: "GET",
+
 						headers: {
 							"Content-Type": "application/json",
 						},
@@ -136,6 +150,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+
+			//Active Orders
+			getOrders: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`http://localhost:3001/api/orders`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							orders: data
+						})
+						console.log(store.orders)
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			}
+
 
 			addService: async (serviceData) => {
 				try {
@@ -157,6 +195,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`);
 				}
 			},
+
 		}
 	};
 };
