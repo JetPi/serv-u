@@ -54,13 +54,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// Checks if login data is valid
-			loginValidityChecker: (user) => {
-				if (user.email.trim() != "" && user.password.trim() != "") {
-					return true
-				}
-			},
-
 			//Get current users info
 			getUserInfo: async () => {
 				let store = getStore()
@@ -81,28 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 						return true
 					} else {
-						console.log("uwu")
 						return false
-					}
-				} catch (error) {
-					console.log(`Error: ${error}`)
-				}
-			},
-
-			//Get user services
-			getServices: async () => {
-				try {
-					let response = await fetch(`http://localhost:3001/api/services`, {
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
-					})
-					if (response.ok) {
-						let data = await response.json()
-						setStore({
-							services: data
-						})
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -121,13 +93,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					if (response.ok) {
 						let data = await response.json()
+						let actions = getActions()
 						setStore({
 							token: data.token,
 						})
 						localStorage.setItem("token", data.token)
+						actions.getUserInfo()
 						return true
 					} else {
 						return false
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			// Checks if login data is valid
+			loginValidityChecker: (user) => {
+				if (user.email.trim() != "" && user.password.trim() != "") {
+					return true
+				}
+			},
+
+
+
+			//Get user services
+			getServices: async () => {
+				try {
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							services: data
+						})
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
