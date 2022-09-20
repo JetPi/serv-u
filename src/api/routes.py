@@ -6,6 +6,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from ast import Or
 import os
 from unicodedata import name 
+"""
+This module takes care of starting the API Server, Loading the DB and Adding the endpoints
+"""
+
+
+from ast import Or
+import os
+from unicodedata import name 
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import Order, Service, db, User
 from api.utils import generate_sitemap, APIException
@@ -177,10 +185,3 @@ def get_orders():
         return jsonify(list(map(lambda item: item.serialize(), orders))) , 200
     else:
         return jsonify({"message":"not found"}), 404
-    
-
-    
-
-
-    
-     
