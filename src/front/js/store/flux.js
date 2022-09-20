@@ -125,8 +125,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
-
 			//Get user services
 			getServices: async () => {
 				try {
