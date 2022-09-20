@@ -1,19 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: localStorage.getItem("token") || "",
+			username: "",
+			email: "",
+			role: "",
+			orders: [],
+			services: [],
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,32 +15,188 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+			//Clears user login data
+			userLogout: () => {
+				localStorage.removeItem("token"),
+					setStore({ token: "" })
+				alert("Succesfully logged out")
+			},
+
+			//Checks if the fields of signup are valid
+			signupValidityChecker: (user) => {
+				if (user.email.trim() !== "" &&
+					user.username.trim() !== "" &&
+					user.password.trim() !== "" &&
+					(user.email.includes("@gmail.com") || user.email.includes("@outlook.com") || user.email.includes("@hotmail.com")) &&
+					user.password.length >= 8) {
+					return true;
+				}
+				else {
+					alert("Error: Datos no válidos");
+					return false;
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			//Signs up a user to the database
+			userSignup: async (user) => {
+				try {
+					let response = await fetch(`http://localhost:3001/api/signup`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(user),
+					});
+					if (response.ok) {
+						return true;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			//Get current users info
+			getUserInfo: async () => {
+				let store = getStore()
+				try {
+
+					let response = await fetch(`http://localhost:3001/api/users/single_user`, {
+
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${store.token}`
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							username: data.username,
+							email: data.email,
+							role: data.role,
+						})
+						return true
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			//Recieves a user object and logs them in, generating a token for future authentication
+			loginUser: async (user) => {
+				let store = getStore()
+				try {
+
+					// let response = await fetch(`http://localhost:3001/api/services`, {
+					// 	method: "GET",
+
+					let response = await fetch(`http://localhost:3001/api/login`, {
+						method: "POST",
+
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+						body: JSON.stringify(user),
+					})
+					if (response.ok) {
+						let data = await response.json()
+						let actions = getActions()
+						setStore({
+							token: data.token,
+						})
+						localStorage.setItem("token", data.token)
+						actions.getUserInfo()
+						return true
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			// Checks if login data is valid
+			loginValidityChecker: (user) => {
+				if (user.email.trim() != "" && user.password.trim() != "") {
+					return true
+				}
+			},
+
+
+
+			//Get user services
+			getServices: async () => {
+				try {
+
+					// let response = await fetch(`http://localhost:3001/api/login`, {
+					// 	method: "POST",
+
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "GET",
+
+						headers: {
+							"Content-Type": "application/json",
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							services: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			//Active Orders
+			getOrders: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`http://localhost:3001/api/orders`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							orders: data
+						})
+						console.log(store.orders)
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+
+			addService: async (serviceData) => {
+				try {
+					let response = await fetch(`http://localhost:3001/api/services`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(serviceData),
+					});
+					if (response.ok) {
+						return true;
+
+					} else {
+						return false;
+					}
+
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
+
 		}
 	};
 };
