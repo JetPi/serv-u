@@ -85,19 +85,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Recieves a user object and logs them in, generating a token for future authentication
+			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
-				let store = getStore()
 				try {
-
-					// let response = await fetch(`http://localhost:3001/api/services`, {
-					// 	method: "GET",
-
 					let response = await fetch(`http://localhost:3001/api/login`, {
 						method: "POST",
-
 						headers: {
 							"Content-Type": "application/json",
-							"Authorization": "Bearer " + store.token
 						},
 						body: JSON.stringify(user),
 					})
@@ -118,14 +112,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
 			// Checks if login data is valid
 			loginValidityChecker: (user) => {
 				if (user.email.trim() != "" && user.password.trim() != "") {
 					return true
 				}
 			},
-
-
 
 			//Get user services
 			getServices: async () => {
@@ -168,7 +161,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							orders: data
 						})
-						console.log(store.orders)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)

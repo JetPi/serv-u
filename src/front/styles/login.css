@@ -1,0 +1,21 @@
+.image-fitter{
+    height: 80vh;
+    width: 100%;
+    object-fit: fill;
+}
+
+.view-fitter{
+    height: 80vh;
+}
+
+.form-fitter{
+    height: 90%;
+}
+
+.input-fitter{
+    width: 45vw;
+}
+
+.container-fitter{
+    height: 80vh;
+}

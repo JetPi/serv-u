@@ -10,7 +10,6 @@ from unicodedata import name
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 
-
 from ast import Or
 import os
 from unicodedata import name 
