@@ -23,6 +23,7 @@ export const Profile = () => {
         <div className="container-fluid row mt-4">
             <div className="col-4 mx-2"></div>
             <div className="col-4 column background position-fixed">
+                {/* Profile Info */}
                 <div className="col-12  my-3">
                     <img className="image-rounder" src="https://picsum.photos/300/300" alt="" />
                 </div>
@@ -37,18 +38,23 @@ export const Profile = () => {
                 </div>
                 <button type="button" onClick={() => actions.userLogout()} class="btn my-2 col-12 fs-5 special">Logout</button>
             </div>
-            <div className="col-8 row d-fllex-align">
+            {/* Banner and services */}
+            <div className="col-8 row d-flex-align">
                 <div className="col-12  ">
                     <img className="image-square" src="https://picsum.photos/600/300" alt="" />
                 </div>
+                {/* Botones de redirección a otras vistas */}
                 <div className="col-12 d-flex justify-content-between">
-                    <div className="w-50 mx-1 fs-2 d-flex justify-content-center my-3 background  ">
-                        Publica tu Servicio
+
+                    <div className="w-50 mx-1 fs-2 d-flex justify-content-center my-3 background">
+                        <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>Publica tu Servicio</Link>
                     </div>
+
                     <div className="w-50 mx-1 fs-2 d-flex justify-content-center my-3 background  ">
                         Busca un Servicio
                     </div>
                 </div>
+                {/* Listado de servicios relacionados al usuario */}
                 <div className="col-12 d-flex justify-content-center">
                     <div className="col-12 fs-2   d-flex justify-content-center special mb-3">
                         Tus Servicios
