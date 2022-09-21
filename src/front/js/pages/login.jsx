@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +30,8 @@ export const Login = () => {
 			}
 		}
 	}
+
+	useEffect(() => { { store.token != "" ? actions.userLogout() : [] } }, [])
 
 	return (
 		<div className="container-fluid container-fitter">
