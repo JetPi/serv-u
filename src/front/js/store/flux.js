@@ -2,12 +2,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
+			backendUrl: "https://serv-u.herokuapp.com",
 			username: "",
 			email: "",
 			role: "",
 			orders: [],
 			services: [],
-
+			errorCode: 0,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -44,8 +45,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//Signs up a user to the database
 			userSignup: async (user) => {
+				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/signup`, {
+					let response = await fetch(`${store.backendUrl}/api/signup`, {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -65,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 
-					let response = await fetch(`http://localhost:3001/api/users/single_user`, {
+					let response = await fetch(`${store.backendUrl}/api/users/single_user`, {
 
 						method: "GET",
 						headers: {
@@ -80,9 +82,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							email: data.email,
 							role: data.role,
 						})
-						return true
 					} else {
-						return false
+						console.log(response.status)
+						if (response.status == 401) {
+							setStore({
+								errorCode: response.status
+							})
+						}
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -90,19 +96,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Recieves a user object and logs them in, generating a token for future authentication
+			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				let store = getStore()
 				try {
-
-					// let response = await fetch(`http://localhost:3001/api/services`, {
-					// 	method: "GET",
-
-					let response = await fetch(`http://localhost:3001/api/login`, {
+					let response = await fetch(`${store.backendUrl}/api/login`, {
 						method: "POST",
-
 						headers: {
 							"Content-Type": "application/json",
-							"Authorization": "Bearer " + store.token
 						},
 						body: JSON.stringify(user),
 					})
@@ -123,6 +124,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
 			// Checks if login data is valid
 			loginValidityChecker: (user) => {
 				if (user.email.trim() != "" && user.password.trim() != "") {
@@ -130,16 +132,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
-
 			//Get user services
 			getServices: async () => {
+				let store = getStore()
 				try {
-
-					// let response = await fetch(`http://localhost:3001/api/login`, {
-					// 	method: "POST",
-
-					let response = await fetch(`http://localhost:3001/api/services`, {
+					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
 
 						headers: {
@@ -161,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getOrders: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/orders`, {
+					let response = await fetch(`${store.backendUrl}/api/orders`, {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
@@ -173,7 +170,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							orders: data
 						})
-						console.log(store.orders)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -182,8 +178,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			addService: async (serviceData) => {
+				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/services`, {
+					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"

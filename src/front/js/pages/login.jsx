@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -15,28 +15,30 @@ export const Login = () => {
 
 	let [userData, setUserData] = useState(initialState)
 
-	let handleChange = ({ target }) =>{
+	let handleChange = ({ target }) => {
 		setUserData({
-            ...userData,
-            [target.name]: target.value,
-        })
-    };
+			...userData,
+			[target.name]: target.value,
+		})
+	};
 
-	let handleSubmit = async (event) =>{
+	let handleSubmit = async (event) => {
 		event.preventDefault()
-		if (actions.loginValidityChecker(userData)){
-			if (await actions.loginUser(userData)){
+		if (actions.loginValidityChecker(userData)) {
+			if (await actions.loginUser(userData)) {
 				navigate("/")
 			}
 		}
 	}
+
+	useEffect(() => { { store.token != "" ? actions.userLogout() : [] } }, [])
 
 	return (
 		<div className="container-fluid container-fitter">
 			<div className="row view-fitter mt-4">
 				{/* Imagen */}
 				<div className="col-sm-12 col-md-6 d-flex justify-content-center ">
-					<img className="image-fitter" src="https://picsum.photos/700/500" alt=""/>
+					<img className="image-fitter" src="https://picsum.photos/700/500" alt="" />
 				</div>
 				{/* Form */}
 				<div className="col-sm-12 col-md-6 d-flex flex-column">
@@ -48,12 +50,12 @@ export const Login = () => {
 							{/* Campo de correo */}
 							<div className="mb-3 d-flex flex-column">
 								<label for="exampleInputEmail1" className="form-label fs-2">Correo Electrónico</label>
-								<input 
-									type="email" 
+								<input
+									type="email"
 									name="email"
-									onChange={handleChange} 
-									className="form-control input-fitter" 
-									id="exampleInputEmail1" 
+									onChange={handleChange}
+									className="form-control input-fitter"
+									id="exampleInputEmail1"
 									aria-describedby="emailHelp"
 								/>
 								<div id="emailHelp" className="form-text">Nunca compartiremos tu información.</div>
@@ -61,11 +63,11 @@ export const Login = () => {
 							{/* Campo de contraseña */}
 							<div className="mb-3 d-flex flex-column fs-2">
 								<label for="exampleInputPassword1" className="form-label">Contraseña</label>
-								<input 
-									type="password" 
+								<input
+									type="password"
 									name="password"
-									onChange={handleChange} 
-									className="form-control" 
+									onChange={handleChange}
+									className="form-control"
 									id="exampleInputPassword1"
 								/>
 							</div>
@@ -86,7 +88,7 @@ export const Login = () => {
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	);
 };

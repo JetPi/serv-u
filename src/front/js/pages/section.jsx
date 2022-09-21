@@ -34,14 +34,14 @@ export const Section = () => {
                         if (theme == "general") {
                             return (
                                 <div key={index} className="col-4 my-2">
-                                    <ServiceCard name={element.name} description={element.description} />
+                                    <ServiceCard name={element.name} description={element.description} service_id={index} />
                                 </div>
                             )
                         } else {
                             if (element.type == theme) {
                                 return (
                                     <div key={index} className="col-4 my-2">
-                                        <ServiceCard name={element.name} description={element.description} />
+                                        <ServiceCard name={element.name} description={element.description} service_id={index} />
                                     </div>
                                 )
                             }
@@ -50,7 +50,7 @@ export const Section = () => {
                 </div>
                 {/* List of buttons */}
                 <div className="col-3 column selection-box">
-                    <div className="col-12 text-center fs-4" style={{ "border-bottom": "1px solid black" }}>
+                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
                         Secciones
                     </div>
                     <div className="col-12 my-2">
