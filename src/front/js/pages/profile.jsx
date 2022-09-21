@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ActiveOrders } from "../component/activeOrders.jsx";
+import { ActiveService } from "../component/activeService.jsx";
 
 import { Link, useNavigate } from "react-router-dom"
 
@@ -46,41 +47,16 @@ export const Profile = () => {
                         <div className="w-50 mx-1 fs-2 d-flex justify-content-center my-3 background  ">
                             Busca un Servicio
                 </div>
-                    </div>
-                    {/* Listado de servicios relacionados al usuario */}
-                    <div className="col-12 d-flex justify-content-center">
-                        <div className="col-12 fs-2   d-flex justify-content-center special mb-3">
-                            Tus Servicios
-                </div>
-                    </div>
-                    <div className="col-12 d-flex justify-content-between">
-                        <div className="w-50 mx-1 fs-4 justify-content-center background mb-3  ">
-                            <h5 className="text-center">Ordenes Activas</h5>
+                <div className="col-12 d-flex justify-content-between">
+                    <div className="row w-50 mx-1 fs-4 background mb-3  ">
+                        <h5 className="text-center">Ordenes Activas</h5>
+                        <div className="col-6">
                             <ActiveOrders />
                         </div>
-                        <div className="w-50 mx-1 fs-4 d-flex justify-content-center mb-3 background  ">
-                            Servicios
-                </div>
                     </div>
-                    <div className="col-12 d-flex justify-content-between">
-                        <div className="w-50 mx-1 fs-5 background">
-                            <ul className="my-2">
-                                {store.services.map((element, index) => {
-                                    return (
-                                        <li key={index}>{element.name}</li>
-                                    )
-                                })}
-                            </ul>
-                        </div>
-                        <div className="w-50 mx-1 fs-5 background">
-                            <ul className="my-2">
-                                {store.services.map((element, index) => {
-                                    return (
-                                        <li key={index}>{element.name}</li>
-                                    )
-                                })}
-                            </ul>
-                        </div>
+                    <div className="w-50 mx-1 fs-4 justify-content-center mb-3 background  ">
+                        <h5 className="text-center">Servicios</h5>
+                        <ActiveService />
                     </div>
                 </div>
             </div>
