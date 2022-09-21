@@ -14,6 +14,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			//Change order status
+			changeOrder: () => {
+				let store = getStore()
+
+			},
 
 			//Clears user login data
 			userLogout: () => {
@@ -194,6 +199,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				} catch (error) {
 					console.log(`Error: ${error}`);
+				}
+			},
+
+			updateOrder: async (orderId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`http://localhost:3001/api/orders/${orderId}`, {
+						method: "PATCH",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							status: "culminado"
+						}),
+					});
+					if (response.ok) {
+						let ordersCopy = [...store.orders]
+						let index = ordersCopy.findIndex((order) => order.id === orderId)
+						if (index > -1) {
+							ordersCopy[index] = { ...ordersCopy[index], status: "culminado" }
+							setStore({
+								...store, orders: ordersCopy
+							})
+							return true;
+						}
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
+					return false;
 				}
 			},
 

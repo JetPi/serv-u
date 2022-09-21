@@ -179,6 +179,33 @@ def get_orders():
         return jsonify({"message":"not found"}), 404
     
 
+@api.route('/orders', methods=['PATCH'])#actualizar
+@api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
+def update_order(order_id=None):
+    if request.method == 'PATCH':
+        body = request.json
+        print(request.json)
+        if order_id is None:
+            return jsonify({"message":"Bad request"}), 400
+
+        if order_id is not None:
+            update_order = Order.query.get(order_id)
+            if update_order is None:
+                return jsonify({"message":"Not found"}), 404
+            else:
+                update_order.status = body["status"]
+               
+                try:
+                    db.session.commit()
+                    return jsonify(update_order.serialize()), 201
+                except Exception as error:
+                    print(error.args)
+                    return jsonify({"message":f"Error {error.args}"}),500
+
+        return jsonify([]), 200
+    return jsonify([]), 405
+
+
     
 
 
