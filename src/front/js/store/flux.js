@@ -8,7 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			role: "",
 			orders: [],
 			services: [],
-
+			errorCode: 0,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -77,9 +77,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 							email: data.email,
 							role: data.role,
 						})
-						return true
 					} else {
-						return false
+						console.log(response.status)
+						if (response.status == 401) {
+							setStore({
+								errorCode: response.status
+							})
+						}
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
