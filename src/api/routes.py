@@ -10,7 +10,7 @@ from api.models import Order, Service, db, User
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token,jwt_required, get_jwt_identity
 from datetime import timedelta, datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -181,7 +181,6 @@ def get_orders():
 
         return jsonify(list(map(lambda item: item.serialize(), orders))), 200
     else:
- feature/userstorie/35#
         return jsonify({"message": "not found"}), 404
 
 
@@ -212,7 +211,6 @@ def publish_profile_photo(user_id=None):
             db.session.rollback()
             return jsonify({"message": f"Error {error.args}"}),500    
 
-        return jsonify({"message":"not found"}), 404
     
 
 @api.route('/orders', methods=['PATCH'])#actualizar
