@@ -12,6 +12,11 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+#cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 #from models import Person
 
@@ -19,6 +24,12 @@ ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+#cloudinary
+app.config.from_mapping(
+    CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
+)
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

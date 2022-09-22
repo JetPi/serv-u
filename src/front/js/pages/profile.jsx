@@ -35,7 +35,7 @@ export const Profile = () => {
                 <div className="col-12 fs-5 mb-2">
                     Rol: {store.role != "" ? (store.role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
                 </div>
-                <button type="button" onClick={() => actions.userLogout()} class="btn my-2 col-12 fs-5 special">Logout</button>
+                <button type="button" onClick={() => actions.userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button>
             </div>
             <div className="col-8 row d-fllex-align">
                 <div className="col-12  ">
