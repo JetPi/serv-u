@@ -196,7 +196,6 @@ def publish_profile_photo(user_id=None):
     body=request.files
     if user_id is not None:
         get_user_info = User.query.get(user_id)
-        print(get_user_info)
    
     try:
             image_profile = body['file_profile']

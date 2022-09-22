@@ -101,22 +101,3 @@ class Order(db.Model):
             "status": self.status.name,
             "services": self.services_id
         }
-
-
-
-
-#PRUEBA
-
-# class Photo(db.Model):
-#     # Identifications
-#     id = db.Column(db.Integer, primary_key=True) 
-#     profile_photo = db.Column(db.String(500), nullable=True,unique=True)
-#     cloudinary_id = db.Column(db.String(500), unique=True, nullable=True)
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,          
-#             "profile_photo": self.profile_photo,
-#             "cloudinary_id": self.cloudinary_id
-
-#         }
