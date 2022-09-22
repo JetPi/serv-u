@@ -39,7 +39,7 @@ export const ServiceInfo = () => {
                                         </div>
                                         <div className="col-5 background my-1 mx-2 p-2 fs-5">
                                             Dirección: {element.location} <br />
-                                            Precio Base: {element.base_price}
+                                            Precio Base: {element.base_price} $
                                         </div>
                                     </div>
                                     <div className="col-12 fs-3 text-center special my-3">
