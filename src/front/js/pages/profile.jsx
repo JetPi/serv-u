@@ -13,6 +13,7 @@ export const Profile = () => {
 
     useEffect(() => { { actions.getUserInfo() } }, [])
     return (
+
         <>
             {
                 store.errorCode != 401 ?
