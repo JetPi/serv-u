@@ -133,7 +133,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-
 						headers: {
 							"Content-Type": "application/json",
 						},
