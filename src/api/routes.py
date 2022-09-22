@@ -2,23 +2,19 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 
-
-import cloudinary.uploader as uploader
-from flask_jwt_extended import JWTManager
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import create_access_token
-from base64 import b64encode
-from werkzeug.security import generate_password_hash, check_password_hash
-from api.utils import generate_sitemap, APIException
-from api.models import Order, Service, db, User
-from flask import Flask, request, jsonify, url_for, Blueprint
 from ast import Or
 import os
-from unicodedata import name
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
+from unicodedata import name 
+from flask import Flask, request, jsonify, url_for, Blueprint
+from api.models import Order, Service, db, User
+from api.utils import generate_sitemap, APIException
+from werkzeug.security import generate_password_hash, check_password_hash
+from base64 import b64encode
+from flask_jwt_extended import create_access_token
+from datetime import timedelta, datetime
+
+from werkzeug.security import generate_password_hash, check_password_hash
+from base64 import b64encode
 
 
 # cloudinary
@@ -74,9 +70,9 @@ def login_user():
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
                 if check_password(login_user.password, password, login_user.salt):
-                    print(check_password)
-                    Coin = create_access_token(identity=login_user.id)
-                    return jsonify({'token': Coin, "user_id": login_user.id})
+                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
+                    return jsonify({'token': Coin, "user_id":login_user.id})
+
                 else:
                     return jsonify('Bad credentials'), 400
             else:
@@ -185,6 +181,7 @@ def get_orders():
 
         return jsonify(list(map(lambda item: item.serialize(), orders))), 200
     else:
+ feature/userstorie/35#
         return jsonify({"message": "not found"}), 404
 
 
@@ -214,3 +211,33 @@ def publish_profile_photo(user_id=None):
     except Exception as error:
             db.session.rollback()
             return jsonify({"message": f"Error {error.args}"}),500    
+
+        return jsonify({"message":"not found"}), 404
+    
+
+@api.route('/orders', methods=['PATCH'])#actualizar
+@api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
+def update_order(order_id=None):
+    if request.method == 'PATCH':
+        body = request.json
+        print(request.json)
+        if order_id is None:
+            return jsonify({"message":"Bad request"}), 400
+
+        if order_id is not None:
+            update_order = Order.query.get(order_id)
+            if update_order is None:
+                return jsonify({"message":"Not found"}), 404
+            else:
+                update_order.status = body["status"]
+               
+                try:
+                    db.session.commit()
+                    return jsonify(update_order.serialize()), 201
+                except Exception as error:
+                    print(error.args)
+                    return jsonify({"message":f"Error {error.args}"}),500
+
+        return jsonify([]), 200
+    return jsonify([]), 405
+
