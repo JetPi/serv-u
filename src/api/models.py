@@ -114,7 +114,7 @@ class Comment(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
+            "user_data": User.query.get(self.user_id).serialize(),
             "observation": self.observation,
             "services_id": self.services_id
         }

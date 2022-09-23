@@ -240,6 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(comment),
 					});
 					if (response.ok) {
+						getActions().getComment()
 						return true;
 					}
 				} catch (error) {
