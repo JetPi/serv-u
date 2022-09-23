@@ -107,9 +107,9 @@ class Order(db.Model):
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
     observation = db.Column(db.String(300), nullable=False)
     services_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def serialize(self):
         return {

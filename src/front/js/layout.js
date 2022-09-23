@@ -37,7 +37,7 @@ const Layout = () => {
                         <Route element={<Post_service />} path="/post_service" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<ServiceInfo />} path="/service/:id" />
-                        <Route element={<ServiceComment />} path="/user/comments" />
+                        <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

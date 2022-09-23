@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			orders: [],
 			services: [],
 			errorCode: 0,
-			comment: "",
+			comments: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -234,7 +234,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json"
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
 						},
 						body: JSON.stringify(comment),
 					});
@@ -243,6 +244,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`);
+				}
+			},
+			getComment: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
 				}
 			},
 		}

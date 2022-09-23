@@ -239,14 +239,15 @@ def update_order(order_id=None):
 
 
 @api.route('/user/comments', methods=['POST'])
+@jwt_required()
 def publish_comment():
     if request.method == 'POST':
         body = request.json
-        user_id = body.get('user_id', None)
+        user_id = get_jwt_identity()
         observation = body.get('observation', None)
         services_id = body.get('services_id', None)
 
-        if observation is None or user_id is None or services_id is None:
+        if observation is None or services_id is None:
             return jsonify('Verified your entries'), 400
         else:
             new_comment = Comment(
@@ -262,3 +263,21 @@ def publish_comment():
                 return jsonify({"message": f"Error {error.args}"}), 500
 
     return jsonify(), 201
+
+
+@api.route('/user/comments', methods=['GET'])
+@jwt_required()
+def get_comment():
+    user_id = get_jwt_identity()
+    comments = Comment()
+    comments = comments.query.filter_by(user_id=user_id).all()
+    print(comments)
+    if comments is None:
+        return jsonify('Empty'), 400
+    elif comments is not None:
+        comments = Comment()
+        comments = comments.query.all()
+
+        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+    else:
+        return jsonify({"message": "not found"}), 404
