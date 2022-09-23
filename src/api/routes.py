@@ -4,13 +4,13 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 
 from ast import Or
 import os
-from unicodedata import name 
+from unicodedata import name
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Order, Service, db, User
+from api.models import Comment, Order, Service, db, User
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
-from flask_jwt_extended import create_access_token,jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta, datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -18,7 +18,7 @@ from base64 import b64encode
 
 
 # cloudinary
-import cloudinary.uploader as uploader 
+import cloudinary.uploader as uploader
 
 api = Blueprint('api', __name__)
 
@@ -70,8 +70,14 @@ def login_user():
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
                 if check_password(login_user.password, password, login_user.salt):
+
+                    Coin = create_access_token(
+                        identity=login_user.id, expires_delta=timedelta(days=1))
+                    return jsonify({'token': Coin, "user_id": login_user.id})
+
                     Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(minutes=1))
                     return jsonify({'token': Coin, "user_id":login_user.id})
+
 
                 else:
                     return jsonify('Bad credentials'), 400
@@ -184,57 +190,110 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
+# ruta para actualizar la foto del perfil y el banner
+
 
 
 #Ruta para actualizar la foto del perfil y el banner
+
 @api.route('/profile/<int:user_id>', methods=['PATCH'])
-def publish_profile_photo(user_id=None):   
-    body=request.files
+def publish_profile_photo(user_id=None):
+    body = request.files
     if user_id is not None:
         get_user_info = User.query.get(user_id)
-   
+
     try:
-            image_profile = body['file_profile']
-            image_banner = body['file_banner']  
-            cloudinary_upload_profile = uploader.upload(image_profile)
-            cloudinary_upload_banner = uploader.upload(image_banner)
+        image_profile = body['file_profile']
+        image_banner = body['file_banner']
+        cloudinary_upload_profile = uploader.upload(image_profile)
+        cloudinary_upload_banner = uploader.upload(image_banner)
 
-            get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
-            get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
+        get_user_info.profile_photo_url = cloudinary_upload_profile["url"]
+        get_user_info.cloudinary_id_profile = cloudinary_upload_profile["public_id"]
 
-            get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
-            get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
-            
-            db.session.commit()
-            return jsonify({"message":"todo bien"}), 201
+        get_user_info.banner_photo_url = cloudinary_upload_banner["url"]
+        get_user_info.cloudinary_id_banner = cloudinary_upload_banner["public_id"]
+
+        db.session.commit()
+        return jsonify({"message": "todo bien"}), 201
     except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": f"Error {error.args}"}),500    
+        db.session.rollback()
+        return jsonify({"message": f"Error {error.args}"}), 500
+
+
+
+@api.route('/orders', methods=['PATCH'])  # actualizar
+@api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
 
 # Update order status
 @api.route('/orders', methods=['PATCH'])#actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
+
 def update_order(order_id=None):
     if request.method == 'PATCH':
         body = request.json
         print(request.json)
         if order_id is None:
-            return jsonify({"message":"Bad request"}), 400
+            return jsonify({"message": "Bad request"}), 400
 
         if order_id is not None:
             update_order = Order.query.get(order_id)
             if update_order is None:
-                return jsonify({"message":"Not found"}), 404
+                return jsonify({"message": "Not found"}), 404
             else:
                 update_order.status = body["status"]
-               
+
                 try:
                     db.session.commit()
                     return jsonify(update_order.serialize()), 201
                 except Exception as error:
                     print(error.args)
-                    return jsonify({"message":f"Error {error.args}"}),500
+                    return jsonify({"message": f"Error {error.args}"}), 500
 
         return jsonify([]), 200
     return jsonify([]), 405
 
+
+@api.route('/user/comments', methods=['POST'])
+@jwt_required()
+def publish_comment():
+    if request.method == 'POST':
+        body = request.json
+        user_id = get_jwt_identity()
+        observation = body.get('observation', None)
+        services_id = body.get('services_id', None)
+
+        if observation is None or services_id is None:
+            return jsonify('Verified your entries'), 400
+        else:
+            new_comment = Comment(
+                user_id=user_id, observation=observation, services_id=services_id)
+            db.session.add(new_comment)
+
+            try:
+                db.session.commit()
+                return jsonify(new_comment.serialize()), 201
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message": f"Error {error.args}"}), 500
+
+    return jsonify(), 201
+
+
+@api.route('/user/comments', methods=['GET'])
+@jwt_required()
+def get_comment():
+    user_id = get_jwt_identity()
+    comments = Comment()
+    comments = comments.query.filter_by(user_id=user_id).all()
+    print(comments)
+    if comments is None:
+        return jsonify('Empty'), 400
+    elif comments is not None:
+        comments = Comment()
+        comments = comments.query.all()
+
+        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+    else:
+        return jsonify({"message": "not found"}), 404

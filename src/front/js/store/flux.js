@@ -2,12 +2,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
+
+			username: "",
+			email: "",
+			role: "",
+
 			// backendUrl: "https://serv-u.herokuapp.com",
 			backendUrl: process.env.BACKEND_URL,
 			userInfo: {},
 			orders: [],
 			services: [],
 			errorCode: 0,
+			comments: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -197,7 +203,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			updateOrder: async (orderId) => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/orders/${orderId}`, {
+					let response = await fetch(`${store.backendUrl}/api/orders/${orderId}`, {
 						method: "PATCH",
 						headers: {
 							"Content-Type": "application/json"
@@ -222,7 +228,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
+			sendComment: async (comment) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+						body: JSON.stringify(comment),
+					});
+					if (response.ok) {
+						getActions().getComment()
+						return true;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
+			getComment: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
 		}
 	};
 };
