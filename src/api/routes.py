@@ -30,7 +30,7 @@ def set_password(password, salt):
 def check_password(hash_password, password, salt):
     return check_password_hash(hash_password, f"{password}{salt}")
 
-
+# Signup user
 @api.route('/signup', methods=['POST'])
 def add_user():
     if request.method == 'POST':
@@ -58,7 +58,7 @@ def add_user():
 
     return jsonify(), 201
 
-
+# Login
 @api.route('/login', methods=['POST'])
 def login_user():
     if request.method == 'POST':
@@ -70,9 +70,14 @@ def login_user():
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
                 if check_password(login_user.password, password, login_user.salt):
+
                     Coin = create_access_token(
                         identity=login_user.id, expires_delta=timedelta(days=1))
                     return jsonify({'token': Coin, "user_id": login_user.id})
+
+                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(minutes=1))
+                    return jsonify({'token': Coin, "user_id":login_user.id})
+
 
                 else:
                     return jsonify('Bad credentials'), 400
@@ -82,7 +87,7 @@ def login_user():
             return jsonify('Bad credentials'), 400
     return jsonify('Access'), 201
 
-
+# Get all users
 @api.route('/users', methods=['GET'])
 def all_user(user_id=None):
     if request.method == 'GET':
@@ -99,7 +104,7 @@ def all_user(user_id=None):
 
         return jsonify({"message": "not found"}), 404
 
-
+# Get a particular user'
 @api.route('/users/single_user', methods=['GET'])
 @jwt_required()
 def single_user():
@@ -111,7 +116,7 @@ def single_user():
 
     return jsonify({"message": "not found"}), 404
 
-
+# Get services
 @api.route('/services', methods=['GET'])
 @api.route('/services/<int:services_id>', methods=['GET'])
 @api.route('/services/<string:search_type>', methods=['GET'])
@@ -135,7 +140,7 @@ def get_service(services_id=None, search_type=None):
 
         return jsonify({"message": "not found"}), 404
 
-
+# Post service, now with cloudinary
 @api.route('/services', methods=['POST'])
 def publish_service():
     if request.method == 'POST':
@@ -166,7 +171,7 @@ def publish_service():
 
     return jsonify(), 201
 
-
+# Get orders 
 @api.route('/orders', methods=['GET'])
 @jwt_required()
 def get_orders():
@@ -186,6 +191,11 @@ def get_orders():
 
 
 # ruta para actualizar la foto del perfil y el banner
+
+
+
+#Ruta para actualizar la foto del perfil y el banner
+
 @api.route('/profile/<int:user_id>', methods=['PATCH'])
 def publish_profile_photo(user_id=None):
     body = request.files
@@ -211,8 +221,14 @@ def publish_profile_photo(user_id=None):
         return jsonify({"message": f"Error {error.args}"}), 500
 
 
+
 @api.route('/orders', methods=['PATCH'])  # actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
+
+# Update order status
+@api.route('/orders', methods=['PATCH'])#actualizar
+@api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
+
 def update_order(order_id=None):
     if request.method == 'PATCH':
         body = request.json
