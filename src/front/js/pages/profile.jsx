@@ -10,13 +10,14 @@ import "../../styles/profile.css";
 export const Profile = () => {
     const { store, actions } = useContext(Context);
     let navigate = useNavigate()
+    const { username, role, email } = store.userInfo
 
     useEffect(() => { { actions.getUserInfo() } }, [])
-    return (
 
+    return (
         <>
             {
-                store.errorCode != 401 ?
+                store.userInfo != "undefined" ?
                     <div className="container-fluid row mt-4">
                         <div className="col-4 mx-2"></div>
                         <div className="col-4 column background position-fixed">
@@ -24,16 +25,17 @@ export const Profile = () => {
                             <div className="col-12  my-3">
                                 <img className="image-rounder" src="https://picsum.photos/300/300" alt="" />
                             </div>
+                            <button type="button" className="btn fab-upload-file">Primary</button>
                             <div className="col-12 fs-2 d-flex justify-content-center">
-                                {store.username == "" ? "Placeholder" : store.username}
+                                {username == "" ? "Placeholder" : username}
                             </div>
                             <div className="col-12 fs-5 mb-2">
-                                Correo: {store.email == "" ? "Placeholder" : store.email}
+                                Correo: {email == "" ? "Placeholder" : email}
                             </div>
                             <div className="col-12 fs-5 mb-2">
-                                Rol: {store.role != "" ? (store.role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
+                                Rol: {role != "" ? (role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
                             </div>
-                            <button type="button" onClick={() => actions.userLogout()} class="btn my-2 col-12 fs-5 special">Logout</button>
+                            <button type="button" onClick={() => actions.userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button>
                         </div>
                         {/* Banner and services */}
                         <div className="col-8 row d-flex-align">

@@ -2,10 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			backendUrl: "https://serv-u.herokuapp.com",
-			username: "",
-			email: "",
-			role: "",
+			// backendUrl: "https://serv-u.herokuapp.com",
+			backendUrl: process.env.BACKEND_URL,
+			userInfo: {},
 			orders: [],
 			services: [],
 			errorCode: 0,
@@ -78,17 +77,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						let data = await response.json()
 						setStore({
-							username: data.username,
-							email: data.email,
-							role: data.role,
+							...store,
+							userInfo: data
 						})
 					} else {
-						console.log(response.status)
-						if (response.status == 401) {
-							setStore({
-								errorCode: response.status
-							})
-						}
+						setStore({
+							...store,
+							userInfo: "undefined"
+						})
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)

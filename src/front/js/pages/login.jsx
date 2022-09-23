@@ -31,7 +31,7 @@ export const Login = () => {
 		}
 	}
 
-	useEffect(() => { { store.token != "" ? actions.userLogout() : [] } }, [])
+	useEffect(() => { { store.token != "" && actions.userLogout() } }, [])
 
 	return (
 		<div className="container-fluid container-fitter">
