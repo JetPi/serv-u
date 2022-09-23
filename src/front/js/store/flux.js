@@ -2,13 +2,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			backendUrl: "https://serv-u.herokuapp.com",
+			backendUrl: "http://127.0.0.1:3001",
 			username: "",
 			email: "",
 			role: "",
 			orders: [],
 			services: [],
 			errorCode: 0,
+			comment: "",
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -202,7 +203,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			updateOrder: async (orderId) => {
 				let store = getStore()
 				try {
-					let response = await fetch(`http://localhost:3001/api/orders/${orderId}`, {
+					let response = await fetch(`${store.backendUrl}/api/orders/${orderId}`, {
 						method: "PATCH",
 						headers: {
 							"Content-Type": "application/json"
@@ -227,7 +228,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
+			sendComment: async (comment) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(comment),
+					});
+					if (response.ok) {
+						return true;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
 		}
 	};
 };

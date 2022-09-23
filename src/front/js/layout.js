@@ -13,6 +13,7 @@ import { ServiceInfo } from "./pages/service_info.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
+import { ServiceComment } from "./component/serviceComment.jsx";
 
 
 
@@ -36,6 +37,7 @@ const Layout = () => {
                         <Route element={<Post_service />} path="/post_service" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<ServiceInfo />} path="/service/:id" />
+                        <Route element={<ServiceComment />} path="/user/comments" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>
