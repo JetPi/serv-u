@@ -2,7 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			// backendUrl: "https://serv-u.herokuapp.com",
 			backendUrl: process.env.BACKEND_URL,
 			userInfo: {},
 			orders: [],
@@ -14,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
 			//Change order status
 			changeOrder: () => {
 				let store = getStore()
@@ -223,6 +223,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			uploadImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
+						method: "PATCH",
+						headers: {
+							"Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("getProduct Error", error);
+				}
+			},
 		}
 	};
 };

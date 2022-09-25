@@ -70,7 +70,7 @@ def login_user():
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
                 if check_password(login_user.password, password, login_user.salt):
-                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(minutes=1))
+                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
                     return jsonify({'token': Coin, "user_id":login_user.id})
 
                 else:
@@ -184,32 +184,56 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
-
-
-#Ruta para actualizar la foto del perfil y el banner
-@api.route('/profile/<int:user_id>', methods=['PATCH'])
-def publish_profile_photo(user_id=None):   
+#Ruta para actualizar la foto del perfil
+@api.route('/profile/single_user/profile', methods=['PATCH'])
+@jwt_required()
+def publish_profile_photo():   
     body=request.files
-    if user_id is not None:
-        get_user_info = User.query.get(user_id)
-   
+    get_user_info = User.query.get(get_jwt_identity())
+    if get_user_info is None:
+        return jsonify({"Error":"Couldn't find user"}), 404
+    
     try:
-            image_profile = body['file_profile']
-            image_banner = body['file_banner']  
-            cloudinary_upload_profile = uploader.upload(image_profile)
-            cloudinary_upload_banner = uploader.upload(image_banner)
+        if body['file_profile'] == None:
+            return jsonify({"message": "Error: Invalid parameters"}),400 
 
+        if body['file_profile'] != None:   
+            image_profile = body['file_profile']
+            cloudinary_upload_profile = uploader.upload(image_profile)
             get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
             get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
-
-            get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
-            get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
-            
-            db.session.commit()
-            return jsonify({"message":"todo bien"}), 201
+        
+        db.session.commit()
+        return jsonify({"message":"todo bien"}), 201
     except Exception as error:
             db.session.rollback()
             return jsonify({"message": f"Error {error.args}"}),500    
+
+#Ruta para actualizar la foto del banner
+@api.route('/profile/single_user/banner', methods=['PATCH'])
+@jwt_required()
+def publish_banner_photo():   
+    body=request.files
+    get_user_info = User.query.get(get_jwt_identity())
+    if get_user_info is None:
+        return jsonify({"Error":"Couldn't find user"}), 404
+    
+    try:
+        if body['file_banner'] == None:
+            return jsonify({"message": "Error: Invalid parameters"}),400 
+
+        if body['file_banner'] != None:
+            image_banner = body['file_banner']
+            cloudinary_upload_banner = uploader.upload(image_banner)
+            get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
+            get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
+        
+        db.session.commit()
+        return jsonify({"message":"todo bien"}), 201
+    except Exception as error:
+            db.session.rollback()
+            return jsonify({"message": f"Error {error.args}"}),500    
+
 
 # Update order status
 @api.route('/orders', methods=['PATCH'])#actualizar
