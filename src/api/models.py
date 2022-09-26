@@ -20,6 +20,7 @@ class ServiceType(Enum):
 class Role(Enum):
     comprador = "comprador",
     vendedor = "vendedor"
+    admin = "admin"
 
 
 class User(db.Model):
