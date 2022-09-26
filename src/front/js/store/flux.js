@@ -229,6 +229,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
 			sendComment: async (comment) => {
 				let store = getStore()
 				try {
@@ -248,6 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`);
 				}
 			},
+			
 			getComment: async () => {
 				let store = getStore()
 				try {
@@ -268,6 +270,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+			
 			getUserStatus: async () => {
 				let store = getStore()
 				try {
@@ -287,6 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+			
 			updateUserStatus: async (userId) => {
 				let store = getStore()
 				try {
@@ -303,7 +307,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			}
+			},
       
 			uploadProfileImg: async (product) => {
 				const store = getStore();
