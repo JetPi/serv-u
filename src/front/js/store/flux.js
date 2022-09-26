@@ -287,6 +287,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+			updateUserStatus: async (userId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/${userId}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					}
+
+					)
+					if (response.ok) {
+						getActions().getUserStatus()
+					}
+				} catch (eror) {
+					console.log(`Error: ${error}`)
+				}
+			}
 		}
 	};
 };

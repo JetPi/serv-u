@@ -3,10 +3,11 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from ast import Or
+import json
 import os
 from unicodedata import name
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Comment, Order, Service, db, User
+from api.models import Comment, Order, Role, Service, db, User
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
@@ -73,6 +74,8 @@ def login_user():
         if email is not None or password is not None:
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
+                if login_user.is_active == False:
+                    return jsonify("Su usuario esta bloqueado"), 401
                 if check_password(login_user.password, password, login_user.salt):
 
                     Coin = create_access_token(
@@ -310,9 +313,9 @@ def get_comment():
 @jwt_required()
 def user_active(user_id=None):
     if request.method == 'PUT':
-        body = request.json
         admin = User.query.get(get_jwt_identity())
-        if admin.role != "admin":
+        print(admin.role)
+        if admin.role != Role.admin:
             return jsonify("No eres administrador"), 401
 
         if user_id is None:
@@ -323,7 +326,7 @@ def user_active(user_id=None):
             if update_user is None:
                 return jsonify({"message": "Not found"}), 404
             else:
-                update_user.is_active = body["is_active"]
+                update_user.is_active = not update_user.is_active
 
                 try:
                     db.session.commit()

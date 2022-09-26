@@ -18,7 +18,7 @@ class ServiceType(Enum):
 
 
 class Role(Enum):
-    comprador = "comprador",
+    comprador = "comprador"
     vendedor = "vendedor"
     admin = "admin"
 

@@ -23,10 +23,19 @@ export const ActiveUser = () => {
                                     className="border-bottom d-flex justify-content-between align-item-center py-2"
                                 >
                                     <div>
-                                        <p><strong>{element.username}</strong></p>
-                                        <p><strong>{element.email}</strong></p>
-                                        <p><strong>{element.role}</strong></p>
-                                        <p><strong>{element.is_active}</strong></p>
+                                        <p>Usuario: <strong>{element.username}</strong></p>
+                                        <p>Email: <strong>{element.email}</strong></p>
+                                        <p>Rol: <strong>{element.role}</strong></p>
+                                        <p>Estatus: <strong>{element.is_active ? "Activo" : "Inactivo"}</strong></p>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p></p>
+                                            <input type="checkbox"
+                                                value={element.is_active}
+                                                onChange={() => actions.updateUserStatus(element.id)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             );
