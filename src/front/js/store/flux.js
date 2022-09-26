@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// backendUrl: "https://serv-u.herokuapp.com",
 			backendUrl: process.env.BACKEND_URL,
 			userInfo: {},
+			users: [],
 			orders: [],
 			services: [],
 			errorCode: 0,
@@ -267,6 +268,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+			getUserStatus: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/users`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							users: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+			updateUserStatus: async (userId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/${userId}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					}
+
+					)
+					if (response.ok) {
+						getActions().getUserStatus()
+					}
+				} catch (eror) {
+					console.log(`Error: ${error}`)
+				}
+			}
 		}
 	};
 };
