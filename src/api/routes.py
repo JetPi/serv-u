@@ -144,31 +144,40 @@ def get_service(services_id=None, search_type=None):
 @api.route('/services', methods=['POST'])
 def publish_service():
     if request.method == 'POST':
-        body = request.json
+        body = request.form
         name = body.get('name', None)
         type = body.get('type', None)
         location = body.get('location', None)
-        home_delivery = body.get('home_delivery', None)
+        # home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
         description = body.get('description', None)
-        image = request.files['file']
+        
+        img_service = request.files['file']
+        # print(type(home_delivery))
 
-        if name is None or type is None or location is None or home_delivery is None or base_price is None:
+        if name is None or type is None or location is None or base_price is None:
             return jsonify('Verified your entries'), 400
         else:
-            cloudinary_upload = uploader.upload(image)
-            new_services = Service(name=name, type=type, location=location, home_delivery=home_delivery, base_price=base_price,
-                                   description=description, service_photo_url=cloudinary_upload["url"],  cloudinary_id_service=cloudinary_upload["public_id"])
+            
+            cloudinary_upload = uploader.upload(img_service)
+            # print(cloudinary_upload)
+            new_services = Service(name=name, type=type, 
+                                    location=location,  
+                                    base_price=base_price, 
+                                    description=description,
+                                    service_photo_url=cloudinary_upload["url"],
+                                    cloudinary_id_service=cloudinary_upload["public_id"])
+            print(new_services.serialize())
             db.session.add(new_services)
 
             try:
                 db.session.commit()
-                return jsonify(new_services.serialize()), 201
+                return jsonify({"message":"Todo bien"}), 201
             except Exception as error:
                 print(error.args)
                 db.session.rollback()
-                return jsonify({"message": f"Error {error.args}"}), 500
-
+                return jsonify({"message":f"Error {error.args}"}),500    
+        
     return jsonify(), 201
 
 # Get orders 
@@ -190,12 +199,10 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
-# ruta para actualizar la foto del perfil y el banner
 
 
 
 #Ruta para actualizar la foto del perfil y el banner
-
 @api.route('/profile/<int:user_id>', methods=['PATCH'])
 def publish_profile_photo(user_id=None):
     body = request.files
@@ -222,13 +229,9 @@ def publish_profile_photo(user_id=None):
 
 
 
-@api.route('/orders', methods=['PATCH'])  # actualizar
-@api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
-
 # Update order status
 @api.route('/orders', methods=['PATCH'])#actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
-
 def update_order(order_id=None):
     if request.method == 'PATCH':
         body = request.json

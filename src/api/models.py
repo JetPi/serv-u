@@ -68,9 +68,10 @@ class Service(db.Model):
     clients = db.Column(db.String(100))
     description = db.Column(db.String(500))
     base_price = db.Column(db.Integer, nullable=False)
-    service_photo_url = db.Column(db.String(500), nullable=True, unique=True)
-    cloudinary_id_service = db.Column(
-        db.String(500), unique=True, nullable=False)
+
+    service_photo_url = db.Column(db.String(500), nullable=False, unique=True)
+    cloudinary_id_service = db.Column(db.String(500), unique=True, nullable=False)
+
     orders = db.relationship('Order', backref="service", lazy=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.relationship('Comment', backref="service", lazy=False)
@@ -79,7 +80,7 @@ class Service(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "type": self.type.name,
+            "type": self.type,
             "home_delivery": self.home_delivery,
             "location": self.location,
             "base_price": self.base_price,

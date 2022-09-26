@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			role: "",
 
 			// backendUrl: "https://serv-u.herokuapp.com",
-			backendUrl: process.env.BACKEND_URL,
+			// backendUrl: process.env.BACKEND_URL,
+			backendUrl: "http://localhost:3001",
 			userInfo: {},
 			orders: [],
 			services: [],
@@ -58,7 +59,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(user),
+						headers: {'Content-type': 'application/json'}
 					});
+
 					if (response.ok) {
 						return true;
 					}
@@ -144,16 +147,81 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json",
 						},
 					})
+					
 					if (response.ok) {
+						
 						let data = await response.json()
 						setStore({
 							services: data
 						})
+						return true
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
 			},
+
+			// uploadImg: async (serviceData) => {
+			// 	const store = getStore();
+			// 	const actions = getActions()
+			// 	try {
+			// 	  const response = await fetch(`${store.backendUrl}/services`, {
+			// 		method: "POST",
+			// 		mode: "no-cors",					
+			// 		body: serviceData
+			// 	  });
+			// 	  actions.getServices()
+			// 	  if (response.ok) {
+			// 			let data = await response.json()
+			// 				setStore({
+			// 				services: data
+			// 			})
+			// 			return true
+			// 		}
+			// 		else {
+			// 			console.log("error al subir img_service")
+			// 			return false;
+			// 		}
+			// 	}catch (error) {
+			// 	  console.log("Error to upload the image", error);
+			// 	}
+			//   },
+
+			addService: async (serviceData) => {
+				let store = getStore()
+				let actions = getActions()
+				
+				try {
+					
+					let response = await fetch(`${store.backendUrl}/api/services`, {
+						method: 'POST',     					
+      					// headers: {"Content-Type": "application/json"},
+						body: serviceData,
+						mode:"no-cors"
+					});
+					
+
+					if (response.ok) {
+						actions.getServices()
+						console.log(serviceData)
+						console.log("add service ok")
+						return true;
+
+					} else {
+						console.log(serviceData)
+						console.log("mal add service")
+						return false;
+					}
+
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
+
+
+
+
+
 
 			//Active Orders
 			getOrders: async () => {
@@ -175,30 +243,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			},
-
-
-			addService: async (serviceData) => {
-				let store = getStore()
-				try {
-					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(serviceData),
-					});
-					if (response.ok) {
-						return true;
-
-					} else {
-						return false;
-					}
-
-				} catch (error) {
-					console.log(`Error: ${error}`);
-				}
-			},
+			},			
 
 			updateOrder: async (orderId) => {
 				let store = getStore()
@@ -272,3 +317,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
+
+// //how I use cloudinary frontednd?*
+// const uploadImage = (base64EncodedImage) => {
+//   console.log(base64EncodedImage);
+//   fetch('/api/upload', {
+//       method: 'POST',
+//       body: JSON.stringify({data: base64EncodedImage}),
+//       headers: {'Content-type': 'application/json'}
+//     })
+//     .then(doWhateverYouWant)
+//     .catch((error) => console.error(error))
+// }
+
+// const doWhateverYouWant = async (res) => {
+// // you can use res.url
+// }
+
+
