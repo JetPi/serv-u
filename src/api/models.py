@@ -11,7 +11,7 @@ class OrderStatus(Enum):
     culminado = "culminado"
 
 
-class ServiceType(Enum):
+class Type(Enum):
     electricidad = "electricidad"
     plomeria = "plomeria"
     hogar = "hogar"
@@ -62,7 +62,7 @@ class User(db.Model):
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    type = db.Column(db.Enum(ServiceType), nullable=False)
+    type = db.Column(db.Enum(Type), nullable=False)
     home_delivery = db.Column(db.Boolean(), nullable=False, default=True)
     location = db.Column(db.String(200), nullable=False)
     clients = db.Column(db.String(100))

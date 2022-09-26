@@ -195,14 +195,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: 'POST',     					
-      					// headers: {"Content-Type": "application/json"},
+      					headers: {"Content-Type": "application/json"},
 						body: serviceData,
 						mode:"no-cors"
 					});
 					
 
 					if (response.ok) {
-						actions.getServices()
+						// actions.getServices()
 						console.log(serviceData)
 						console.log("add service ok")
 						return true;
@@ -318,21 +318,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 export default getState;
 
-
-// //how I use cloudinary frontednd?*
-// const uploadImage = (base64EncodedImage) => {
-//   console.log(base64EncodedImage);
-//   fetch('/api/upload', {
-//       method: 'POST',
-//       body: JSON.stringify({data: base64EncodedImage}),
-//       headers: {'Content-type': 'application/json'}
-//     })
-//     .then(doWhateverYouWant)
-//     .catch((error) => console.error(error))
-// }
-
-// const doWhateverYouWant = async (res) => {
-// // you can use res.url
-// }
 
 

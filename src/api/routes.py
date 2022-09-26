@@ -135,7 +135,6 @@ def get_service(services_id=None, search_type=None):
         else:
             services = Service()
             services = services.query.all()
-
             return jsonify(list(map(lambda item: item.serialize(), services))), 200
 
         return jsonify({"message": "not found"}), 404
@@ -148,7 +147,7 @@ def publish_service():
         name = body.get('name', None)
         type = body.get('type', None)
         location = body.get('location', None)
-        # home_delivery = body.get('home_delivery', None)
+        home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
         description = body.get('description', None)
         

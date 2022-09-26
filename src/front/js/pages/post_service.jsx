@@ -12,7 +12,7 @@ export const Post_service = () => {
         name: "",
         type: "",
         location: "",
-        // home_delivery: false,
+        home_delivery: false,
         base_price: "",
         description: ""
         // owner: store.email
