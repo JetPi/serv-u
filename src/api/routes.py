@@ -4,7 +4,8 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 
 from ast import Or
 import os
-from unicodedata import name 
+from unicodedata import name
+from urllib import response 
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import Order, Service, db, User
 from api.utils import generate_sitemap, APIException
@@ -188,23 +189,24 @@ def get_orders():
 @api.route('/profile/single_user/profile', methods=['PATCH'])
 @jwt_required()
 def publish_profile_photo():   
-    body=request.files
+    # body=request.form
+    profile_image = request.files['file_profile']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
         return jsonify({"Error":"Couldn't find user"}), 404
     
     try:
-        if body['file_profile'] == None:
+        if profile_image is None:
             return jsonify({"message": "Error: Invalid parameters"}),400 
-
-        if body['file_profile'] != None:   
-            image_profile = body['file_profile']
-            cloudinary_upload_profile = uploader.upload(image_profile)
-            get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
-            get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
+            
+        cloudinary_upload_profile = uploader.upload(profile_image)
+        get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
+        get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
+        response = jsonify({"message":"Todo bien"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
         
         db.session.commit()
-        return jsonify({"message":"todo bien"}), 201
+        return response, 201
     except Exception as error:
             db.session.rollback()
             return jsonify({"message": f"Error {error.args}"}),500    
@@ -213,23 +215,23 @@ def publish_profile_photo():
 @api.route('/profile/single_user/banner', methods=['PATCH'])
 @jwt_required()
 def publish_banner_photo():   
-    body=request.files
+    banner_image = request.files['file_banner']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
         return jsonify({"Error":"Couldn't find user"}), 404
     
     try:
-        if body['file_banner'] == None:
+        if banner_image is None:
             return jsonify({"message": "Error: Invalid parameters"}),400 
 
-        if body['file_banner'] != None:
-            image_banner = body['file_banner']
-            cloudinary_upload_banner = uploader.upload(image_banner)
-            get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
-            get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
+        cloudinary_upload_banner = uploader.upload(banner_image)
+        get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
+        get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
+        response = jsonify({"message":"Todo bien"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
         
         db.session.commit()
-        return jsonify({"message":"todo bien"}), 201
+        return response, 201
     except Exception as error:
             db.session.rollback()
             return jsonify({"message": f"Error {error.args}"}),500    

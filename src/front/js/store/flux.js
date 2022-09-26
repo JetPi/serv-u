@@ -223,7 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			uploadImg: async (product) => {
+			uploadProfileImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {
 					console.log(p);
@@ -232,8 +232,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
 						method: "PATCH",
 						headers: {
-							"Content-Type": "multipart/form-data",
-							"Authorization": `Bearer ${store.token}`
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
 						},
 						body: product,
 					});
@@ -241,7 +241,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 						getActions().getUserInfo()
 					}
 				} catch (error) {
-					console.log("getProduct Error", error);
+					console.log("uploadProfileImg Error", error);
+				}
+			},
+
+			uploadBannerImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/banner`, {
+						method: "PATCH",
+						headers: {
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("uploadBannerImg Error", error);
 				}
 			},
 		}

@@ -38,13 +38,13 @@ export const Profile = () => {
     const handleProfileSubmit = () => {
         const photo = new FormData();
         photo.append("file_profile", uploadImages.profileImage);
-        actions.uploadImg(photo);
+        actions.uploadProfileImg(photo);
     };
 
     const handleBannerSubmit = () => {
         const formData = new FormData();
         formData.append("file_banner", uploadImages.bannerImage);
-        actions.uploadImg(formData);
+        actions.uploadBannerImg(formData);
     };
 
     console.log(uploadImages)
