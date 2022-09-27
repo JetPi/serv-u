@@ -143,49 +143,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
+						mode:"no-cors"
 					})
-					
 					if (response.ok) {
-						
 						let data = await response.json()
 						setStore({
 							services: data
 						})
-						return true
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
 			},
 
-			// uploadImg: async (serviceData) => {
-			// 	const store = getStore();
-			// 	const actions = getActions()
-			// 	try {
-			// 	  const response = await fetch(`${store.backendUrl}/services`, {
-			// 		method: "POST",
-			// 		mode: "no-cors",					
-			// 		body: serviceData
-			// 	  });
-			// 	  actions.getServices()
-			// 	  if (response.ok) {
-			// 			let data = await response.json()
-			// 				setStore({
-			// 				services: data
-			// 			})
-			// 			return true
-			// 		}
-			// 		else {
-			// 			console.log("error al subir img_service")
-			// 			return false;
-			// 		}
-			// 	}catch (error) {
-			// 	  console.log("Error to upload the image", error);
-			// 	}
-			//   },
 
 			addService: async (serviceData) => {
 				let store = getStore()
@@ -194,34 +164,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: 'POST',     					
-      					headers: {"Content-Type": "application/json"},
-						body: serviceData,
-						mode:"no-cors"
+						method: 'POST',
+						headers: {							
+							"Authorization": "Bearer " + store.token
+						},
+						body: serviceData
+						
 					});
-					
-
 					if (response.ok) {
-						// actions.getServices()
-						console.log(serviceData)
-						console.log("add service ok")
 						return true;
-
 					} else {
-						console.log(serviceData)
-						console.log("mal add service")
 						return false;
 					}
-
 				} catch (error) {
 					console.log(`Error: ${error}`);
 				}
 			},
-
-
-
-
-
 
 			//Active Orders
 			getOrders: async () => {

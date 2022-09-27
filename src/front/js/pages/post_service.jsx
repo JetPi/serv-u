@@ -10,74 +10,72 @@ export const Post_service = () => {
 
     const [serviceData, setServiceData] = useState({
         name: "",
-        type: "",
+        type_service: "",
         location: "",
         home_delivery: false,
         base_price: "",
         description: ""
-        // owner: store.email
-
     })
 
-  
     // useState de la imagen del servicio
     const [imageFile, setImageFile] = useState();
 
     //Preview de la imagen
-    const [previewSource, setPreviewSource]=useState()
+    const [previewSource, setPreviewSource] = useState()
 
-
+    // Función handle para los campos de srting y integer
     const handleChange = (event) => {
         setServiceData({
             ...serviceData,
             [event.target.name]: event.target.value
         })
-
     }
-    const handleCheck = (event) =>
+
+    // Función handle del check para home service
+    const handleCheck = () => {
         setServiceData({
             ...serviceData,
-            [event.target.name]: event.target.checked
-    }) 
-    
+            home_delivery: !serviceData.home_delivery
+        })
+    }
 
-    // // Submit la imagen del servicio
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        const formData = new FormData();
-        formData.append("file", serviceData.file);
-        formData.append("name", serviceData.name);
-        formData.append("type", serviceData.type);
-        formData.append("location", serviceData.location);
-        formData.append("home_delivery", serviceData.home_delivery)
-        formData.append("base_price", serviceData.base_price)
-        formData.append("description", serviceData.description)
-        formData.append("owner", serviceData.owner)
-        actions.addService(formData);
-        if (await actions.addService(serviceData)) {
-                    console.log("handlesub")
-                     navigate("/profile")
-                }
-                return true
-    };
-    const handleFileInputChange=(e)=>{
+    // Función handle para la imagen
+    const handleFileInputChange = (e) => {
         setServiceData({
             ...serviceData,
             [e.target.name]: e.target.files[0]
         })
         const file = e.target.files[0];
         previewFile(file);
-        
-
     }
-    const previewFile=(file)=>{
+
+    // Función para ver la imagen que se quiere subir
+    const previewFile = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = ()=>{
+        reader.onload = () => {
             setPreviewSource(reader.result)
         }
     }
-    
+
+    // Submit del formulario
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        const formData = new FormData();
+        formData.append("file", serviceData.file);
+        formData.append("name", serviceData.name);
+        formData.append("type_service", serviceData.type_service);
+        formData.append("location", serviceData.location);
+        formData.append("home_delivery", serviceData.home_delivery)
+        formData.append("base_price", serviceData.base_price)
+        formData.append("description", serviceData.description)
+        formData.append("owner", serviceData.owner)
+        const response = await actions.addService(formData);
+        if (response) {
+            navigate('/profile')
+        }
+    };
+
     return (
         <div className="container text-center mt-5">
             <div className="text-center my-3">
@@ -90,14 +88,14 @@ export const Post_service = () => {
                     </div>
 
                     <select
-                        value={serviceData.type}
+                        value={serviceData.type_service}
                         onChange={handleChange}
-                        name="type"
+                        name="type_service"
                         className="form-select">
                         <option defaultValue>Elige</option>
-                        <option>electricidad</option>
-                        <option>plomeria</option>
-                        <option>hogar</option>
+                        <option value={"electricidad"}>Electricidad</option>
+                        <option value={"plomeria"}>Plomería</option>
+                        <option value={"hogar"}>Hogar</option>
                     </select>
                 </div>
                 <div className="col-md-6">
@@ -163,38 +161,26 @@ export const Post_service = () => {
                         name="description"
                     />
                 </div>
-                <input type="file" name="file" 
+                <div className="col-md-10 div-tipo-servicio">
+                    <input type="file" name="file"
                     onChange={handleFileInputChange}
-                    value={imageFile} 
+                    value={imageFile}
                     className="form-input"
                 />
-
-
-
-
-
-
-
-                <div className="col-md-10 div-button-submit">
-                    <button type="submit" className="btn btn-primary" >Publicar</button>
                 </div>
-
-            </form>
-
-            {/* <form onSubmit={handleSubmitImage} className="row g-3 mx-5 justify-content-center">
-                
-                <div className="col-md-10 div-button-submit">
-                    <button className="btn btn-primary" type="submit">submit</button>
-                </div>
-                
-            </form> */}
-            {previewSource && (
-                <img 
+                <div className="col-md-10 my-2">
+                {previewSource && (
+                <img
                     src={previewSource} alt="choosen"
-                    style={{height:'300px'}}
+                    style={{ height: '300px' }}
                 />
             )}
-
+            </div>
+                <div className="col-md-10 div-button-submit">
+                    <button type="submit" className="btn btn-primary">Publicar</button>
+                </div>
+            </form>
+            
         </div>
     );
 };
