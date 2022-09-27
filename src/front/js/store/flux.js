@@ -31,7 +31,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userLogout: () => {
 				localStorage.removeItem("token"),
 					setStore({ token: "" })
-				alert("Succesfully logged out")
 			},
 
 			//Checks if the fields of signup are valid
