@@ -24,6 +24,8 @@ import json
 
 config = cloudinary.config(secure=True)
 
+
+
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")

@@ -59,7 +59,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(user),
+						headers: {'Content-type': 'application/json'}
 					});
+
 					if (response.ok) {
 						return true;
 					}
@@ -141,9 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
+						mode:"no-cors"
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -153,6 +153,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
+				}
+			},
+
+
+			addService: async (serviceData) => {
+				let store = getStore()
+				let actions = getActions()
+				
+				try {
+					
+					let response = await fetch(`${store.backendUrl}/api/services`, {
+						method: 'POST',
+						headers: {							
+							"Authorization": "Bearer " + store.token
+						},
+						body: serviceData
+						
+					});
+					if (response.ok) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
 				}
 			},
 
@@ -176,30 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			},
-
-
-			addService: async (serviceData) => {
-				let store = getStore()
-				try {
-					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(serviceData),
-					});
-					if (response.ok) {
-						return true;
-
-					} else {
-						return false;
-					}
-
-				} catch (error) {
-					console.log(`Error: ${error}`);
-				}
-			},
+			},			
 
 			updateOrder: async (orderId) => {
 				let store = getStore()
@@ -357,3 +359,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+

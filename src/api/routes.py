@@ -6,10 +6,9 @@ from ast import Or
 import json
 import os
 from unicodedata import name
-from urllib import response 
-
+from urllib import response
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import Comment, Order, Role, Service, db, User
+from api.models import Comment, Order, Service, db, User, Service_type
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
@@ -33,9 +32,8 @@ def set_password(password, salt):
 def check_password(hash_password, password, salt):
     return check_password_hash(hash_password, f"{password}{salt}")
 
+
 # Signup user
-
-
 @api.route('/signup', methods=['POST'])
 def add_user():
     if request.method == 'POST':
@@ -43,7 +41,6 @@ def add_user():
         username = body.get('username', None)
         email = body.get('email', None)
         password = body.get('password', None)
-
         if username is None or email is None or password is None:
             return jsonify('Send Payload'), 400
         else:
@@ -63,16 +60,14 @@ def add_user():
 
     return jsonify(), 201
 
+
 # Login
-
-
 @api.route('/login', methods=['POST'])
 def login_user():
     if request.method == 'POST':
         body = request.json
         email = body.get('email', None)
         password = body.get('password', None)
-
         if email is not None or password is not None:
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
@@ -81,7 +76,6 @@ def login_user():
                 if check_password(login_user.password, password, login_user.salt):
                     Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
                     return jsonify({'token': Coin, "user_id":login_user.id})
-
                 else:
                     return jsonify('Bad credentials'), 400
             else:
@@ -90,9 +84,8 @@ def login_user():
             return jsonify('Bad credentials'), 400
     return jsonify('Access'), 201
 
+
 # Get all users
-
-
 @api.route('/users', methods=['GET'])
 def all_user(user_id=None):
     if request.method == 'GET':
@@ -145,7 +138,9 @@ def get_service(services_id=None, search_type=None):
             services = Service()
             services = services.query.all()
 
-            return jsonify(list(map(lambda item: item.serialize(), services))), 200
+            response=jsonify(list(map(lambda item: item.serialize(), services)))
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 200
 
         return jsonify({"message": "not found"}), 404
 
@@ -153,33 +148,51 @@ def get_service(services_id=None, search_type=None):
 
 
 @api.route('/services', methods=['POST'])
+@jwt_required()
 def publish_service():
     if request.method == 'POST':
-        body = request.json
+        body = request.form
         name = body.get('name', None)
-        type = body.get('type', None)
+        type_service = body.get('type_service', None)
         location = body.get('location', None)
         home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
-        description = body.get('description', None)
-        image = request.files['file']
+        description = body.get('description', None)       
+        img_service = request.files['file']
+        if home_delivery == 'true':
+            home_delivery = True
+        else:
+            home_delivery = False
+        print(type(type_service))
 
-        if name is None or type is None or location is None or home_delivery is None or base_price is None:
+        if name is None or type is None or location is None or base_price is None:
             return jsonify('Verified your entries'), 400
         else:
-            cloudinary_upload = uploader.upload(image)
-            new_services = Service(name=name, type=type, location=location, home_delivery=home_delivery, base_price=base_price,
-                                   description=description, service_photo_url=cloudinary_upload["url"],  cloudinary_id_service=cloudinary_upload["public_id"])
+            
+            cloudinary_upload = uploader.upload(img_service)
+            print(type(home_delivery))
+            new_services = Service(name=name, 
+                                    type_service=type_service, 
+                                    location=location,  
+                                    base_price=base_price,
+                                    home_delivery=home_delivery, 
+                                    description=description,
+                                    service_photo_url=cloudinary_upload["url"],
+                                    cloudinary_id_service=cloudinary_upload["public_id"])
+            
             db.session.add(new_services)
+
+            response = jsonify({"message":"Todo bien"})
+            response.headers.add('Access-Control-Allow-Origin', '*')
 
             try:
                 db.session.commit()
-                return jsonify(new_services.serialize()), 201
+                return response, 201
             except Exception as error:
                 print(error.args)
                 db.session.rollback()
-                return jsonify({"message": f"Error {error.args}"}), 500
-
+                return jsonify({"message":f"Error {error.args}"}),500    
+        
     return jsonify(), 201
 
 # Get orders
@@ -202,6 +215,7 @@ def get_orders():
     else:
         return jsonify({"message": "not found"}), 404
 
+
 #Ruta para actualizar la foto del perfil
 @api.route('/profile/single_user/profile', methods=['PATCH'])
 @jwt_required()
@@ -211,7 +225,7 @@ def publish_profile_photo():
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
         return jsonify({"Error":"Couldn't find user"}), 404
-    
+
     try:
         if profile_image is None:
             return jsonify({"message": "Error: Invalid parameters"}),400 
