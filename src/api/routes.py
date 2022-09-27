@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 from ast import Or
+import json
 import os
 from unicodedata import name
 from urllib import response
@@ -31,6 +32,7 @@ def set_password(password, salt):
 def check_password(hash_password, password, salt):
     return check_password_hash(hash_password, f"{password}{salt}")
 
+
 # Signup user
 @api.route('/signup', methods=['POST'])
 def add_user():
@@ -39,7 +41,6 @@ def add_user():
         username = body.get('username', None)
         email = body.get('email', None)
         password = body.get('password', None)
-
         if username is None or email is None or password is None:
             return jsonify('Send Payload'), 400
         else:
@@ -59,6 +60,7 @@ def add_user():
 
     return jsonify(), 201
 
+
 # Login
 @api.route('/login', methods=['POST'])
 def login_user():
@@ -66,20 +68,14 @@ def login_user():
         body = request.json
         email = body.get('email', None)
         password = body.get('password', None)
-
         if email is not None or password is not None:
             login_user = User.query.filter_by(email=email).one_or_none()
             if login_user:
+                if login_user.is_active == False:
+                    return jsonify("Su usuario esta bloqueado"), 401
                 if check_password(login_user.password, password, login_user.salt):
-
-                    Coin = create_access_token(
-                        identity=login_user.id, expires_delta=timedelta(days=1))
-                    return jsonify({'token': Coin, "user_id": login_user.id})
-
-                    # Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(minutes=1))
-                    # return jsonify({'token': Coin, "user_id":login_user.id})
-
-
+                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
+                    return jsonify({'token': Coin, "user_id":login_user.id})
                 else:
                     return jsonify('Bad credentials'), 400
             else:
@@ -87,6 +83,7 @@ def login_user():
         else:
             return jsonify('Bad credentials'), 400
     return jsonify('Access'), 201
+
 
 # Get all users
 @api.route('/users', methods=['GET'])
@@ -106,6 +103,8 @@ def all_user(user_id=None):
         return jsonify({"message": "not found"}), 404
 
 # Get a particular user'
+
+
 @api.route('/users/single_user', methods=['GET'])
 @jwt_required()
 def single_user():
@@ -118,6 +117,8 @@ def single_user():
     return jsonify({"message": "not found"}), 404
 
 # Get services
+
+
 @api.route('/services', methods=['GET'])
 @api.route('/services/<int:services_id>', methods=['GET'])
 @api.route('/services/<string:search_type>', methods=['GET'])
@@ -144,6 +145,8 @@ def get_service(services_id=None, search_type=None):
         return jsonify({"message": "not found"}), 404
 
 # Post service, now with cloudinary
+
+
 @api.route('/services', methods=['POST'])
 @jwt_required()
 def publish_service():
@@ -192,7 +195,9 @@ def publish_service():
         
     return jsonify(), 201
 
-# Get orders 
+# Get orders
+
+
 @api.route('/orders', methods=['GET'])
 @jwt_required()
 def get_orders():
@@ -211,43 +216,64 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
-
-
-
-#Ruta para actualizar la foto del perfil y el banner
-@api.route('/profile/<int:user_id>', methods=['PATCH'])
-def publish_profile_photo(user_id=None):
-    body = request.files
-    if user_id is not None:
-        get_user_info = User.query.get(user_id)
+#Ruta para actualizar la foto del perfil
+@api.route('/profile/single_user/profile', methods=['PATCH'])
+@jwt_required()
+def publish_profile_photo():   
+    # body=request.form
+    profile_image = request.files['file_profile']
+    get_user_info = User.query.get(get_jwt_identity())
+    if get_user_info is None:
+        return jsonify({"Error":"Couldn't find user"}), 404
 
     try:
-        image_profile = body['file_profile']
-        image_banner = body['file_banner']
-        cloudinary_upload_profile = uploader.upload(image_profile)
-        cloudinary_upload_banner = uploader.upload(image_banner)
-
-        get_user_info.profile_photo_url = cloudinary_upload_profile["url"]
-        get_user_info.cloudinary_id_profile = cloudinary_upload_profile["public_id"]
-
-        get_user_info.banner_photo_url = cloudinary_upload_banner["url"]
-        get_user_info.cloudinary_id_banner = cloudinary_upload_banner["public_id"]
-
+        if profile_image is None:
+            return jsonify({"message": "Error: Invalid parameters"}),400 
+            
+        cloudinary_upload_profile = uploader.upload(profile_image)
+        get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
+        get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
+        response = jsonify({"message":"Todo bien"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        
         db.session.commit()
-        return jsonify({"message": "todo bien"}), 201
+        return response, 201
+    except Exception as error:
+            db.session.rollback()
+            return jsonify({"message": f"Error {error.args}"}),500    
+
+#Ruta para actualizar la foto del banner
+@api.route('/profile/single_user/banner', methods=['PATCH'])
+@jwt_required()
+def publish_banner_photo():   
+    banner_image = request.files['file_banner']
+    get_user_info = User.query.get(get_jwt_identity())
+    if get_user_info is None:
+        return jsonify({"Error":"Couldn't find user"}), 404
+    
+    try:
+        if banner_image is None:
+            return jsonify({"message": "Error: Invalid parameters"}),400 
+
+        cloudinary_upload_banner = uploader.upload(banner_image)
+        get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
+        get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
+        response = jsonify({"message":"Todo bien"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        
+        db.session.commit()
+        return response, 201
+
     except Exception as error:
         db.session.rollback()
         return jsonify({"message": f"Error {error.args}"}), 500
 
-
-
 # Update order status
-@api.route('/orders', methods=['PATCH'])#actualizar
-@api.route('/orders/<int:order_id>', methods=['PATCH'])#actualizar
+@api.route('/orders', methods=['PATCH'])  # actualizar
+@api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
 def update_order(order_id=None):
     if request.method == 'PATCH':
         body = request.json
-        print(request.json)
         if order_id is None:
             return jsonify({"message": "Bad request"}), 400
 
@@ -312,3 +338,33 @@ def get_comment():
         return jsonify(list(map(lambda item: item.serialize(), comments))), 200
     else:
         return jsonify({"message": "not found"}), 404
+
+
+@api.route('/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def user_active(user_id=None):
+    if request.method == 'PUT':
+        admin = User.query.get(get_jwt_identity())
+        print(admin.role)
+        if admin.role != Role.admin:
+            return jsonify("No eres administrador"), 401
+
+        if user_id is None:
+            return jsonify({"message": "Bad request"}), 400
+
+        if user_id is not None:
+            update_user = User.query.get(user_id)
+            if update_user is None:
+                return jsonify({"message": "Not found"}), 404
+            else:
+                update_user.is_active = not update_user.is_active
+
+                try:
+                    db.session.commit()
+                    return jsonify(update_user.serialize()), 201
+                except Exception as error:
+                    print(error.args)
+                    return jsonify({"message": f"Error {error.args}"}), 500
+
+        return jsonify([]), 200
+    return jsonify([]), 405

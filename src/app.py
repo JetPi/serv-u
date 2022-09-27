@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from distutils.command.config import config
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -12,11 +13,16 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
-#cloudinary
+from dotenv import load_dotenv
+load_dotenv()
+
+#Cloudinary
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import json
 
+config = cloudinary.config(secure=True)
 
 
 

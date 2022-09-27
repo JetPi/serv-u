@@ -2,15 +2,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-
 			username: "",
 			email: "",
 			role: "",
 
 			// backendUrl: "https://serv-u.herokuapp.com",
-			// backendUrl: process.env.BACKEND_URL,
-			backendUrl: "http://localhost:3001",
+			backendUrl: process.env.BACKEND_URL,
 			userInfo: {},
+			users: [],
 			orders: [],
 			services: [],
 			errorCode: 0,
@@ -21,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
 			//Change order status
 			changeOrder: () => {
 				let store = getStore()
@@ -231,6 +231,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			
 			sendComment: async (comment) => {
 				let store = getStore()
 				try {
@@ -250,6 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`);
 				}
 			},
+			
 			getComment: async () => {
 				let store = getStore()
 				try {
@@ -270,11 +272,91 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+			
+			getUserStatus: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/users`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							users: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+			
+			updateUserStatus: async (userId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/${userId}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						getActions().getUserStatus()
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+      
+			uploadProfileImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
+						method: "PATCH",
+						headers: {
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("uploadProfileImg Error", error);
+				}
+			},
+
+			uploadBannerImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/banner`, {
+						method: "PATCH",
+						headers: {
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("uploadBannerImg Error", error);
+				}
+			},
 		}
 	};
 };
 
 export default getState;
-
-
 
