@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(user),
-						headers: {'Content-type': 'application/json'}
+						headers: { 'Content-type': 'application/json' }
 					});
 
 					if (response.ok) {
@@ -143,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-						mode:"no-cors"
+						mode: "no-cors"
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -160,16 +160,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addService: async (serviceData) => {
 				let store = getStore()
 				let actions = getActions()
-				
+
 				try {
-					
+
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: 'POST',
-						headers: {							
+						headers: {
 							"Authorization": "Bearer " + store.token
 						},
 						body: serviceData
-						
+
 					});
 					if (response.ok) {
 						return true;
@@ -201,7 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			},			
+			},
 
 			updateOrder: async (orderId) => {
 				let store = getStore()
@@ -231,7 +231,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			
+
 			sendComment: async (comment) => {
 				let store = getStore()
 				try {
@@ -251,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`);
 				}
 			},
-			
+
 			getComment: async () => {
 				let store = getStore()
 				try {
@@ -272,7 +272,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
-			
+
 			getUserStatus: async () => {
 				let store = getStore()
 				try {
@@ -292,7 +292,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
-			
+
 			updateUserStatus: async (userId) => {
 				let store = getStore()
 				try {
@@ -315,8 +315,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					servicesResults: results
 				})
-=======
-      
+			},
+
 			uploadProfileImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {
