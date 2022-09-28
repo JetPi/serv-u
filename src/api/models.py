@@ -11,7 +11,7 @@ class OrderStatus(Enum):
     culminado = "culminado"
 
 
-class ServiceType(Enum):
+class Service_type(Enum):
     electricidad = "electricidad"
     plomeria = "plomeria"
     hogar = "hogar"
@@ -63,15 +63,16 @@ class User(db.Model):
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    type = db.Column(db.Enum(ServiceType), nullable=False)
-    home_delivery = db.Column(db.Boolean(), nullable=False, default=True)
+    type_service = db.Column(db.Enum(Service_type), nullable=False)
+    home_delivery = db.Column(db.Boolean(), nullable=False)
     location = db.Column(db.String(200), nullable=False)
     clients = db.Column(db.String(100))
     description = db.Column(db.String(500))
     base_price = db.Column(db.Integer, nullable=False)
-    service_photo_url = db.Column(db.String(500), nullable=True, unique=True)
-    cloudinary_id_service = db.Column(
-        db.String(500), unique=True, nullable=False)
+
+    service_photo_url = db.Column(db.String(500), nullable=False, unique=True)
+    cloudinary_id_service = db.Column(db.String(500), unique=True, nullable=False)
+
     orders = db.relationship('Order', backref="service", lazy=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.relationship('Comment', backref="service", lazy=False)
@@ -80,7 +81,7 @@ class Service(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "type": self.type.name,
+            "type_service": self.type_service.name,
             "home_delivery": self.home_delivery,
             "location": self.location,
             "base_price": self.base_price,

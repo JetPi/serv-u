@@ -21,7 +21,7 @@ export const ServiceComment = ({ services_id }) => {
 
     const validacion = (comment) => {
         if (comment.trim() == "") {
-            alert("Por favor completa el campo vacio")
+            alert("Por favor completa el campo vacío")
             return false
         }
     };
@@ -50,7 +50,7 @@ export const ServiceComment = ({ services_id }) => {
                                 <div className="col-12 my-3">
                                     <div className="border-bottom items border-0">
                                         {store.comments.length <= 0
-                                            ? "No hay comentarios de esta publicacion"
+                                            ? "No hay comentarios de esta publicación"
                                             : +store.comments.length + " Comentarios"}
                                     </div>
                                     {store.comments?.map((comentario, index) => {

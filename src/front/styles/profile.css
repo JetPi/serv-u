@@ -7,6 +7,15 @@
     background-size: contain;
 }
 
+.profile-sizer{
+    width: 392px;
+    height: 540px;
+}
+
+.title-size{
+    width: 45%;
+}
+
 .image-square{
     height: 35vh;
     width: 70vw;
@@ -27,6 +36,23 @@
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
 	-webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+.upload-position {
+    left: 90vw;
+    top: 8vh
+}
+
+.modal-backdrop{
+    display: none;
+}
+
+.modal-text{
+    color: black;
+}
+
+.alert_profile{
+    font-size: large;
 }
 
 .upload-icon{width:10px;height:10px;position:relative;color:#2c3e50;background-color:currentColor;}
