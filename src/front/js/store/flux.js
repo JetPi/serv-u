@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			services: [],
 			errorCode: 0,
 			comments: [],
+			servicesResults: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -309,6 +310,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`)
 				}
 			},
+
+			searchService: (results) => {
+				setStore({
+					servicesResults: results
+				})
+=======
       
 			uploadProfileImg: async (product) => {
 				const store = getStore();
@@ -352,6 +359,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log("uploadBannerImg Error", error);
 				}
+
 			},
 		}
 	};
