@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			services: [],
 			errorCode: 0,
 			comments: [],
+			servicesResults: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -305,7 +306,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (eror) {
 					console.log(`Error: ${error}`)
 				}
-			}
+			},
+
+			searchService: (results) => {
+				setStore({
+					servicesResults: results
+				})
+			},
 		}
 	};
 };
