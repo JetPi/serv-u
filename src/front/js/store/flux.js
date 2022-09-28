@@ -2,13 +2,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token") || "",
-			backendUrl: "https://serv-u.herokuapp.com",
 			username: "",
 			email: "",
 			role: "",
+
+			// backendUrl: "https://serv-u.herokuapp.com",
+			backendUrl: process.env.BACKEND_URL,
+			userInfo: {},
+			users: [],
 			orders: [],
 			services: [],
-
+			errorCode: 0,
+			comments: [],
+			servicesResults: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -16,11 +22,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			//Change order status
+			changeOrder: () => {
+				let store = getStore()
+
+			},
+
 			//Clears user login data
 			userLogout: () => {
 				localStorage.removeItem("token"),
 					setStore({ token: "" })
-				alert("Succesfully logged out")
 			},
 
 			//Checks if the fields of signup are valid
@@ -48,7 +59,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(user),
+						headers: {'Content-type': 'application/json'}
 					});
+
 					if (response.ok) {
 						return true;
 					}
@@ -73,13 +86,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						let data = await response.json()
 						setStore({
-							username: data.username,
-							email: data.email,
-							role: data.role,
+							...store,
+							userInfo: data
 						})
-						return true
 					} else {
-						return false
+						setStore({
+							...store,
+							userInfo: "undefined"
+						})
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -129,10 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-
-						headers: {
-							"Content-Type": "application/json",
-						},
+						mode:"no-cors"
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -142,6 +153,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
+				}
+			},
+
+
+			addService: async (serviceData) => {
+				let store = getStore()
+				let actions = getActions()
+				
+				try {
+					
+					let response = await fetch(`${store.backendUrl}/api/services`, {
+						method: 'POST',
+						headers: {							
+							"Authorization": "Bearer " + store.token
+						},
+						body: serviceData
+						
+					});
+					if (response.ok) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
 				}
 			},
 
@@ -165,33 +201,169 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(`Error: ${error}`)
 				}
-			},
+			},			
 
-
-			addService: async (serviceData) => {
+			updateOrder: async (orderId) => {
 				let store = getStore()
 				try {
-					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "POST",
+					let response = await fetch(`${store.backendUrl}/api/orders/${orderId}`, {
+						method: "PATCH",
 						headers: {
 							"Content-Type": "application/json"
 						},
-						body: JSON.stringify(serviceData),
+						body: JSON.stringify({
+							status: "culminado"
+						}),
 					});
 					if (response.ok) {
-						return true;
-
-					} else {
-						return false;
+						let ordersCopy = [...store.orders]
+						let index = ordersCopy.findIndex((order) => order.id === orderId)
+						if (index > -1) {
+							ordersCopy[index] = { ...ordersCopy[index], status: "culminado" }
+							setStore({
+								...store, orders: ordersCopy
+							})
+							return true;
+						}
 					}
-
+				} catch (error) {
+					console.log(`Error: ${error}`);
+					return false;
+				}
+			},
+			
+			sendComment: async (comment) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+						body: JSON.stringify(comment),
+					});
+					if (response.ok) {
+						getActions().getComment()
+						return true;
+					}
 				} catch (error) {
 					console.log(`Error: ${error}`);
 				}
 			},
+			
+			getComment: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+			
+			getUserStatus: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/users`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							users: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+			
+			updateUserStatus: async (userId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/${userId}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						getActions().getUserStatus()
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
 
+			searchService: (results) => {
+				setStore({
+					servicesResults: results
+				})
+=======
+      
+			uploadProfileImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
+						method: "PATCH",
+						headers: {
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("uploadProfileImg Error", error);
+				}
+			},
+
+			uploadBannerImg: async (product) => {
+				const store = getStore();
+				for (var p of product) {
+					console.log(p);
+				}
+				try {
+					const response = await fetch(`${store.backendUrl}/api/profile/single_user/banner`, {
+						method: "PATCH",
+						headers: {
+							// "Content-Type": "multipart/form-data",
+							"Authorization": `Bearer ${store.token}`,
+						},
+						body: product,
+					});
+					if (response.ok) {
+						getActions().getUserInfo()
+					}
+				} catch (error) {
+					console.log("uploadBannerImg Error", error);
+				}
+
+			},
 		}
 	};
 };
 
 export default getState;
+

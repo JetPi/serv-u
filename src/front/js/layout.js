@@ -11,8 +11,12 @@ import { Faq } from "./pages/faq.jsx";
 import { Post_service } from "./pages/post_service.jsx";
 import { ServiceInfo } from "./pages/service_info.jsx";
 import injectContext from "./store/appContext";
+import { ActiveUser } from "./pages/user_register.jsx";
+import { SearchResult } from "./pages/results.jsx";
 
 import { Navbar } from "./component/navbar";
+import { ServiceComment } from "./component/serviceComment.jsx";
+
 
 
 
@@ -36,6 +40,9 @@ const Layout = () => {
                         <Route element={<Post_service />} path="/post_service" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<ServiceInfo />} path="/service/:id" />
+                        <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
+                        <Route element={<ActiveUser />} path="/user" />
+                        <Route element={<SearchResult />} path="/services/search" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from distutils.command.config import config
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -12,6 +13,18 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
+load_dotenv()
+
+#Cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import json
+
+config = cloudinary.config(secure=True)
+
+
 
 #from models import Person
 
@@ -19,6 +32,12 @@ ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+#cloudinary
+app.config.from_mapping(
+    CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
+)
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

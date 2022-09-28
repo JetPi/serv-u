@@ -8,9 +8,9 @@ export const ServiceCard = (props) => {
     const { name, description, service_id } = props
     let navigate = useNavigate()
     return (
-        <div className="card w-100 h-100" style={{ width: "18rem" }}>
+        <div className="card " >
             <img src="https://picsum.photos/300/300" className="img-body" alt="..." />
-            <div className="card-body h-100 d-flex align-items-between justify-content-between flex-column">
+            <div className="card-body card-size d-flex align-items-between justify-content-between flex-column">
                 <h5 className="text-center">{name}</h5>
                 <p className="card-text text-center">{description}</p>
                 <Link className="nav-link active text-center" aria-current="page" to={`/service/${service_id}`}>

@@ -1,11 +1,40 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link, useResolvedPath } from "react-router-dom";
+import { Link, useResolvedPath, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.png"
 import "../../styles/navbar.css";
 
+
+
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
+	let navigate = useNavigate()
+
+	const searchState = ["name", "type"]
+
+	const [search, setSearch] = useState("")
+
+	const searcher = (e) => {
+		setSearch(e.target.value)
+	}
+
+	const results = () => {
+		if (search.trim() !== "") {
+			let filteredResult = []
+			searchState.forEach((prop) => {
+				let filtered = store.services.filter((data) => data[prop].toLowerCase().includes(search.toLowerCase()));
+				filteredResult = filteredResult.concat(filtered)
+			})
+			actions.searchService(filteredResult)
+			navigate("/services/search")
+		}
+	}
+
+	useEffect(() => {
+		{
+			actions.getServices()
+		}
+	}, [])
 
 	return (
 		<>
@@ -24,6 +53,11 @@ export const Navbar = () => {
 						<span className="navbar-toggler-icon"></span>
 					</button>
 					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" id="navbarNavDropdown">
+						<form className="d-flex" onSubmit={(e) => e.preventDefault()} role="search">
+							<input value={search} onChange={searcher} className="form-control me-2 searching" type="search" placeholder="Encuentra tu servicio" aria-label="Search" />
+							<button onClick={results}
+								className="btn btn-outline-info" type="submit">Buscar</button>
+						</form>
 						<ul className="navbar-nav ">
 							<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
