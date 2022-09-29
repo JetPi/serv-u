@@ -56,7 +56,13 @@ export const Section = () => {
                     <div className="col-12 my-2">
                         {possibleThemes.map((element, index) => {
                             return (
-                                <button key={index} type="button" onClick={() => changeTheme(element)} className="btn special my-1 mx-1">{element.charAt(0).toUpperCase() + element.slice(1)}</button>
+                                <button
+                                    key={index}
+                                    type="button"
+                                    onClick={() => changeTheme(element)}
+                                    className="btn special my-1 mx-1">
+                                    {element.charAt(0).toUpperCase() + element.slice(1)}
+                                </button>
                             )
                         })}
                     </div>
