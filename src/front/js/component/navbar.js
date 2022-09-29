@@ -68,6 +68,7 @@ export const Navbar = () => {
 									<li><Link className="nav-link active text-center" aria-current="page" to={'/section'}>Servicios</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
 									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
+									<li><Link className="nav-link active text-center" aria-current="page" to={"/comment"}>comment</Link></li>
 								</ul>
 							</li>
 							<li className="nav-item">

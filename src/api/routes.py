@@ -346,7 +346,7 @@ def user_active(user_id=None):
     if request.method == 'PUT':
         admin = User.query.get(get_jwt_identity())
         print(admin.role)
-        if admin.role != Role.admin:
+        if admin.role != User.role.admin:
             return jsonify("No eres administrador"), 401
 
         if user_id is None:

@@ -142,8 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "GET",
-						mode:"no-cors"
+						method: "GET"
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -315,7 +314,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					servicesResults: results
 				})
-=======
+			},
       
 			uploadProfileImg: async (product) => {
 				const store = getStore();

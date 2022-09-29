@@ -17,6 +17,8 @@ import { SearchResult } from "./pages/results.jsx";
 import { Navbar } from "./component/navbar";
 import { ServiceComment } from "./component/serviceComment.jsx";
 
+import { Comment } from "./component/comment.jsx";
+
 
 
 
@@ -43,6 +45,7 @@ const Layout = () => {
                         <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
                         <Route element={<ActiveUser />} path="/user" />
                         <Route element={<SearchResult />} path="/services/search" />
+                        <Route element={<Comment />} path="/comment" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

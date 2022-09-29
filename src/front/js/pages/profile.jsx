@@ -113,14 +113,15 @@ export const Profile = () => {
                         </div>
                         <div className="col-12 fs-2 d-flex justify-content-center">
                             {profile_photo_url == undefined ?
-                                    <div>
-                                        <div className="col-12 alert alert-danger  justify-content-center" role="alert">
-                                            <p className="alert_profile">
-                                            <i class="fas fa-exclamation-triangle"></i> Agrega una foto de perfil
-                                            </p>
+                                <div>
+                                    <div className="col-12 alert alert-danger  justify-content-center" role="alert">
+                                        <p className="alert_profile">
+                                            <i className="fas fa-exclamation-triangle"></i> 
+                                            Agrega una foto de perfil para publicar un servicio
+                                        </p>
 
-                                        </div>
                                     </div>
+                                </div>
                                 :
                                 null
                             }
@@ -165,7 +166,13 @@ export const Profile = () => {
                         <div className="col-12">
                             <div className="row d-flex justify-content-center">
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
-                                    <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>Publica tu Servicio</Link>
+                                    {profile_photo_url == undefined ? 
+                                            "Publica tu servicio" 
+                                            : 
+                                            <Link className="text-center text-reset text-decoration-none"  aria-current="page" to={'/post_service'}>
+                                                Publica tu Servicio
+                                            </Link>
+                                    }
                                 </div>
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
                                     Busca un Servicio
