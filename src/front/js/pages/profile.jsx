@@ -17,6 +17,14 @@ export const Profile = () => {
     useEffect(() => { { actions.getUserInfo() } }, [])
     let navigate = useNavigate()
 
+    //botón de hacer logout
+    const userLogout = () => {
+        actions.userLogout()
+        navigate("/login")
+        alert("Succesfully logged out")
+
+    }
+
     const { username, role, email, id, banner_photo_url, profile_photo_url } = store.userInfo
     const cld = new Cloudinary({ cloud: { cloudName: 'dboidjsun' } });
 
@@ -47,8 +55,6 @@ export const Profile = () => {
         actions.uploadBannerImg(formData);
     };
 
-    console.log(uploadImages)
-
     return (
         <>
             {store.userInfo != "undefined" ?
@@ -71,10 +77,10 @@ export const Profile = () => {
                                 <i className="upload-icon"></i>
                             </button>
                             {/* Modal */}
-                            <div class="modal" id="profileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body modal-text">
+                            <div className="modal" id="profileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-body modal-text">
                                             <input
                                                 className="input-group my-2"
                                                 type="file"
@@ -86,30 +92,45 @@ export const Profile = () => {
                                                 accept=".jpg, .jpeg, .png"
                                             />
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="btn btn-primary" onClick={() => handleProfileSubmit()}>Guardar foto</button>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" className="btn btn-primary" onClick={() => handleProfileSubmit()}>Guardar foto</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div className="col-12 fs-2 d-flex justify-content-center">
                             {username == "" ? "Placeholder" : username}
                         </div>
+
                         <div className="col-12 fs-5 mb-2">
                             Correo: {email == "" ? "Placeholder" : email}
                         </div>
                         <div className="col-12 fs-5 mb-2">
                             Rol: {role != "" ? (role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
                         </div>
-                        <button type="button" onClick={() => actions.userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button>
+                        <div className="col-12 fs-2 d-flex justify-content-center">
+                            {profile_photo_url == undefined ?
+                                    <div>
+                                        <div className="col-12 alert alert-danger  justify-content-center" role="alert">
+                                            <p className="alert_profile">
+                                            <i class="fas fa-exclamation-triangle"></i> Agrega una foto de perfil
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                :
+                                null
+                            }
+                        </div>
+                        <button type="button" onClick={() => userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button>
                     </div>
                     {/* Banner and services */}
                     <div className="col-8 row d-flex align-content-center">
                         <div className="col-12">
                             {/* Think about this */}
-                            {console.log(banner_photo_url)}
                             {banner_photo_url == undefined ?
                                 <AdvancedImage className="image-square" cldImg={imageFiles.bannerImage} />
                                 :
@@ -117,10 +138,10 @@ export const Profile = () => {
                             }
                             <button type="button" className="btn fab-upload-file  position-absolute upload-position" data-bs-toggle="modal" data-bs-target="#bannerModal"><i className="upload-icon"></i></button>
                             {/* Modal */}
-                            <div class="modal" id="bannerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body modal-text">
+                            <div className="modal" id="bannerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-body modal-text">
                                             <input
                                                 className="input-group my-2"
                                                 type="file"
@@ -132,9 +153,9 @@ export const Profile = () => {
                                                 accept=".jpg, .jpeg, .png"
                                             />
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="btn btn-primary" onClick={() => handleBannerSubmit()}>Guardar foto</button>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" className="btn btn-primary" onClick={() => handleBannerSubmit()}>Guardar foto</button>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +169,7 @@ export const Profile = () => {
                                 </div>
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
                                     Busca un Servicio
-                                    </div>
+                                </div>
                             </div>
                             <div className="col-12">
                                 <div className="row d-flex justify-content-center">

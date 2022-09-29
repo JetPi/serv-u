@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			services: [],
 			errorCode: 0,
 			comments: [],
+			servicesResults: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -32,7 +33,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userLogout: () => {
 				localStorage.removeItem("token"),
 					setStore({ token: "" })
-				alert("Succesfully logged out")
 			},
 
 			//Checks if the fields of signup are valid
@@ -143,12 +143,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
 						method: "GET",
-						mode: "no-cors"
 					})
 					if (response.ok) {
 						let data = await response.json()
 						setStore({
-							services: data
+							...store, services: data
 						})
 					}
 				} catch (error) {
@@ -276,6 +275,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
 			// Gets all(?) users
 			getUserStatus: async () => {
 				let store = getStore()
@@ -316,7 +316,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// Uploads and changes the profile image of the user 
+			searchService: (results) => {
+				setStore({
+					servicesResults: results
+				})
+			},
+
+      // Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {
@@ -360,6 +366,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log("uploadBannerImg Error", error);
 				}
+
 			},
 		}
 	};

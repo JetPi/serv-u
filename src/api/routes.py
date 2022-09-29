@@ -74,8 +74,9 @@ def login_user():
                 if login_user.is_active == False:
                     return jsonify("Su usuario esta bloqueado"), 401
                 if check_password(login_user.password, password, login_user.salt):
-                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
-                    return jsonify({'token': Coin, "user_id":login_user.id})
+                    Coin = create_access_token(
+                        identity=login_user.id, expires_delta=timedelta(days=1))
+                    return jsonify({'token': Coin, "user_id": login_user.id})
                 else:
                     return jsonify('Bad credentials'), 400
             else:
@@ -136,7 +137,8 @@ def get_service(services_id=None, search_type=None):
             services = Service()
             services = services.query.all()
 
-            response=jsonify(list(map(lambda item: item.serialize(), services)))
+            response = jsonify(
+                list(map(lambda item: item.serialize(), services)))
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response, 200
 
@@ -154,7 +156,7 @@ def publish_service():
         location = body.get('location', None)
         home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
-        description = body.get('description', None)       
+        description = body.get('description', None)
         img_service = request.files['file']
         if home_delivery == 'true':
             home_delivery = True
@@ -165,21 +167,21 @@ def publish_service():
         if name is None or type is None or location is None or base_price is None:
             return jsonify('Verified your entries'), 400
         else:
-            
+
             cloudinary_upload = uploader.upload(img_service)
             print(type(home_delivery))
-            new_services = Service(name=name, 
-                                    type_service=type_service, 
-                                    location=location,  
-                                    base_price=base_price,
-                                    home_delivery=home_delivery, 
-                                    description=description,
-                                    service_photo_url=cloudinary_upload["url"],
-                                    cloudinary_id_service=cloudinary_upload["public_id"])
-            
+            new_services = Service(name=name,
+                                   type_service=type_service,
+                                   location=location,
+                                   base_price=base_price,
+                                   home_delivery=home_delivery,
+                                   description=description,
+                                   service_photo_url=cloudinary_upload["url"],
+                                   cloudinary_id_service=cloudinary_upload["public_id"])
+
             db.session.add(new_services)
 
-            response = jsonify({"message":"Todo bien"})
+            response = jsonify({"message": "Todo bien"})
             response.headers.add('Access-Control-Allow-Origin', '*')
 
             try:
@@ -188,8 +190,8 @@ def publish_service():
             except Exception as error:
                 print(error.args)
                 db.session.rollback()
-                return jsonify({"message":f"Error {error.args}"}),500    
-        
+                return jsonify({"message": f"Error {error.args}"}), 500
+
     return jsonify(), 201
 
 
@@ -212,52 +214,51 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
-#Ruta para actualizar la foto del perfil
+# Ruta para actualizar la foto del perfil
 @api.route('/profile/single_user/profile', methods=['PATCH'])
 @jwt_required()
-def publish_profile_photo():   
+def publish_profile_photo():
     # body=request.form
     profile_image = request.files['file_profile']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
-        return jsonify({"Error":"Couldn't find user"}), 404
+        return jsonify({"Error": "Couldn't find user"}), 404
 
     try:
         if profile_image is None:
-            return jsonify({"message": "Error: Invalid parameters"}),400 
-            
+            return jsonify({"message": "Error: Invalid parameters"}), 400
+
         cloudinary_upload_profile = uploader.upload(profile_image)
-        get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
-        get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
-        response = jsonify({"message":"Todo bien"})
+        get_user_info.profile_photo_url = cloudinary_upload_profile["url"]
+        get_user_info.cloudinary_id_profile = cloudinary_upload_profile["public_id"]
+        response = jsonify({"message": "Todo bien"})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        
+
         db.session.commit()
         return response, 201
     except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": f"Error {error.args}"}),500    
-
+        db.session.rollback()
+        return jsonify({"message": f"Error {error.args}"}), 500
 
 #Ruta para actualizar la foto del banner
 @api.route('/profile/single_user/banner', methods=['PATCH'])
 @jwt_required()
-def publish_banner_photo():   
+def publish_banner_photo():
     banner_image = request.files['file_banner']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
-        return jsonify({"Error":"Couldn't find user"}), 404
-    
+        return jsonify({"Error": "Couldn't find user"}), 404
+
     try:
         if banner_image is None:
-            return jsonify({"message": "Error: Invalid parameters"}),400 
+            return jsonify({"message": "Error: Invalid parameters"}), 400
 
         cloudinary_upload_banner = uploader.upload(banner_image)
-        get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
-        get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
-        response = jsonify({"message":"Todo bien"})
+        get_user_info.banner_photo_url = cloudinary_upload_banner["url"]
+        get_user_info.cloudinary_id_banner = cloudinary_upload_banner["public_id"]
+        response = jsonify({"message": "Todo bien"})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        
+
         db.session.commit()
         return response, 201
 
@@ -267,6 +268,8 @@ def publish_banner_photo():
 
 
 # Update order status
+
+
 @api.route('/orders', methods=['PATCH'])  # actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
 def update_order(order_id=None):
