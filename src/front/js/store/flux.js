@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Change order status
+			// It's empty for some reason
 			changeOrder: () => {
 				let store = getStore()
 
@@ -101,7 +102,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Recieves a user object and logs them in, generating a token for future authentication
-			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				let store = getStore()
 				try {
@@ -142,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "GET"
+						method: "GET",
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -202,6 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Updates the status of the order
 			updateOrder: async (orderId) => {
 				let store = getStore()
 				try {
@@ -231,6 +232,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Sends a comment to the backend
 			sendComment: async (comment) => {
 				let store = getStore()
 				try {
@@ -251,6 +253,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Get all(?) comments
 			getComment: async () => {
 				let store = getStore()
 				try {
@@ -272,6 +275,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
+			// Gets all(?) users
 			getUserStatus: async () => {
 				let store = getStore()
 				try {
@@ -292,6 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Change the status of a user
 			updateUserStatus: async (userId) => {
 				let store = getStore()
 				try {
@@ -316,6 +322,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 
+      // Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {
@@ -338,6 +345,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Uploads and changes the banner image of the user
 			uploadBannerImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {

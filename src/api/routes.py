@@ -103,9 +103,8 @@ def all_user(user_id=None):
 
         return jsonify({"message": "not found"}), 404
 
+
 # Get a particular user'
-
-
 @api.route('/users/single_user', methods=['GET'])
 @jwt_required()
 def single_user():
@@ -117,9 +116,8 @@ def single_user():
 
     return jsonify({"message": "not found"}), 404
 
+
 # Get services
-
-
 @api.route('/services', methods=['GET'])
 @api.route('/services/<int:services_id>', methods=['GET'])
 @api.route('/services/<string:search_type>', methods=['GET'])
@@ -146,9 +144,8 @@ def get_service(services_id=None, search_type=None):
 
         return jsonify({"message": "not found"}), 404
 
+
 # Post service, now with cloudinary
-
-
 @api.route('/services', methods=['POST'])
 @jwt_required()
 def publish_service():
@@ -197,9 +194,8 @@ def publish_service():
 
     return jsonify(), 201
 
+
 # Get orders
-
-
 @api.route('/orders', methods=['GET'])
 @jwt_required()
 def get_orders():
@@ -244,9 +240,7 @@ def publish_profile_photo():
         db.session.rollback()
         return jsonify({"message": f"Error {error.args}"}), 500
 
-# Ruta para actualizar la foto del banner
-
-
+#Ruta para actualizar la foto del banner
 @api.route('/profile/single_user/banner', methods=['PATCH'])
 @jwt_required()
 def publish_banner_photo():
@@ -271,6 +265,7 @@ def publish_banner_photo():
     except Exception as error:
         db.session.rollback()
         return jsonify({"message": f"Error {error.args}"}), 500
+
 
 # Update order status
 
@@ -301,20 +296,26 @@ def update_order(order_id=None):
     return jsonify([]), 405
 
 
+# Post a new comment
 @api.route('/user/comments', methods=['POST'])
 @jwt_required()
 def publish_comment():
     if request.method == 'POST':
         body = request.json
         user_id = get_jwt_identity()
+        rating = body.get('rating', None)
         observation = body.get('observation', None)
         services_id = body.get('services_id', None)
 
-        if observation is None or services_id is None:
-            return jsonify('Verified your entries'), 400
+        if observation is None or services_id is None or rating is None:
+            return jsonify('Verify your entries'), 400
         else:
             new_comment = Comment(
-                user_id=user_id, observation=observation, services_id=services_id)
+                user_id=user_id, 
+                observation=observation, 
+                services_id=services_id,
+                rating=rating,
+            )
             db.session.add(new_comment)
 
             try:
@@ -328,6 +329,7 @@ def publish_comment():
     return jsonify(), 201
 
 
+# Get all comments from a user
 @api.route('/user/comments', methods=['GET'])
 @jwt_required()
 def get_comment():
@@ -346,31 +348,29 @@ def get_comment():
         return jsonify({"message": "not found"}), 404
 
 
+# Activate or deactivate a user
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def user_active(user_id=None):
     if request.method == 'PUT':
         admin = User.query.get(get_jwt_identity())
         print(admin.role)
-        if admin.role != Role.admin:
+        if admin.role != User.role.admin:
             return jsonify("No eres administrador"), 401
 
         if user_id is None:
             return jsonify({"message": "Bad request"}), 400
 
-        if user_id is not None:
-            update_user = User.query.get(user_id)
-            if update_user is None:
-                return jsonify({"message": "Not found"}), 404
-            else:
-                update_user.is_active = not update_user.is_active
+        update_user = User.query.get(user_id)
+        if update_user is None:
+            return jsonify({"message": "Not found"}), 404
+        else:
+            update_user.is_active = not update_user.is_active
+            try:
+                db.session.commit()
+                return jsonify(update_user.serialize()), 201
+            except Exception as error:
+                print(error.args)
+                return jsonify({"message": f"Error {error.args}"}), 500
 
-                try:
-                    db.session.commit()
-                    return jsonify(update_user.serialize()), 201
-                except Exception as error:
-                    print(error.args)
-                    return jsonify({"message": f"Error {error.args}"}), 500
-
-        return jsonify([]), 200
     return jsonify([]), 405
