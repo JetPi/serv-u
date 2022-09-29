@@ -142,13 +142,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "GET",
-						mode: "no-cors"
+						method: "GET"
 					})
 					if (response.ok) {
 						let data = await response.json()
 						setStore({
-							services: data
+							...store, services: data
 						})
 					}
 				} catch (error) {
