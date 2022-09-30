@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 
 
-export const Comment = (props) => {
+export const Comment = ({profile_photo_url,username,description}) => {
 
+    const { store, actions } = useContext(Context)
 
-
-
-    const { username, description, profile_photo_url, rating } = props
+    useEffect(() => { { actions.getComment() } }, [])
+    
 
     return (
 
         <div className="card mb-3" style={{ maxwidth: 50 }}>
             <div className="row g-0">
                 <div className="col-md-4">
-                    <img src="..." className="img-fluid rounded-start" alt="..." />
+                    <img src={profile_photo_url} className="img-fluid rounded-start" alt="foto" />
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
@@ -24,7 +24,7 @@ export const Comment = (props) => {
                                 {username}                          
                         </h5>
                         <p className="card-text">
-                            comentario.
+                            {description}
                         </p>
                         <p className="card-text">
                             <small className="text-muted">

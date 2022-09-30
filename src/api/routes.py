@@ -163,7 +163,6 @@ def publish_service():
             home_delivery = True
         else:
             home_delivery = False
-        print(type(type_service))
 
         if name is None or type is None or location is None or base_price is None:
             return jsonify('Verified your entries'), 400
