@@ -8,8 +8,7 @@ import { Comment } from "../component/comment.jsx";
 
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-	const { username, role, email, id, banner_photo_url, profile_photo_url } = store.userInfo
+	
 
 	return (
 		<div className="container text-center mt-5 container-home">
@@ -38,9 +37,6 @@ export const Home = () => {
 
 				</div>
 
-			</div>
-			<div>
-			<Comment />
 			</div>
 
 
