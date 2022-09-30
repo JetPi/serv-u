@@ -74,8 +74,9 @@ def login_user():
                 if login_user.is_active == False:
                     return jsonify("Su usuario esta bloqueado"), 401
                 if check_password(login_user.password, password, login_user.salt):
-                    Coin = create_access_token(identity=login_user.id, expires_delta=timedelta(days=1))
-                    return jsonify({'token': Coin, "user_id":login_user.id})
+                    Coin = create_access_token(
+                        identity=login_user.id, expires_delta=timedelta(days=1))
+                    return jsonify({'token': Coin, "user_id": login_user.id})
                 else:
                     return jsonify('Bad credentials'), 400
             else:
@@ -102,9 +103,8 @@ def all_user(user_id=None):
 
         return jsonify({"message": "not found"}), 404
 
+
 # Get a particular user'
-
-
 @api.route('/users/single_user', methods=['GET'])
 @jwt_required()
 def single_user():
@@ -116,9 +116,8 @@ def single_user():
 
     return jsonify({"message": "not found"}), 404
 
+
 # Get services
-
-
 @api.route('/services', methods=['GET'])
 @api.route('/services/<int:services_id>', methods=['GET'])
 @api.route('/services/<string:search_type>', methods=['GET'])
@@ -138,15 +137,15 @@ def get_service(services_id=None, search_type=None):
             services = Service()
             services = services.query.all()
 
-            response=jsonify(list(map(lambda item: item.serialize(), services)))
+            response = jsonify(
+                list(map(lambda item: item.serialize(), services)))
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response, 200
 
         return jsonify({"message": "not found"}), 404
 
+
 # Post service, now with cloudinary
-
-
 @api.route('/services', methods=['POST'])
 @jwt_required()
 def publish_service():
@@ -157,7 +156,7 @@ def publish_service():
         location = body.get('location', None)
         home_delivery = body.get('home_delivery', None)
         base_price = body.get('base_price', None)
-        description = body.get('description', None)       
+        description = body.get('description', None)
         img_service = request.files['file']
         if home_delivery == 'true':
             home_delivery = True
@@ -167,21 +166,21 @@ def publish_service():
         if name is None or type is None or location is None or base_price is None:
             return jsonify('Verified your entries'), 400
         else:
-            
+
             cloudinary_upload = uploader.upload(img_service)
             print(type(home_delivery))
-            new_services = Service(name=name, 
-                                    type_service=type_service, 
-                                    location=location,  
-                                    base_price=base_price,
-                                    home_delivery=home_delivery, 
-                                    description=description,
-                                    service_photo_url=cloudinary_upload["url"],
-                                    cloudinary_id_service=cloudinary_upload["public_id"])
-            
+            new_services = Service(name=name,
+                                   type_service=type_service,
+                                   location=location,
+                                   base_price=base_price,
+                                   home_delivery=home_delivery,
+                                   description=description,
+                                   service_photo_url=cloudinary_upload["url"],
+                                   cloudinary_id_service=cloudinary_upload["public_id"])
+
             db.session.add(new_services)
 
-            response = jsonify({"message":"Todo bien"})
+            response = jsonify({"message": "Todo bien"})
             response.headers.add('Access-Control-Allow-Origin', '*')
 
             try:
@@ -190,13 +189,12 @@ def publish_service():
             except Exception as error:
                 print(error.args)
                 db.session.rollback()
-                return jsonify({"message":f"Error {error.args}"}),500    
-        
+                return jsonify({"message": f"Error {error.args}"}), 500
+
     return jsonify(), 201
 
+
 # Get orders
-
-
 @api.route('/orders', methods=['GET'])
 @jwt_required()
 def get_orders():
@@ -215,51 +213,51 @@ def get_orders():
         return jsonify({"message": "not found"}), 404
 
 
-#Ruta para actualizar la foto del perfil
+# Ruta para actualizar la foto del perfil
 @api.route('/profile/single_user/profile', methods=['PATCH'])
 @jwt_required()
-def publish_profile_photo():   
+def publish_profile_photo():
     # body=request.form
     profile_image = request.files['file_profile']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
-        return jsonify({"Error":"Couldn't find user"}), 404
+        return jsonify({"Error": "Couldn't find user"}), 404
 
     try:
         if profile_image is None:
-            return jsonify({"message": "Error: Invalid parameters"}),400 
-            
+            return jsonify({"message": "Error: Invalid parameters"}), 400
+
         cloudinary_upload_profile = uploader.upload(profile_image)
-        get_user_info.profile_photo_url= cloudinary_upload_profile["url"]
-        get_user_info.cloudinary_id_profile= cloudinary_upload_profile["public_id"]
-        response = jsonify({"message":"Todo bien"})
+        get_user_info.profile_photo_url = cloudinary_upload_profile["url"]
+        get_user_info.cloudinary_id_profile = cloudinary_upload_profile["public_id"]
+        response = jsonify({"message": "Todo bien"})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        
+
         db.session.commit()
         return response, 201
     except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": f"Error {error.args}"}),500    
+        db.session.rollback()
+        return jsonify({"message": f"Error {error.args}"}), 500
 
 #Ruta para actualizar la foto del banner
 @api.route('/profile/single_user/banner', methods=['PATCH'])
 @jwt_required()
-def publish_banner_photo():   
+def publish_banner_photo():
     banner_image = request.files['file_banner']
     get_user_info = User.query.get(get_jwt_identity())
     if get_user_info is None:
-        return jsonify({"Error":"Couldn't find user"}), 404
-    
+        return jsonify({"Error": "Couldn't find user"}), 404
+
     try:
         if banner_image is None:
-            return jsonify({"message": "Error: Invalid parameters"}),400 
+            return jsonify({"message": "Error: Invalid parameters"}), 400
 
         cloudinary_upload_banner = uploader.upload(banner_image)
-        get_user_info.banner_photo_url= cloudinary_upload_banner["url"]
-        get_user_info.cloudinary_id_banner= cloudinary_upload_banner["public_id"]
-        response = jsonify({"message":"Todo bien"})
+        get_user_info.banner_photo_url = cloudinary_upload_banner["url"]
+        get_user_info.cloudinary_id_banner = cloudinary_upload_banner["public_id"]
+        response = jsonify({"message": "Todo bien"})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        
+
         db.session.commit()
         return response, 201
 
@@ -267,7 +265,10 @@ def publish_banner_photo():
         db.session.rollback()
         return jsonify({"message": f"Error {error.args}"}), 500
 
+
 # Update order status
+
+
 @api.route('/orders', methods=['PATCH'])  # actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
 def update_order(order_id=None):
@@ -294,20 +295,26 @@ def update_order(order_id=None):
     return jsonify([]), 405
 
 
+# Post a new comment
 @api.route('/user/comments', methods=['POST'])
 @jwt_required()
 def publish_comment():
     if request.method == 'POST':
         body = request.json
         user_id = get_jwt_identity()
+        rating = body.get('rating', None)
         observation = body.get('observation', None)
         services_id = body.get('services_id', None)
 
-        if observation is None or services_id is None:
-            return jsonify('Verified your entries'), 400
+        if observation is None or services_id is None or rating is None:
+            return jsonify('Verify your entries'), 400
         else:
             new_comment = Comment(
-                user_id=user_id, observation=observation, services_id=services_id)
+                user_id=user_id, 
+                observation=observation, 
+                services_id=services_id,
+                rating=rating,
+            )
             db.session.add(new_comment)
 
             try:
@@ -321,6 +328,7 @@ def publish_comment():
     return jsonify(), 201
 
 
+# Get all comments from a user
 @api.route('/user/comments', methods=['GET'])
 @jwt_required()
 def get_comment():
@@ -339,6 +347,7 @@ def get_comment():
         return jsonify({"message": "not found"}), 404
 
 
+# Activate or deactivate a user
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def user_active(user_id=None):
@@ -351,19 +360,16 @@ def user_active(user_id=None):
         if user_id is None:
             return jsonify({"message": "Bad request"}), 400
 
-        if user_id is not None:
-            update_user = User.query.get(user_id)
-            if update_user is None:
-                return jsonify({"message": "Not found"}), 404
-            else:
-                update_user.is_active = not update_user.is_active
+        update_user = User.query.get(user_id)
+        if update_user is None:
+            return jsonify({"message": "Not found"}), 404
+        else:
+            update_user.is_active = not update_user.is_active
+            try:
+                db.session.commit()
+                return jsonify(update_user.serialize()), 201
+            except Exception as error:
+                print(error.args)
+                return jsonify({"message": f"Error {error.args}"}), 500
 
-                try:
-                    db.session.commit()
-                    return jsonify(update_user.serialize()), 201
-                except Exception as error:
-                    print(error.args)
-                    return jsonify({"message": f"Error {error.args}"}), 500
-
-        return jsonify([]), 200
     return jsonify([]), 405

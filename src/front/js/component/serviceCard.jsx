@@ -6,7 +6,6 @@ import "../../styles/serviceCard.css";
 
 export const ServiceCard = (props) => {
     const { name, description, service_id } = props
-    let navigate = useNavigate()
     return (
         <div className="card " >
             <img src="https://picsum.photos/300/300" className="img-body" alt="..." />

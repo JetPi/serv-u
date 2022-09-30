@@ -10,7 +10,7 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	let navigate = useNavigate()
 
-	const searchState = ["name", "type"]
+	const searchState = ["name", "type_service"]
 
 	const [search, setSearch] = useState("")
 
@@ -49,28 +49,21 @@ export const Navbar = () => {
 							/>
 						</Link>
 					</div>
-					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
 					</button>
-					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" id="navbarNavDropdown">
+					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" >
 						<form className="d-flex" onSubmit={(e) => e.preventDefault()} role="search">
 							<input value={search} onChange={searcher} className="form-control me-2 searching" type="search" placeholder="Encuentra tu servicio" aria-label="Search" />
 							<button onClick={results}
 								className="btn btn-outline-info" type="submit">Buscar</button>
+							<div className="button-style">
+								<button
+									className="btn btn-outline-info" type="submit">Servicios</button>
+							</div>
 						</form>
-						<ul className="navbar-nav ">
-							<li className="nav-item dropdown">
-								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Categorías
-								</a>
-								<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									{/* Mientras se hace la vista de las categorías */}
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/section'}>Servicios</Link></li>
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
-									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
-									
-								</ul>
-							</li>
+
+						<ul className="navbar-nav">
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
 							</li>

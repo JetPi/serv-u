@@ -116,8 +116,10 @@ export const Profile = () => {
                                 <div>
                                     <div className="col-12 alert alert-danger  justify-content-center" role="alert">
                                         <p className="alert_profile">
+
                                             <i className="fas fa-exclamation-triangle"></i> 
                                             Agrega una foto de perfil para publicar un servicio
+
                                         </p>
 
                                     </div>
