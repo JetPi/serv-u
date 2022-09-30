@@ -34,7 +34,7 @@ export const ServiceInfo = () => {
                                     </div>
                                     <div className="d-flex justify-content-between">
                                         <div className="col-5 background my-1 mx-2 p-2 fs-5">
-                                            Tipo: {element.type.charAt(0).toUpperCase() + element.type.slice(1)} <br />
+                                            Tipo: {element.type_service.charAt(0).toUpperCase() + element.type_service.slice(1)} <br />
                                             A Domicilio: {element.home_delivery == true ? "Si" : "No"}
                                         </div>
                                         <div className="col-5 background my-1 mx-2 p-2 fs-5">
