@@ -62,6 +62,7 @@ export const Navbar = () => {
 									className="btn btn-outline-info" type="submit">Servicios</button>
 							</div>
 						</form>
+
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>

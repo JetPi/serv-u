@@ -142,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "GET",
+						method: "GET"
 					})
 					if (response.ok) {
 						let data = await response.json()
@@ -321,6 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					servicesResults: results
 				})
 			},
+
 
       // Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
