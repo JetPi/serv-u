@@ -2,7 +2,7 @@
 import os
 from xml.etree.ElementTree import Comment
 from flask_admin import Admin
-from .models import Order, Service, db, User, Comments
+from .models import Order, Service, db, User, Comment
 from flask_admin.contrib.sqla import ModelView
 
 

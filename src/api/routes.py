@@ -346,6 +346,17 @@ def get_comment():
     else:
         return jsonify({"message": "not found"}), 404
 
+# Get all comments with a certain rating
+@api.route('/user/comments/all', methods=['GET'])
+def get_all_comment():
+    comments = Comment()
+    comments = comments.query.all()
+    if comments is None:
+        return jsonify('Empty'), 400
+    elif comments is not None:
+        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+    else:
+        return jsonify({"message": "not found"}), 404
 
 # Activate or deactivate a user
 @api.route('/user/<int:user_id>', methods=['PUT'])
