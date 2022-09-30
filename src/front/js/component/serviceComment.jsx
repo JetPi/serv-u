@@ -177,10 +177,14 @@ export const ServiceComment = (props) => {
                                         }
                                         return (
                                             <div key={index}
-                                                className="border-bottom d-flex justify-content-between align-item-center py-2">
+                                                className="border-bottom d-flex justify-content-between align-item-center py-2 w-100">
                                                 <div className="comment-list">
                                                     <div className="d-flex flex-row">
-                                                        <img src={comentario.user_data.profile_photo_url} className="profile-photo " />
+                                                        {comentario.user_data.profile_photo_url == undefined ?
+                                                            <img src="https://picsum.photos/50/50" className="profile-photo" />
+                                                            :
+                                                            <img src={comentario.user_data.profile_photo_url} className="profile-photo " />
+                                                        }
                                                         <div className="d-flex align-items-center fw-bold">
                                                             {comentario.user_data.username}
                                                         </div>
