@@ -113,14 +113,14 @@ export const Profile = () => {
                         </div>
                         <div className="col-12 fs-2 d-flex justify-content-center">
                             {profile_photo_url == undefined ?
-                                    <div>
-                                        <div className="col-12 alert alert-danger  justify-content-center" role="alert">
-                                            <p className="alert_profile">
-                                            <i class="fas fa-exclamation-triangle"></i> Agrega una foto de perfil
-                                            </p>
+                                <div>
+                                    <div className="col-12 alert alert-danger  justify-content-center" role="alert">
+                                        <p className="alert_profile">
+                                            <i className="fas fa-exclamation-triangle"></i> Agrega una foto de perfil
+                                        </p>
 
-                                        </div>
                                     </div>
+                                </div>
                                 :
                                 null
                             }
