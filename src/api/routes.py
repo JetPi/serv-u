@@ -339,22 +339,34 @@ def get_comment():
     if comments is None:
         return jsonify('Empty'), 400
     elif comments is not None:
-        comments = Comment()
-        comments = comments.query.all()
-
         return jsonify(list(map(lambda item: item.serialize(), comments))), 200
     else:
         return jsonify({"message": "not found"}), 404
 
-# Get all comments with a certain rating
-@api.route('/user/comments/all', methods=['GET'])
+# Get all comments from all users
+@api.route('/comments', methods=['GET'])
 def get_all_comment():
+    comments = Comment()
+    comments = comments.query.all()
+    print(comments)
+    if comments is None:
+        return jsonify('Empty'), 400
+    elif comments is not None:
+        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+    else:
+        return jsonify({"message": "not found"}), 404
+
+# Get all comments that are equal or above a certain rating
+@api.route('/comments/<int:rating>', methods=['GET'])
+def get_rated_comment(rating = None):
     comments = Comment()
     comments = comments.query.all()
     if comments is None:
         return jsonify('Empty'), 400
     elif comments is not None:
-        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+        results = (list(filter(lambda comment: comment.rating >= rating, comments)))
+        results = list(map(lambda item: item.serialize(), results))
+        return jsonify(results), 200
     else:
         return jsonify({"message": "not found"}), 404
 
