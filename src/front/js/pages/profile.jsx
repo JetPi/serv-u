@@ -28,11 +28,6 @@ export const Profile = () => {
     const { username, role, email, id, banner_photo_url, profile_photo_url } = store.userInfo
     const cld = new Cloudinary({ cloud: { cloudName: 'dboidjsun' } });
 
-    // let imageNames = {
-    //     profileImageName: `profile-${id}`,
-    //     bannerImageName: `banner-${id}`,
-    // }
-
     const [imageFiles, setImageFiles] = useState({
         profileImage: cld.image('Serv-U_Placeholder').resize(fill().width(450).height(325)),
         bannerImage: cld.image('Serv-U_Placeholder').resize(fill().width(800).height(325)),
@@ -117,7 +112,7 @@ export const Profile = () => {
                                     <div className="col-12 alert alert-danger  justify-content-center" role="alert">
                                         <p className="alert_profile">
 
-                                            <i className="fas fa-exclamation-triangle"></i> 
+                                            <i className="fas fa-exclamation-triangle"></i>
                                             Agrega una foto de perfil para publicar un servicio
 
                                         </p>
@@ -168,11 +163,11 @@ export const Profile = () => {
                         <div className="col-12">
                             <div className="row d-flex justify-content-center">
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
-                                    {profile_photo_url == undefined ? 
-                                            "Publica tu servicio" 
-                                            : 
-                                            <Link className="text-center text-reset text-decoration-none"  aria-current="page" to={'/post_service'}>
-                                                Publica tu Servicio
+                                    {profile_photo_url == undefined ?
+                                        "Publica tu servicio"
+                                        :
+                                        <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>
+                                            Publica tu Servicio
                                             </Link>
                                     }
                                 </div>
