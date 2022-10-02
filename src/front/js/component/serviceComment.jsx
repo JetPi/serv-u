@@ -21,12 +21,13 @@ export const ServiceComment = (props) => {
         "fa-regular"
     ]
 
-    // Añadir una variable que pase a true si la estrella es seleccionada, y pasa a false de lo contrario
-    // Para poder
-
     const starVariant = "fa-solid star-color"
 
     const [starsState, setStarsState] = useState({ stars: initialStar })
+    const [starSelected, setStarsSelected] = useState({
+        state: false,
+        star: 0,
+    })
 
     useEffect(() => { { actions.getComment() } }, [])
 
@@ -39,7 +40,7 @@ export const ServiceComment = (props) => {
     };
 
     const Validar = () => {
-        if (commentData.comment.trim() == "" || (commentData.rating >= 1 && commentData.rating >= 5)) {
+        if (commentData.comment.trim() == "" || (commentData.rating <= 0 && commentData.rating >= 5)) {
             alert("Por favor completa el campo vacío")
             return false
         } else {
@@ -86,11 +87,13 @@ export const ServiceComment = (props) => {
                 break;
             }
             case 0: {
-                if (commentData.rating <= 0) {
+                if (starSelected == false) {
                     setStarsState({
                         ...starsState,
                         stars: initialStar,
                     })
+                } else {
+                    newStars(starSelected.star)
                 }
                 break;
             }
@@ -104,6 +107,10 @@ export const ServiceComment = (props) => {
             rating: ratingNumber
         })
         changeStars(ratingNumber)
+        setStarsSelected({
+            state: true,
+            star: ratingNumber
+        })
     }
 
     const handleChange = (event) => {
@@ -119,7 +126,7 @@ export const ServiceComment = (props) => {
                 <div className="row card py-2 shadow-lg w-50">
                     <div className="col-12 d-flex justify-content-center flex-column">
                         <div className="col-12 d-flex flex-row p-1">
-                            {/* Stars, it annoys me how I made it */}
+                            {/* Stars, its good how I made them */}
                             {starsState.stars.map((element, index) => {
                                 return (
                                     <button
@@ -132,36 +139,8 @@ export const ServiceComment = (props) => {
                                     </button>
                                 )
                             })}
-
-                            {/* <button
-                                className="button-clearer"
-                                onMouseOver={() => changeStars(2)}
-                                onMouseOut={() => changeStars(0)}
-                                onClick={() => changeRating(2)}>
-                                <i className={`${starsState.star2} fa-star`}></i>
-                            </button>
-                            <button
-                                className="button-clearer"
-                                onMouseOver={() => changeStars(3)}
-                                onMouseOut={() => changeStars(0)}
-                                onClick={() => changeRating(3)}>
-                                <i className={`${starsState.star3} fa-star`}></i>
-                            </button>
-                            <button
-                                className="button-clearer"
-                                onMouseOver={() => changeStars(4)}
-                                onMouseOut={() => changeStars(0)}
-                                onClick={() => changeRating(4)}>
-                                <i className={`${starsState.star4} fa-star`}></i>
-                            </button>
-                            <button
-                                className="button-clearer"
-                                onMouseOver={() => changeStars(5)}
-                                onMouseOut={() => changeStars(0)}
-                                onClick={() => changeRating(5)}>
-                                <i className={`${starsState.star5} fa-star`}></i>
-                            </button> */}
                         </div>
+                        {/* Comment input */}
                         <div className="col-12">
                             <input
                                 name="comment"
@@ -172,30 +151,50 @@ export const ServiceComment = (props) => {
                                 onKeyDown={handleKey}
                             />
                         </div>
-
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="col-12 my-3">
-                                    <div className="border-bottom items border-0">
-                                        {store.comments.length <= 0
-                                            ? "No hay comentarios de esta publicación"
-                                            : +store.comments.length + " Comentarios"}
-                                    </div>
-                                    {store.comments?.map((comentario, index) => {
-                                        return (
-                                            <div
-                                                key={index}
-                                                className="border-bottom d-flex justify-content-between align-item-center py-2"
-                                            >
-                                                <div className="comment-list">
-                                                    <p><strong>{comentario.user_data?.username}</strong></p>
-                                                    <p>{comentario.observation}</p>
+                        {/* Published Comments */}
+                        <div className="container-fluid row">
+                            {/* Header */}
+                            <div className="border-bottom items border-0">
+                                {store.comments.length <= 0
+                                    ? "No hay comentarios en esta publicación"
+                                    : `${store.comments.length} Comentarios`}
+                            </div>
+                            {/* Comment Generator */}
+                            {store.comments.map((comentario, index) => {
+                                let commentStars = []
+                                for (let index = 0; index < starsState.stars.length; index++) {
+                                    if (index < comentario.rating) {
+                                        const element = starVariant
+                                        commentStars.push(element)
+                                    } else {
+                                        commentStars.push("fa-regular")
+                                    }
+                                }
+                                return (
+                                    <div key={index} className="border-bottom d-flex align-item-center py-2 col-lg-6 col-sm-12">
+                                        <div className="w-100">
+                                            <div className="d-flex flex-row w-100">
+                                                <div className="my-2">
+                                                    {comentario.user_data.profile_photo_url == undefined ?
+                                                        <img src="https://picsum.photos/50/50" className="profile-photo" />
+                                                        :
+                                                        <img src={comentario.user_data.profile_photo_url} className="profile-photo " />
+                                                    }
+                                                </div>
+                                                <div className="d-flex align-items-center fw-bold">
+                                                    {comentario.user_data.username}
+                                                </div>
+                                                <div className="w-100 d-flex justify-content-end align-items-center">
+                                                    {commentStars.map((element, index) => {
+                                                        return (<i key={index} className={`${element} fa-star`}></i>)
+                                                    })}
                                                 </div>
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
+                                            <p>{comentario.observation}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

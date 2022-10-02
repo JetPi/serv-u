@@ -58,29 +58,30 @@ export const Navbar = () => {
 							<button onClick={results}
 								className="btn btn-outline-info" type="submit">Buscar</button>
 							<div className="button-style">
-								<button
-									className="btn btn-outline-info" type="submit">Servicios</button>
+								<button className="btn btn-outline-info" type="submit">Servicios</button>
 							</div>
 						</form>
 
-						<ul className="navbar-nav">
-							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
-							</li>
+						<ul className="navbar-nav justify-content-end">
 							{store.token == "" ?
 								<>
 									<Link className="nav-link active" aria-current="page" to={'/login'}>
-										<h5>Login</h5>
+										Login
 									</Link>
 
 									<Link className="nav-link active" aria-current="page" to={'/signup'}>
-										<h5>Signup</h5>
+										Signup
 									</Link>
 								</>
 								:
-								<Link className="nav-link active" aria-current="page" to={'/profile'}>
-									<h5>Profile</h5>
-								</Link>
+								<>
+									<li className="nav-item">
+										<button type="button" onClick={() => userLogout()} className="btn btn-outline-info mx-2">Logout</button>
+									</li>
+									<Link className="btn btn-outline-info " aria-current="page" to={'/profile'}>
+										Profile
+									</Link>
+								</>
 							}
 						</ul>
 					</div>
