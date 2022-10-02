@@ -33,3 +33,36 @@
 .star-color{
     color: orange;
 }
+
+.img_comment_home{
+    width: 5rem;
+    border-radius: 100%;
+    height: 5rem;
+
+}
+
+.div_comentario{
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid navy;
+    width: 30rem;
+}
+
+.title_comment_component{
+    color: navy;
+}
+
+.card-user-title{
+    text-align: left;
+}
+
+.rating_stars{
+    text-align: end;
+}
+
+.card-text-observation{
+    text-align: justify;
+}
+
+.div-username-and-stars{
+    padding-top: 0.5rem;
+}

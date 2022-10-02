@@ -257,10 +257,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllComments: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`${store.backendUrl}/api/comments`, {
+					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
 						method: "GET",
 						headers: {
-							"Content-Type": "application/json"
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
 						},
 					})
 					if (response.ok) {
@@ -268,6 +269,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							comments: data
 						})
+						console.log(data)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -363,7 +365,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			// Uploads and changes the profile image of the user
+      // Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {

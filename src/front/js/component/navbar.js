@@ -30,6 +30,13 @@ export const Navbar = () => {
 		}
 	}
 
+    const userLogout = () => {
+        actions.userLogout()
+        navigate("/login")
+        alert("Succesfully logged out")
+
+    }
+
 	useEffect(() => {
 		{
 			actions.getServices()
