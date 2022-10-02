@@ -88,7 +88,8 @@ class Service(db.Model):
             "description": self.description,
             "base_price": self.base_price,
             "service_photo_url": self.service_photo_url,
-            "cloudinary_id_service": self.cloudinary_id_service
+            "cloudinary_id_service": self.cloudinary_id_service,
+            "user_id": self.user_id
         }
 
 

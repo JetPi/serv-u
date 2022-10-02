@@ -145,12 +145,31 @@ def get_service(services_id=None, search_type=None):
         return jsonify({"message": "not found"}), 404
 
 
+# Get a certain user's services
+@api.route('/user/services', methods=['GET'])
+@jwt_required()
+def get_user_service():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
+
+        services = Service()
+        services = services.query.filter_by(user_id=user_id).all()
+
+        if services is None:
+            return jsonify({"message": "not found"}), 404
+        else:
+            response = jsonify(list(map(lambda item: item.serialize(), services)))
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 200
+
+
 # Post service, now with cloudinary
 @api.route('/services', methods=['POST'])
 @jwt_required()
 def publish_service():
     if request.method == 'POST':
         body = request.form
+        user_id = get_jwt_identity()
         name = body.get('name', None)
         type_service = body.get('type_service', None)
         location = body.get('location', None)
@@ -176,7 +195,8 @@ def publish_service():
                                    home_delivery=home_delivery,
                                    description=description,
                                    service_photo_url=cloudinary_upload["url"],
-                                   cloudinary_id_service=cloudinary_upload["public_id"])
+                                   cloudinary_id_service=cloudinary_upload["public_id"],
+                                   user_id=user_id)
 
             db.session.add(new_services)
 
@@ -267,8 +287,6 @@ def publish_banner_photo():
 
 
 # Update order status
-
-
 @api.route('/orders', methods=['PATCH'])  # actualizar
 @api.route('/orders/<int:order_id>', methods=['PATCH'])  # actualizar
 def update_order(order_id=None):

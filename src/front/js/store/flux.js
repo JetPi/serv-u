@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userInfo: {},
 			users: [],
 			orders: [],
+			userServices: [],
 			services: [],
 			errorCode: 0,
 			comments: [],
@@ -137,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			//Get user services
+			//Get all services
 			getServices: async () => {
 				let store = getStore()
 				try {
@@ -156,9 +157,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
+			//Get a user services
+			getUserServices: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/services`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							...store, userServices: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+
+			// Add a service
 			addService: async (serviceData) => {
 				let store = getStore()
-				let actions = getActions()
 
 				try {
 
@@ -269,7 +293,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							comments: data
 						})
-						console.log(data)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)
@@ -365,12 +388,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-      // Uploads and changes the profile image of the user
+			// Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
 				const store = getStore();
-				for (var p of product) {
-					console.log(p);
-				}
 				try {
 					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
 						method: "PATCH",

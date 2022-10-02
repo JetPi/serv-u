@@ -14,6 +14,7 @@ import "../../styles/profile.css";
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
+    useEffect(() => { { actions.getUserServices() } }, [])
     useEffect(() => { { actions.getUserInfo() } }, [])
     let navigate = useNavigate()
 
@@ -159,6 +160,7 @@ export const Profile = () => {
                                 </div>
                             </div>
                         </div>
+
                         {/* Botones de redirección a otras vistas */}
                         <div className="col-12">
                             <div className="row d-flex justify-content-center">
