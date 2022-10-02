@@ -30,6 +30,13 @@ export const Navbar = () => {
 		}
 	}
 
+    const userLogout = () => {
+        actions.userLogout()
+        navigate("/login")
+        alert("Succesfully logged out")
+
+    }
+
 	useEffect(() => {
 		{
 			actions.getServices()
@@ -75,12 +82,13 @@ export const Navbar = () => {
 								</>
 								:
 								<>
-									<li className="nav-item">
-										<button type="button" onClick={() => userLogout()} className="btn btn-outline-info mx-2">Logout</button>
-									</li>
-									<Link className="btn btn-outline-info " aria-current="page" to={'/profile'}>
+									
+									<Link className="btn btn-outline-info mx-4" aria-current="page" to={'/profile'}>
 										Profile
 									</Link>
+									<li className="nav-item">
+										<button type="button" onClick={() => userLogout()} className="btn btn-outline-info mx-2"><i class="fas fa-sign-out"></i></button>
+									</li>
 								</>
 							}
 						</ul>
