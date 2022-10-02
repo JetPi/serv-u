@@ -49,7 +49,7 @@ export const Login = () => {
 						<form onSubmit={handleSubmit}>
 							{/* Campo de correo */}
 							<div className="mb-3 d-flex flex-column">
-								<label for="exampleInputEmail1" className="form-label fs-2">Correo Electrónico</label>
+								<label htmlFor="exampleInputEmail1" className="form-label fs-2">Correo Electrónico</label>
 								<input
 									type="email"
 									name="email"
@@ -62,7 +62,7 @@ export const Login = () => {
 							</div>
 							{/* Campo de contraseña */}
 							<div className="mb-3 d-flex flex-column fs-2">
-								<label for="exampleInputPassword1" className="form-label">Contraseña</label>
+								<label htmlFor="exampleInputPassword1" className="form-label">Contraseña</label>
 								<input
 									type="password"
 									name="password"

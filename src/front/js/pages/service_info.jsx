@@ -11,15 +11,15 @@ export const ServiceInfo = () => {
     return (
         <>
             {store.services != "" ?
-                <div className="container-fluid row">
+                <div className="container-fluid row justify-content-center">
                     {store.services.map((element, index) => {
                         if (index == params.id) {
                             return (
-                                <>
+                                <div className="w-100 row" key={index}>
                                     <div className="col-4 my-3 background">
                                         <img className="image-rounder p-2" src={element.service_photo_url} alt="" />
                                     </div>
-                                    <div key={index} className="col-8">
+                                    <div className="col-8 my-3">
                                         <div className="col-12 text-center fs-1 special my-3">
                                             {element.name}
                                         </div>
@@ -40,7 +40,7 @@ export const ServiceInfo = () => {
                                             {element.description}
                                         </div>
                                     </div>
-                                </>
+                                </div>
                             )
                         }
                     }
@@ -55,7 +55,6 @@ export const ServiceInfo = () => {
                 :
                 <div>Loading...</div>
             }
-
         </>
     )
 
