@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/comment.css";
 
 
@@ -19,7 +20,7 @@ export const Comment = () => {
       }
 
     let arr = store.comments
-
+    
     const arrPorRating = arr.filter(filtrarPorRating);
 
     const goodComments = arrPorRating.slice(0, 6);
