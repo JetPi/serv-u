@@ -245,7 +245,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(comment),
 					});
 					if (response.ok) {
-						getActions().getComment()
+						getActions().getServiceComments(comment.services_id)
 						return true;
 					}
 				} catch (error) {
@@ -253,8 +253,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// Get all(?) comments
-			getComment: async () => {
+			// Get all comments
+			getAllComments: async () => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
@@ -276,6 +276,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Get rated comments
+			getRatedComments: async (ratingMinimun) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/comments/${ratingMinimun}`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			// Get a service's comments
+			getServiceComments: async (serviceId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/service/${serviceId}/comments`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
 
 			// Gets all(?) users
 			getUserStatus: async () => {

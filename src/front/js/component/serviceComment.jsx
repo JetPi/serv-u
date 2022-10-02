@@ -5,32 +5,21 @@ import { Link, useNavigate } from "react-router-dom"
 import "../../styles/comment.css";
 
 export const ServiceComment = (props) => {
+    // Variables
     const { store, actions } = useContext(Context)
     const { services_id } = props
 
-    const [commentData, setCommentData] = useState({
-        comment: "",
-        rating: 0
-    });
-
-    const initialStar = [
-        "fa-regular",
-        "fa-regular",
-        "fa-regular",
-        "fa-regular",
-        "fa-regular"
-    ]
-
+    const initialStar = ["fa-regular", "fa-regular", "fa-regular", "fa-regular", "fa-regular"]
     const starVariant = "fa-solid star-color"
 
+    useEffect(() => { { actions.getServiceComments(services_id) } }, [])
+
+    const [commentData, setCommentData] = useState({ comment: "", rating: 0 });
+
     const [starsState, setStarsState] = useState({ stars: initialStar })
-    const [starSelected, setStarsSelected] = useState({
-        state: false,
-        star: 0,
-    })
+    const [starSelected, setStarsSelected] = useState({ state: false, star: 0, })
 
-    useEffect(() => { { actions.getComment() } }, [])
-
+    // Functions
     const handleKey = (event) => {
         if (event.key === "Enter") {
             if (Validar()) {
@@ -123,7 +112,7 @@ export const ServiceComment = (props) => {
     return (
         <>
             <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center">
-                <div className="row card py-2 shadow-lg w-50">
+                <div className="row card py-2 shadow-lg w-100">
                     <div className="col-12 d-flex justify-content-center flex-column">
                         <div className="col-12 d-flex flex-row p-1">
                             {/* Stars, its good how I made them */}
@@ -202,3 +191,7 @@ export const ServiceComment = (props) => {
         </>
     );
 };
+
+ServiceComment.propTypes = {
+    services_id: PropTypes.number
+}

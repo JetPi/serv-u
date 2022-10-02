@@ -370,6 +370,18 @@ def get_rated_comment(rating = None):
     else:
         return jsonify({"message": "not found"}), 404
 
+# Get all comments from a service
+@api.route('/service/<int:service_id>/comments', methods=['GET'])
+def get_service_comment(service_id = None):
+    comments = Comment()
+    comments = comments.query.filter_by(services_id=service_id).all()
+    if comments is None:
+        return jsonify('Empty'), 400
+    elif comments is not None:
+        return jsonify(list(map(lambda item: item.serialize(), comments))), 200
+    else:
+        return jsonify({"message": "not found"}), 404
+
 # Activate or deactivate a user
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()

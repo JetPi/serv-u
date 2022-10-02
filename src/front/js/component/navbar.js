@@ -60,35 +60,35 @@ export const Navbar = () => {
 						<span className="navbar-toggler-icon"></span>
 					</button>
 					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" >
-						<form className="d-flex" onSubmit={(e) => e.preventDefault()} role="search">
+						<form className="d-flex mx-5" onSubmit={(e) => e.preventDefault()} role="search">
 							<input value={search} onChange={searcher} className="form-control me-2 searching" type="search" placeholder="Encuentra tu servicio" aria-label="Search" />
 							<button onClick={results}
-								className="btn btn-outline-info" type="submit">Buscar</button>
-							<div className="button-style">
-								<button className="btn btn-outline-info" type="submit">Servicios</button>
-							</div>
+								className="btn btn-outline-info" type="submit">Buscar
+							</button>
 						</form>
 
-						<ul className="navbar-nav justify-content-end">
+						<ul className="navbar-nav justify-content-end my-2">
+							<Link className="btn btn-outline-info" aria-current="page" to={'/section'}>
+								Servicios
+							</Link>
 							{store.token == "" ?
 								<>
-									<Link className="nav-link active" aria-current="page" to={'/login'}>
+									<Link className="btn btn-outline-info mx-2" aria-current="page" to={'/login'}>
 										Login
 									</Link>
 
-									<Link className="nav-link active" aria-current="page" to={'/signup'}>
+									<Link className="btn btn-outline-info" aria-current="page" to={'/signup'}>
 										Signup
 									</Link>
 								</>
 								:
 								<>
-									
-									<Link className="btn btn-outline-info mx-4" aria-current="page" to={'/profile'}>
-										Profile
-									</Link>
 									<li className="nav-item">
-										<button type="button" onClick={() => userLogout()} className="btn btn-outline-info mx-2"><i class="fas fa-sign-out"></i></button>
+										<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info mx-2">Logout</button>
 									</li>
+									<Link className="btn btn-outline-info" aria-current="page" to={'/profile'}>
+										<i class="fa-solid fa-user"></i>
+									</Link>
 								</>
 							}
 						</ul>
