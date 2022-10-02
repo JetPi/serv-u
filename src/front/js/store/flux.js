@@ -268,6 +268,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({
 							comments: data
 						})
+						console.log(data)
 					}
 				} catch (error) {
 					console.log(`Error: ${error}`)

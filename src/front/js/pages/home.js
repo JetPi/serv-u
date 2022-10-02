@@ -4,7 +4,10 @@ import { Link } from "react-router-dom"
 import "../../styles/home.css";
 
 import servicios from "../../img/servicios.png"
+
+import { Comment } from "../component/comment.jsx"
 import { ServiceComment } from "../component/serviceComment.jsx";
+
 
 
 export const Home = () => {
@@ -37,6 +40,10 @@ export const Home = () => {
 
 				</div>
 
+			</div>
+
+			<div>
+				<Comment/>
 			</div>
 
 
