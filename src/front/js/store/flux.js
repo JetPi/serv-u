@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userInfo: {},
 			users: [],
 			orders: [],
+			userServices: [],
 			services: [],
 			errorCode: 0,
 			comments: [],
@@ -23,6 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Change order status
+			// It's empty for some reason
 			changeOrder: () => {
 				let store = getStore()
 
@@ -101,7 +103,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			//Recieves a user object and logs them in, generating a token for future authentication
-			//Recieves a user object and logs them in, generating a token for future authentication
 			loginUser: async (user) => {
 				let store = getStore()
 				try {
@@ -137,18 +138,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			//Get user services
+			//Get all services
 			getServices: async () => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/services`, {
-						method: "GET",
-						mode: "no-cors"
+						method: "GET"
 					})
 					if (response.ok) {
 						let data = await response.json()
 						setStore({
-							services: data
+							...store, services: data
 						})
 					}
 				} catch (error) {
@@ -157,9 +157,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
+			//Get a user services
+			getUserServices: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/user/services`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							...store, userServices: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+
+			// Add a service
 			addService: async (serviceData) => {
 				let store = getStore()
-				let actions = getActions()
 
 				try {
 
@@ -203,6 +226,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Updates the status of the order
 			updateOrder: async (orderId) => {
 				let store = getStore()
 				try {
@@ -232,6 +256,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Sends a comment to the backend
 			sendComment: async (comment) => {
 				let store = getStore()
 				try {
@@ -244,7 +269,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(comment),
 					});
 					if (response.ok) {
-						getActions().getComment()
+						getActions().getServiceComments(comment.services_id)
 						return true;
 					}
 				} catch (error) {
@@ -252,7 +277,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getComment: async () => {
+			// Get all comments
+			getAllComments: async () => {
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.backendUrl}/api/user/comments`, {
@@ -273,6 +299,49 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Get rated comments
+			getRatedComments: async (ratingMinimun) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/comments/${ratingMinimun}`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			// Get a service's comments
+			getServiceComments: async (serviceId) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.backendUrl}/api/service/${serviceId}/comments`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json"
+						},
+					})
+					if (response.ok) {
+						let data = await response.json()
+						setStore({
+							comments: data
+						})
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`)
+				}
+			},
+
+			// Gets all(?) users
 			getUserStatus: async () => {
 				let store = getStore()
 				try {
@@ -293,6 +362,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Change the status of a user
 			updateUserStatus: async (userId) => {
 				let store = getStore()
 				try {
@@ -317,11 +387,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			},
 
+
+			// Uploads and changes the profile image of the user
 			uploadProfileImg: async (product) => {
 				const store = getStore();
-				for (var p of product) {
-					console.log(p);
-				}
 				try {
 					const response = await fetch(`${store.backendUrl}/api/profile/single_user/profile`, {
 						method: "PATCH",
@@ -339,6 +408,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Uploads and changes the banner image of the user
 			uploadBannerImg: async (product) => {
 				const store = getStore();
 				for (var p of product) {

@@ -88,7 +88,8 @@ class Service(db.Model):
             "description": self.description,
             "base_price": self.base_price,
             "service_photo_url": self.service_photo_url,
-            "cloudinary_id_service": self.cloudinary_id_service
+            "cloudinary_id_service": self.cloudinary_id_service,
+            "user_id": self.user_id
         }
 
 
@@ -110,6 +111,7 @@ class Order(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     observation = db.Column(db.String(300), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
     services_id = db.Column(db.Integer, db.ForeignKey('service.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -118,5 +120,6 @@ class Comment(db.Model):
             "id": self.id,
             "user_data": User.query.get(self.user_id).serialize(),
             "observation": self.observation,
-            "services_id": self.services_id
+            "services_id": self.services_id,
+            "rating": self.rating
         }

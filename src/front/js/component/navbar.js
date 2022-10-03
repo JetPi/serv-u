@@ -10,7 +10,7 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	let navigate = useNavigate()
 
-	const searchState = ["name", "type"]
+	const searchState = ["name", "type_service"]
 
 	const [search, setSearch] = useState("")
 
@@ -28,6 +28,13 @@ export const Navbar = () => {
 			actions.searchService(filteredResult)
 			navigate("/services/search")
 		}
+	}
+
+	const userLogout = () => {
+		actions.userLogout()
+		navigate("/login")
+		alert("Succesfully logged out")
+
 	}
 
 	useEffect(() => {
@@ -49,44 +56,42 @@ export const Navbar = () => {
 							/>
 						</Link>
 					</div>
-					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
 					</button>
-					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" id="navbarNavDropdown">
-						<form className="d-flex" onSubmit={(e) => e.preventDefault()} role="search">
+					<div className="collapse navbar-collapse nav justify-content-end div-nav-links" >
+						<form className="d-flex mx-5" onSubmit={(e) => e.preventDefault()} role="search">
 							<input value={search} onChange={searcher} className="form-control me-2 searching" type="search" placeholder="Encuentra tu servicio" aria-label="Search" />
 							<button onClick={results}
-								className="btn btn-outline-info" type="submit">Buscar</button>
+								className="btn btn-outline-info" type="submit">Buscar
+							</button>
 						</form>
-						<ul className="navbar-nav ">
-							<li className="nav-item dropdown">
-								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Categorías
-								</a>
-								<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									{/* Mientras se hace la vista de las categorías */}
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/section'}>Servicios</Link></li>
-									<li><Link className="nav-link active text-center" aria-current="page" to={'/popular'}>Popular</Link></li>
-									<li><Link className="nav-link active text-center" aria-current="page" to={"/hogar"}>Hogar</Link></li>
-								</ul>
-							</li>
-							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" to={'/faq'}><h5>FAQ</h5></Link>
-							</li>
+
+						<ul className="navbar-nav justify-content-end my-2">
+							<Link className="btn btn-outline-info" aria-current="page" to={'/section'}>
+								Servicios
+							</Link>
 							{store.token == "" ?
 								<>
-									<Link className="nav-link active" aria-current="page" to={'/login'}>
-										<h5>Login</h5>
+									<Link className="btn btn-outline-info mx-2" aria-current="page" to={'/login'}>
+										Login
 									</Link>
 
-									<Link className="nav-link active" aria-current="page" to={'/signup'}>
-										<h5>Signup</h5>
+									<Link className="btn btn-outline-info" aria-current="page" to={'/signup'}>
+										Signup
 									</Link>
 								</>
 								:
-								<Link className="nav-link active" aria-current="page" to={'/profile'}>
-									<h5>Profile</h5>
-								</Link>
+								<>
+									<li className="nav-item">
+										<Link aria-current="page" to={'/login'}>
+											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info mx-2">Logout</button>
+										</Link>
+									</li>
+									<Link className="btn btn-outline-info" aria-current="page" to={'/profile'}>
+										<i className="fa-solid fa-user"></i>
+									</Link>
+								</>
 							}
 						</ul>
 					</div>

@@ -14,6 +14,7 @@ import "../../styles/profile.css";
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
+    useEffect(() => { { actions.getUserServices() } }, [])
     useEffect(() => { { actions.getUserInfo() } }, [])
     let navigate = useNavigate()
 
@@ -27,11 +28,6 @@ export const Profile = () => {
 
     const { username, role, email, id, banner_photo_url, profile_photo_url } = store.userInfo
     const cld = new Cloudinary({ cloud: { cloudName: 'dboidjsun' } });
-
-    // let imageNames = {
-    //     profileImageName: `profile-${id}`,
-    //     bannerImageName: `banner-${id}`,
-    // }
 
     const [imageFiles, setImageFiles] = useState({
         profileImage: cld.image('Serv-U_Placeholder').resize(fill().width(450).height(325)),
@@ -113,14 +109,17 @@ export const Profile = () => {
                         </div>
                         <div className="col-12 fs-2 d-flex justify-content-center">
                             {profile_photo_url == undefined ?
-                                    <div>
-                                        <div className="col-12 alert alert-danger  justify-content-center" role="alert">
-                                            <p className="alert_profile">
-                                            <i class="fas fa-exclamation-triangle"></i> Agrega una foto de perfil
-                                            </p>
+                                <div>
+                                    <div className="col-12 alert alert-danger  justify-content-center" role="alert">
+                                        <p className="alert_profile">
 
-                                        </div>
+                                            <i className="fas fa-exclamation-triangle"></i>
+                                            Agrega una foto de perfil para publicar un servicio
+
+                                        </p>
+
                                     </div>
+                                </div>
                                 :
                                 null
                             }
@@ -161,11 +160,18 @@ export const Profile = () => {
                                 </div>
                             </div>
                         </div>
+
                         {/* Botones de redirección a otras vistas */}
                         <div className="col-12">
                             <div className="row d-flex justify-content-center">
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
-                                    <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>Publica tu Servicio</Link>
+                                    {profile_photo_url == undefined ?
+                                        "Publica tu servicio"
+                                        :
+                                        <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>
+                                            Publica tu Servicio
+                                            </Link>
+                                    }
                                 </div>
                                 <div className="title-size mx-2 fs-2 text-center my-3 background">
                                     Busca un Servicio

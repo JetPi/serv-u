@@ -34,14 +34,14 @@ export const Section = () => {
                         if (theme == "general") {
                             return (
                                 <div key={index} className="col-4 my-2">
-                                    <ServiceCard name={element.name} description={element.description} service_id={index} />
+                                    <ServiceCard name={element.name} description={element.description} service_id={index} card_photo={element.service_photo_url} />
                                 </div>
                             )
                         } else {
-                            if (element.type == theme) {
+                            if (element.type_service == theme) {
                                 return (
                                     <div key={index} className="col-4 my-2">
-                                        <ServiceCard name={element.name} description={element.description} service_id={index} />
+                                        <ServiceCard name={element.name} description={element.description} service_id={index} card_photo={element.service_photo_url} />
                                     </div>
                                 )
                             }
@@ -56,7 +56,13 @@ export const Section = () => {
                     <div className="col-12 my-2">
                         {possibleThemes.map((element, index) => {
                             return (
-                                <button key={index} type="button" onClick={() => changeTheme(element)} className="btn special my-1 mx-1">{element.charAt(0).toUpperCase() + element.slice(1)}</button>
+                                <button
+                                    key={index}
+                                    type="button"
+                                    onClick={() => changeTheme(element)}
+                                    className="btn special my-1 mx-1">
+                                    {element.charAt(0).toUpperCase() + element.slice(1)}
+                                </button>
                             )
                         })}
                     </div>
