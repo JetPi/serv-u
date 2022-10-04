@@ -33,13 +33,13 @@ export const Signup = () => {
 
 	return (
 		<div className="container text-center mt-5">
-			<div className="d-flex ">
-				<div className="col-6 div-logo">
+			<div className="d-flex div-form">
+				{/* <div className="col-6 div-logo">
 					<img className="img-logo"
 						src={logo}
 						alt="Serv-U Logo"
 					/>
-				</div>
+				</div> */}
 				<div className="col-6 text-center div-registrarse">
 					<div><h1>Registrarse</h1></div>
 					<form onSubmit={handleSubmit} action="login.php">
