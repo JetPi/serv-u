@@ -65,3 +65,8 @@
 .div-username-and-stars{
     padding-top: 0.5rem;
 }
+
+.div-service-comment{
+    height: 10rem;
+    overflow: auto;
+}
