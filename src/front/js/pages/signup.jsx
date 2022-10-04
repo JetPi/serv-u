@@ -94,7 +94,7 @@ export const Signup = () => {
 							</p>
 						</div>
 						<div className="col-12">
-							<button className="btn btn-primary w-100 my-3" type="submit">
+							<button className="btn btn-primary w-100 my-3 fs-5" type="submit">
 								Registrarse
 							</button>
 						</div>
@@ -102,7 +102,7 @@ export const Signup = () => {
 					<div className="row d-flex my-3">
 						<div className="row fs-5 d-flex">
 							<div className="col-12 d-flex ">
-								<p className="parrafo">¿Ya te registraste?</p>
+								<p className="parrafo-go-to-register">¿Ya te registraste?</p>
 
 								<Link to={`/login`}>
 									Ingresa aquí

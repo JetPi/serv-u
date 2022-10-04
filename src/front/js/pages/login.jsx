@@ -72,17 +72,19 @@ export const Login = () => {
 								/>
 							</div>
 							{/* Botón de enviado */}
-							<button type="submit" className="btn btn-primary fs-5">Iniciar Sesión</button>
+							<button type="submit" className="btn btn-primary w-100 fs-5 my-2">Iniciar Sesión</button>
 							{/* Redirigir a vista de signup */}
 							<div className="col-12 row mt-3">
-								<div className="col-6 d-flex justify-content-start fs-4">
-									¿No estás registrado?
-								</div>
-								<div className="col-6 d-flex justify-content-end fs-4 align-items-center">
-									<Link to="/signup">
+								<div className="row fs-5 d-flex">
+									<div className="col-12 d-flex ">
+										<p className="parrafo-not-registered">¿No estás registrado?</p>
+
+										<Link to="/signup">
 										<span>Regístrate</span>
 									</Link>
+									</div>
 								</div>
+								
 							</div>
 						</form>
 					</div>
