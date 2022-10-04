@@ -105,6 +105,7 @@ export const Profile = () => {
                             Correo: {email == "" ? "Placeholder" : email}
                         </div>
                         <div className="col-12 fs-5 mb-2">
+                            {/* Cambiar la logica para que funcione */}
                             Rol: {role != "" ? (role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
                         </div>
                         <div className="col-12 fs-2 d-flex justify-content-center">
