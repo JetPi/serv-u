@@ -34,7 +34,7 @@ export const Login = () => {
 	useEffect(() => { { store.token != "" && actions.userLogout() } }, [])
 
 	return (
-		<div className="container-fluid container-fitter">
+		<div className="container-fluid container-fitter fondo">
 			<div className="row view-fitter mt-4">
 				{/* Imagen */}
 				<div className="col-sm-12 col-md-6 d-flex justify-content-center ">

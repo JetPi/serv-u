@@ -7,14 +7,15 @@
 .navbar-contenedor{
     padding-top: 0rem;
     padding-bottom: 0rem;
-    background-color: #F0F8FF;
-    
-    
+    background-color: transparent;
+    opacity: 1;
 }
+
 .container-navbar{
     padding-left: 0rem;
     padding-right: 0rem;
-    background-color: #F0F8FF;
+    background-color: transparent;
+    opacity: 1;
     padding-bottom: 0.8rem;
     padding-top: 0.8rem;
 }
