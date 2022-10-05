@@ -14,7 +14,16 @@ body {
     background-position: center; */
 }
 
-.background {
+
+.testFooter {
+    
+    min-height:100vh; 
+    display:flex; 
+    flex-direction:column; 
+    justify-content:space-between;
+  }
+
+.background{
     background-color: rgb(116, 206, 168);
     color: white;
     border-radius: 10px;

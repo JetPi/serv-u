@@ -10,9 +10,9 @@ import { ServiceComment } from "../component/serviceComment.jsx";
 
 export const Home = () => {
 	return (
+		// Here there is something fishy
 		<div className="container text-center mt-5 container-home">
 			<div className="d-flex ">
-
 				<div className="col-6 ">
 					<div className="div-home-text">
 						<h1 className="home-title">¿Quienes somos?</h1>
@@ -23,11 +23,9 @@ export const Home = () => {
 						</div>
 					</div>
 				</div>
-
 				<div className="col-6 div-img-home">
 					<img src={servicios} alt="Imagen" width="500" height="400" />
 				</div>
-
 			</div>
 
 			<div>
