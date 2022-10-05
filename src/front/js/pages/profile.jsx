@@ -167,11 +167,11 @@ export const Profile = () => {
                             <div className="row d-flex justify-content-center">
                                 <div className="title-size mx-2 fs-2 text-center my-3">
                                     {profile_photo_url == undefined ?
-                                        <button  className="btn btn-primary boton-diasble fs-4">
+                                        <button  className="btn btn-info boton-diasble fs-5">
                                             Publica tu servicio
                                         </button>
                                         :
-                                        <Link className="text-center text-reset text-decoration-none btn btn-primary fs-4" aria-current="page" to={'/post_service'}>
+                                        <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
                                             Publica tu Servicio
                                         </Link>
                                     }
@@ -186,7 +186,7 @@ export const Profile = () => {
                                         </div>
                                     </div>
                                     <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center">Servicios</h5>
+                                        <h5 className="text-center">Mis servicios</h5>
                                         <ActiveService />
                                     </div>
                                 </div>
