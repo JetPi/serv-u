@@ -34,14 +34,11 @@ export const Login = () => {
 	useEffect(() => { { store.token != "" && actions.userLogout() } }, [])
 
 	return (
-		<div className="container-fluid container-fitter fondo">
-			<div className="row view-fitter mt-4">
-				{/* Imagen */}
-				<div className="col-sm-12 col-md-6 d-flex justify-content-center ">
-					<img className="image-fitter" src="https://picsum.photos/700/500" alt="" />
-				</div>
+
+		<div className="container-fluid container-fitter">
+			<div className="row view-fitter mt-4 justify-content-center">
 				{/* Form */}
-				<div className="col-sm-12 col-md-6 d-flex flex-column">
+				<div className="col-sm-12 col-md-6 d-flex flex-column ">
 					<div className="d-flex justify-content-center align-items-top col-12">
 						<h1>Iniciar Sesión</h1>
 					</div>

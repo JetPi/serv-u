@@ -158,7 +158,8 @@ def get_user_service():
         if services is None:
             return jsonify({"message": "not found"}), 404
         else:
-            response = jsonify(list(map(lambda item: item.serialize(), services)))
+            response = jsonify(
+                list(map(lambda item: item.serialize(), services)))
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response, 200
 
@@ -259,7 +260,9 @@ def publish_profile_photo():
         db.session.rollback()
         return jsonify({"message": f"Error {error.args}"}), 500
 
-#Ruta para actualizar la foto del banner
+# Ruta para actualizar la foto del banner
+
+
 @api.route('/profile/single_user/banner', methods=['PATCH'])
 @jwt_required()
 def publish_banner_photo():
@@ -328,8 +331,8 @@ def publish_comment():
             return jsonify('Verify your entries'), 400
         else:
             new_comment = Comment(
-                user_id=user_id, 
-                observation=observation, 
+                user_id=user_id,
+                observation=observation,
                 services_id=services_id,
                 rating=rating,
             )
@@ -362,6 +365,8 @@ def get_comment():
         return jsonify({"message": "not found"}), 404
 
 # Get all comments from all users
+
+
 @api.route('/comments', methods=['GET'])
 def get_all_comment():
     comments = Comment()
@@ -375,22 +380,27 @@ def get_all_comment():
         return jsonify({"message": "not found"}), 404
 
 # Get all comments that are equal or above a certain rating
+
+
 @api.route('/comments/<int:rating>', methods=['GET'])
-def get_rated_comment(rating = None):
+def get_rated_comment(rating=None):
     comments = Comment()
     comments = comments.query.all()
     if comments is None:
         return jsonify('Empty'), 400
     elif comments is not None:
-        results = (list(filter(lambda comment: comment.rating >= rating, comments)))
+        results = (
+            list(filter(lambda comment: comment.rating >= rating, comments)))
         results = list(map(lambda item: item.serialize(), results))
         return jsonify(results), 200
     else:
         return jsonify({"message": "not found"}), 404
 
 # Get all comments from a service
+
+
 @api.route('/service/<int:service_id>/comments', methods=['GET'])
-def get_service_comment(service_id = None):
+def get_service_comment(service_id=None):
     comments = Comment()
     comments = comments.query.filter_by(services_id=service_id).all()
     if comments is None:
@@ -401,6 +411,8 @@ def get_service_comment(service_id = None):
         return jsonify({"message": "not found"}), 404
 
 # Activate or deactivate a user
+
+
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def user_active(user_id=None):
@@ -426,3 +438,37 @@ def user_active(user_id=None):
                 return jsonify({"message": f"Error {error.args}"}), 500
 
     return jsonify([]), 405
+
+
+@api.route('/user/orders', methods=['POST'])
+@jwt_required()
+def publish_order():
+    if request.method == 'POST':
+        body = request.json
+        user_id = get_jwt_identity()
+        status = body.get('status', None)
+        services_id = body.get('services_id', None)
+        direccion = body.get('direccion', None)
+        observacion = body.get('observacion', None)
+
+        if status is None or services_id is None or direccion is None or observacion is None:
+            return jsonify('Verify your entries'), 400
+        else:
+            new_order = Order(
+                user_id=user_id,
+                status=status,
+                services_id=services_id,
+                observacion=observacion,
+                direccion=direccion
+            )
+            db.session.add(new_order)
+
+            try:
+                db.session.commit()
+                return jsonify(new_order.serialize()), 201
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message": f"Error {error.args}"}), 500
+
+    return jsonify(), 201
