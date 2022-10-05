@@ -1,17 +1,19 @@
-.div-nav-logo{
+.div-nav-logo {
     margin-left: 3rem;
 }
-.div-nav-links{
+
+.div-nav-links {
     margin-right: 3rem;
 }
-.navbar-contenedor{
+
+.navbar-contenedor {
     padding-top: 0rem;
     padding-bottom: 0rem;
     background-color: transparent;
     opacity: 1;
 }
 
-.container-navbar{
+.container-navbar {
     padding-left: 0rem;
     padding-right: 0rem;
     background-color: transparent;
@@ -19,15 +21,85 @@
     padding-bottom: 0.8rem;
     padding-top: 0.8rem;
 }
-.searching{
+
+.searching {
     width: 50vh;
 }
-.button-style{
+
+.button-style {
     margin-left: 3em;
     width: 10rem;
 }
 
-.boton-diasble{
+.boton-diasble {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.especiales {
+    width: 140px;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #040404;
+    background-color: rgb(22, 89, 117);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid black;
+}
+
+.especiales:hover {
+    background-color: #249AF1;
+    box-shadow: 0px 15px 20px rgba(48, 188, 231, 0.4);
+    color: black;
+    transform: translateY(-7px);
+}
+
+.especiales-lupa {
+    width: 80px;
+    height: 45px;
+    color: #040404;
+    background-color: rgb(22, 89, 117);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid black;
+}
+
+.especiales-lupa:hover {
+    background-color: #249AF1;
+    box-shadow: 0px 15px 20px rgba(48, 188, 231, 0.4);
+    color: black;
+    transform: translateY(-7px);
+}
+
+.especiales-profile {
+    width: 80px;
+    height: 45px;
+    color: #040404;
+    background-color: rgb(22, 89, 117);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid black;
+}
+
+.especiales-profile:hover {
+    background-color: #249AF1;
+    box-shadow: 0px 15px 20px rgba(48, 188, 231, 0.4);
+    color: black;
+    transform: translateY(-7px);
 }
