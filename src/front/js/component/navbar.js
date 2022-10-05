@@ -62,17 +62,8 @@ export const Navbar = () => {
 							<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/section'}>
 								Servicios
 							</Link>
-							<li>
-								{store.userInfo.profile_photo_url == undefined ?
-									<button className="btn btn-outline-info bg-light mx-2 boton-disable">
-										Publica tu servicio
-									</button>
-									:
-									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
-										Publica tu servicio
-									</Link>
-								}
-							</li>
+
+
 							{store.token == "" ?
 								<>
 									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/login'}>
@@ -85,6 +76,17 @@ export const Navbar = () => {
 								</>
 								:
 								<>
+									<li>
+										{store.userInfo.profile_photo_url == undefined ?
+											<button className="btn btn-outline-info bg-light mx-2 boton-disable">
+												Publica tu servicio
+											</button>
+											:
+											<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
+												Publica tu servicio
+											</Link>
+										}
+									</li>
 									<li className="nav-item">
 										<Link aria-current="page" to={'/login'}>
 											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2">Logout</button>
