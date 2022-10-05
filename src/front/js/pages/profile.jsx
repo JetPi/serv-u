@@ -165,11 +165,13 @@ export const Profile = () => {
                         {/* Botones de redirección a otras vistas */}
                         <div className="col-12">
                             <div className="row d-flex justify-content-center">
-                                <div className="title-size mx-2 fs-2 text-center my-3 background">
+                                <div className="title-size mx-2 fs-2 text-center my-3">
                                     {profile_photo_url == undefined ?
-                                        "Publica tu servicio"
+                                        <button  className="btn btn-primary boton-diasble fs-4">
+                                            Publica tu servicio
+                                        </button>
                                         :
-                                        <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>
+                                        <Link className="text-center text-reset text-decoration-none btn btn-primary fs-4" aria-current="page" to={'/post_service'}>
                                             Publica tu Servicio
                                         </Link>
                                     }

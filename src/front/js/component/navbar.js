@@ -88,9 +88,19 @@ export const Navbar = () => {
 											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2">Logout</button>
 										</Link>
 									</li>
-									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
-										Publica tu servicio
-									</Link>
+									<li>
+										{store.userInfo.profile_photo_url == undefined ?
+											<button  className="btn btn-outline-info bg-light mx-2 boton-diasble">
+                                            Publica tu servicio
+                                        </button>
+											:
+											<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
+												Publica tu servicio
+											</Link>
+										}
+										
+										
+									</li>
 									<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/profile'}>
 										<i className="fa-solid fa-user"></i>
 									</Link>
