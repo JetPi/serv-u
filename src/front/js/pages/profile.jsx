@@ -55,7 +55,7 @@ export const Profile = () => {
         <>
             {store.userInfo != "undefined" ?
                 <div className="container-fluid row mt-4">
-                    <div className="col-4 column background position-fi">
+                    <div className="col-4 column background  card-profile-datos">
                         {/* Profile Info */}
                         <div className="col-12  my-3">
                             {profile_photo_url == undefined ?
@@ -163,22 +163,10 @@ export const Profile = () => {
 
                         {/* Botones de redirección a otras vistas */}
                         <div className="col-12">
-                            <div className="row d-flex justify-content-center">
-                                <div className="title-size mx-2 fs-2 text-center my-3">
-                                    {profile_photo_url == undefined ?
-                                        <button className="btn btn-primary boton-diasble fs-4">
-                                            Publica tu servicio
-                                        </button>
-                                        :
-                                        <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
-                                            Publica tu Servicio
-                                        </Link>
-                                    }
-                                </div>
-                            </div>
+
                             <div className="col-12">
                                 <div className="row d-flex justify-content-center">
-                                    <div className="title-size mx-2 fs-4 background  ">
+                                    <div className="title-size mx-2 fs-4 background card-active-order ">
                                         <h5 className="text-center my-1">Ordenes Activas</h5>
                                         {store.orders.length == 0 ?
                                             <p className="text-center">No tienes ordenes</p>
@@ -186,7 +174,7 @@ export const Profile = () => {
                                             <ActiveOrders />
                                         }
                                     </div>
-                                    <div className="title-size mx-2 fs-4 background  ">
+                                    <div className="title-size mx-2 fs-4 background card-active-service ">
                                         <h5 className="text-center my-1">Servicios</h5>
                                         {store.userServices.length == 0 ?
                                             <p className="text-center">No tienes servicios</p>
@@ -196,9 +184,23 @@ export const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
+                        <div className="row d-flex justify-content-end div-button-publish">
+                        <div className="title-size mx-2 fs-2 text-center my-3 justify-content-end div-button-publish-service">
+                            {profile_photo_url == undefined ?
+                                <button className="btn btn-primary boton-diasble fs-4">
+                                    Publica tu servicio
+                                </button>
+                                :
+                                <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
+                                    Publica tu Servicio
+                                </Link>
+                            }
+                        </div>
                     </div>
+                    </div>
+                    
                 </div> :
                 navigate("/login")
             }
