@@ -55,6 +55,10 @@
     font-size: large;
 }
 
+.boton-diasble{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 .upload-icon{width:10px;height:10px;position:relative;color:#2c3e50;background-color:currentColor;}
 .upload-icon:before,.upload-icon:after{content:"";display:block;position:absolute;}
 .upload-icon:before{bottom:100%;margin-left:-7.5px;border-bottom:12px solid currentColor;border-left:12px solid transparent;border-right:12px solid transparent;}

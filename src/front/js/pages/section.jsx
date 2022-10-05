@@ -26,8 +26,7 @@ export const Section = () => {
 
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-12 fs-1 d-flex justify-content-center">{theme.toUpperCase()}</div>
+            <div className="row my-5">
                 {/* Generate service cards */}
                 <div className="col-9 row ">
                     {store.services.map((element, index) => {
@@ -53,16 +52,19 @@ export const Section = () => {
                     <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
                         Secciones
                     </div>
-                    <div className="col-12 my-2 wrap">
+                    <div className="col-12 my-2">
                         {possibleThemes.map((element, index) => {
                             return (
-                                <button
-                                    key={index}
-                                    type="button"
-                                    onClick={() => changeTheme(element)}
-                                    className="btn specials my-1 mx-1">
-                                    {element.charAt(0).toUpperCase() + element.slice(1)}
-                                </button>
+                                <div className="row my-5 justify-content-center">
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        onClick={() => changeTheme(element)}
+                                        className="btn specials my-1 mx-1">
+                                        {element.charAt(0).toUpperCase() + element.slice(1)}
+                                    </button>
+                                </div>
+
                             )
                         })}
                     </div>
