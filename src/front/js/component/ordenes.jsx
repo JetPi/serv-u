@@ -22,7 +22,7 @@ export const OrderModal = ({ services_id }) => {
 
     const createOrder = () => {
         if (orderState.direccion.trim() && orderState.observacion.trim() == "") {
-            return toast("Completa los campos vacios", {
+            return toast("Completa los campos vacíos", {
                 position: 'top-center',
                 autoClose: true,
                 type: 'warning',
@@ -34,7 +34,7 @@ export const OrderModal = ({ services_id }) => {
             actions.addOrders(orderData).then((response) => {
                 if (response) {
                     //return alert("Servicio contratado")
-                    toast("Exito", {
+                    toast("Éxito", {
                         position: 'top-center',
                         autoClose: true,
                         type: 'success',
@@ -63,26 +63,26 @@ export const OrderModal = ({ services_id }) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Informacion del cliente</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Información del cliente</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">Direccion: </label>
+                                    <label htmlFor="recipient-name" className="col-form-label">Dirección: </label>
                                     <input type="text" className="form-control" onChange={handleChange} value={orderState.direccion} name="direccion" id="recipient-name" />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="message-text" className="col-form-label">Observacion:</label>
+                                    <label htmlFor="message-text" className="col-form-label">Observación:</label>
                                     <textarea className="form-control" onChange={handleChange} value={orderState.observacion} name="observacion" id="message-text"></textarea>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="message-text" className="col-form-label">Metodo de pago: Efectivo <br>
-                                    </br>Pago movil:
+                                    <label htmlFor="message-text" className="col-form-label">Método de pago: Efectivo <br>
+                                    </br>Pago móvil:
                                         <ul>
-                                            <li>Cedula: J-0673637-3</li>
+                                            <li>Cédula: J-0673637-3</li>
                                             <li>Nombre: Serv-u</li>
-                                            <li>Telefono: 04244401044</li>
+                                            <li>Teléfono: 0424-4401044</li>
                                         </ul></label>
                                 </div>
                             </form>
