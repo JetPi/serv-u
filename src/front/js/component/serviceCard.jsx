@@ -10,10 +10,10 @@ export const ServiceCard = (props) => {
         <div className="card " >
             <img src={card_photo} className="img-body card-photo" alt="..." />
             <div className="card-body card-size d-flex align-items-between justify-content-between flex-column">
-                <h5 className="text-center">{name}</h5>
-                <p className="card-text text-center">{description}</p>
+                <h5 className="text-center barra">{name}</h5>
+                <p className="card-text text-center description-card">{description}</p>
                 <Link className="nav-link active text-center" aria-current="page" to={`/service/${service_id}`}>
-                    <button type="button" className="btn background">Ir a servicio</button>
+                    <button type="button" className="btn especial">Ir a servicio</button>
                 </Link>
             </div>
         </div>

@@ -71,7 +71,8 @@ class Service(db.Model):
     base_price = db.Column(db.Integer, nullable=False)
 
     service_photo_url = db.Column(db.String(500), nullable=False, unique=True)
-    cloudinary_id_service = db.Column(db.String(500), unique=True, nullable=False)
+    cloudinary_id_service = db.Column(
+        db.String(500), unique=True, nullable=False)
 
     orders = db.relationship('Order', backref="service", lazy=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -97,6 +98,8 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Enum(OrderStatus), nullable=False)
+    direccion = db.Column(db.String(100), nullable=True)
+    observacion = db.Column(db.String(100), nullable=True)
     services_id = db.Column(db.Integer, db.ForeignKey('service.id'))
 
     def serialize(self):
@@ -104,6 +107,8 @@ class Order(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "status": self.status.name,
+            "direccion": self.direccion,
+            "observacion": self.observacion,
             "services": self.services_id
         }
 

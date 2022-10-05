@@ -161,26 +161,45 @@ export const Post_service = () => {
                         name="description"
                     />
                 </div>
-                <div className="col-md-10 div-tipo-servicio">
-                    <input type="file" name="file"
-                    onChange={handleFileInputChange}
-                    value={imageFile}
-                    className="form-input"
-                />
+                <button type="button" className="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Click para cargar una foto
+                </button>
+
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Sube una foto</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="col-md-10 div-tipo-servicio">
+                                    <input type="file" name="file"
+                                        onChange={handleFileInputChange}
+                                        value={imageFile}
+                                        className="form-input"
+                                    />
+                                </div>
+                                <div className="col-md-10 my-2">
+                                    {previewSource && (
+                                        <img
+                                            src={previewSource} alt="choosen"
+                                            style={{ height: '300px' }}
+                                        />
+                                    )}
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-md-10 my-2">
-                {previewSource && (
-                <img
-                    src={previewSource} alt="choosen"
-                    style={{ height: '300px' }}
-                />
-            )}
-            </div>
                 <div className="col-md-10 div-button-submit">
                     <button type="submit" className="btn btn-primary">Publicar</button>
                 </div>
             </form>
-            
+
         </div>
     );
 };

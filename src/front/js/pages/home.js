@@ -3,16 +3,16 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom"
 import "../../styles/home.css";
 
-import servicios from "../../img/servicios.png"
+import servicios from "../../img/service_home.png"
 
 import { Comment } from "../component/comment.jsx"
 import { ServiceComment } from "../component/serviceComment.jsx";
 
 export const Home = () => {
 	return (
+		// Here there is something fishy
 		<div className="container text-center mt-5 container-home">
 			<div className="d-flex ">
-
 				<div className="col-6 ">
 					<div className="div-home-text">
 						<h1 className="home-title">¿Quienes somos?</h1>
@@ -23,11 +23,9 @@ export const Home = () => {
 						</div>
 					</div>
 				</div>
-
 				<div className="col-6 div-img-home">
-					<img src={servicios} alt="Imagen" width="450" height="400" />
+					<img src={servicios} alt="Imagen" width="500" height="400" />
 				</div>
-
 			</div>
 
 			<div>

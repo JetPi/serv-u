@@ -46,6 +46,7 @@ export const Comment = () => {
     }
 
     return (
+        <>
         <div className="container d-flex flex-column text-center justify-content-center align-items-center">
             <div className="my-3">
                 <h2 className="title_comment_component">
@@ -89,9 +90,15 @@ export const Comment = () => {
                     );
 
                 })}
+                
             </div>
+            
 
         </div>
+        <div >
+               <p className="paragraph-under-comments fs-5"> con más de {goodComments.length} clientes satisfechos...</p>
+            </div>
+        </>
 
     )
 };

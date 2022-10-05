@@ -38,9 +38,16 @@
 	-webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
 }
 
-.upload-position {
-    left: 90vw;
-    top: 8vh
+.upload-position-1 {
+    left: 53vw;
+    top: -5vh;
+    position: relative;
+}
+
+.upload-position-2 {
+    left: 22vw;
+    bottom: 45vh;
+    position: absolute;
 }
 
 .modal-backdrop{
@@ -55,6 +62,10 @@
     font-size: large;
 }
 
+.boton-diasble{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 .upload-icon{width:10px;height:10px;position:relative;color:#2c3e50;background-color:currentColor;}
 .upload-icon:before,.upload-icon:after{content:"";display:block;position:absolute;}
 .upload-icon:before{bottom:100%;margin-left:-7.5px;border-bottom:12px solid currentColor;border-left:12px solid transparent;border-right:12px solid transparent;}

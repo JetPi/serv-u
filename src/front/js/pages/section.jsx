@@ -26,8 +26,7 @@ export const Section = () => {
 
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-12 fs-1 d-flex justify-content-center">{theme.toUpperCase()}</div>
+            <div className="row my-5">
                 {/* Generate service cards */}
                 <div className="col-9 row ">
                     {store.services.map((element, index) => {
@@ -50,19 +49,21 @@ export const Section = () => {
                 </div>
                 {/* List of buttons */}
                 <div className="col-3 column selection-box">
-                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
+                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black", "color":"navy" }}>
                         Secciones
                     </div>
-                    <div className="col-12 my-2">
+                    <div className="col-12 my-2 row justify-content-center">
                         {possibleThemes.map((element, index) => {
                             return (
+                                // <div className="row my-5 justify-content-center" key={index}>
                                 <button
-                                    key={index}
                                     type="button"
+                                    key={index}
                                     onClick={() => changeTheme(element)}
-                                    className="btn special my-1 mx-1">
+                                    className="btn specials my-1 mx-1">
                                     {element.charAt(0).toUpperCase() + element.slice(1)}
                                 </button>
+                                // </div>
                             )
                         })}
                     </div>

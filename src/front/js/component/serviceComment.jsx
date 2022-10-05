@@ -22,8 +22,10 @@ export const ServiceComment = (props) => {
     // Functions
     const handleKey = (event) => {
         if (event.key === "Enter") {
-            if (Validar()) {
-                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating });
+            if (store.token == "") {
+                alert("Para hacer un comentario tienes que registrarte o iniciar sesión.")
+            }else if(Validar()){               
+                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating }); 
             }
         }
     };
@@ -141,7 +143,7 @@ export const ServiceComment = (props) => {
                         />
                     </div>
                     {/* Published Comments */}
-                    <div className="container-fluid row">
+                    <div className="container-fluid row div-service-comment">
                         {/* Header */}
                         <div className="border-bottom items border-0">
                             {store.comments.length <= 0
@@ -161,7 +163,7 @@ export const ServiceComment = (props) => {
                             }
                             return (
                                 <div key={index} className="border-bottom d-flex align-item-center py-2 col-lg-6 col-sm-12">
-                                    <div className="w-100">
+                                    <div className="w-100 ">
                                         <div className="d-flex flex-row w-100">
                                             <div className="my-2">
                                                 {comentario.user_data.profile_photo_url == undefined ?

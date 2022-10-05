@@ -33,13 +33,8 @@ export const Signup = () => {
 
 	return (
 		<div className="container text-center mt-5">
-			<div className="d-flex ">
-				<div className="col-6 div-logo">
-					<img className="img-logo"
-						src={logo}
-						alt="Serv-U Logo"
-					/>
-				</div>
+			<div className="d-flex div-form">
+
 				<div className="col-6 text-center div-registrarse">
 					<div><h1>Registrarse</h1></div>
 					<form onSubmit={handleSubmit} action="login.php">
@@ -94,27 +89,26 @@ export const Signup = () => {
 							</div>
 						</div>
 						<div className="col-12 my-3">
-							<p>
+							<p className="parrafo-conditions">
 								Al registrarte aceptas todos los términos y condiciones de la plataforma.
 							</p>
 						</div>
 						<div className="col-12">
-							<button className="btn btn-primary w-100 my-3" type="submit">
+							<button className="btn btn-primary w-100 my-3 fs-5" type="submit">
 								Registrarse
 							</button>
 						</div>
 					</form>
-					<div className="d-flex">
-						<div className="col-6 fs-5">
-							<p>¿Ya te registraste?</p>
-						</div>
-						<div className="col-6 fs-5">
-							<Link to={`/login`}>
-								Ingresa aquí
-							</Link>
-						</div>
+					<div className="row d-flex my-3">
+						<div className="row fs-5 d-flex">
+							<div className="col-12 d-flex ">
+								<p className="parrafo-go-to-register">¿Ya te registraste?</p>
 
-
+								<Link to={`/login`}>
+									Ingresa aquí
+								</Link>
+							</div>
+						</div>
 					</div>
 
 
