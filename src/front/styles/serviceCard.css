@@ -1,3 +1,12 @@
+.card{
+    border-radius: 1rem;
+    border: 2px solid black;
+}
+
+.barra{
+    padding-bottom: 1.0rem;
+    border-bottom: 1px solid gray;
+}
 .card-size{
     height: 30vh;
     width: 100%; 
@@ -6,8 +15,38 @@
 .card-photo{
     height: 200px;
     width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 1rem;
 }
 
 .description-card{
     overflow: auto;
+    
 }
+
+.especial {
+    width: 140px;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #249AF1;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid black;
+    }
+  
+  .especial:hover {
+    background-color: #249AF1;
+    box-shadow: 0px 15px 20px rgba(48, 188, 231, 0.4);
+    color: black;
+    transform: translateY(-7px);
+  }
