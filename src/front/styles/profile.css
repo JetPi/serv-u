@@ -1,4 +1,4 @@
-.image-rounder{
+.image-rounder {
     height: 35vh;
     width: 35vw;
     max-width: 100%;
@@ -7,16 +7,16 @@
     background-size: contain;
 }
 
-.profile-sizer{
+.profile-sizer {
     width: 392px;
     height: 540px;
 }
 
-.title-size{
+.title-size {
     width: 45%;
 }
 
-.image-square{
+.image-square {
     height: 35vh;
     width: 70vw;
     max-width: 100%;
@@ -25,17 +25,17 @@
 }
 
 .fab-upload-file {
-	width: 70px;
-	height: 70px;
+    width: 70px;
+    height: 70px;
     display: flex;
-	cursor: pointer;
-	align-items: center;
-	border-radius: 100%;
-	justify-content: center;
-	background-color: #ecf0f1;
-    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-	-webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    cursor: pointer;
+    align-items: center;
+    border-radius: 100%;
+    justify-content: center;
+    background-color: #ecf0f1;
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .upload-position-1 {
@@ -50,23 +50,53 @@
     position: absolute;
 }
 
-.modal-backdrop{
+
+.modal-backdrop {
     display: none;
 }
 
-.modal-text{
+.modal-text {
     color: black;
 }
 
-.alert_profile{
+.alert_profile {
     font-size: large;
 }
 
-.boton-diasble{
+.boton-diasble {
     opacity: 0.6;
     cursor: not-allowed;
 }
-.upload-icon{width:10px;height:10px;position:relative;color:#2c3e50;background-color:currentColor;}
-.upload-icon:before,.upload-icon:after{content:"";display:block;position:absolute;}
-.upload-icon:before{bottom:100%;margin-left:-7.5px;border-bottom:12px solid currentColor;border-left:12px solid transparent;border-right:12px solid transparent;}
-.upload-icon:after{top:100%;left:-95%;width:300%;height:2px;margin-top:5px;position:absolute;background-color:currentColor;}
+
+.upload-icon {
+    width: 10px;
+    height: 10px;
+    position: relative;
+    color: #2c3e50;
+    background-color: currentColor;
+}
+
+.upload-icon:before,
+.upload-icon:after {
+    content: "";
+    display: block;
+    position: absolute;
+}
+
+.upload-icon:before {
+    bottom: 100%;
+    margin-left: -7.5px;
+    border-bottom: 12px solid currentColor;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+}
+
+.upload-icon:after {
+    top: 100%;
+    left: -95%;
+    width: 300%;
+    height: 2px;
+    margin-top: 5px;
+    position: absolute;
+    background-color: currentColor;
+}
