@@ -218,20 +218,20 @@ def publish_service():
 # Get orders
 @api.route('/orders', methods=['GET'])
 @jwt_required()
-def get_orders():
-    user_id = get_jwt_identity()
-    orders = Order()
-    orders = orders.query.filter_by(user_id=user_id).all()
-    print(orders)
-    if orders is None:
-        return jsonify('Empty'), 400
-    elif orders is not None:
-        orders = Order()
-        orders = orders.query.all()
+def get_user_order():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
 
-        return jsonify(list(map(lambda item: item.serialize(), orders))), 200
-    else:
-        return jsonify({"message": "not found"}), 404
+        orders = Order()
+        orders = orders.query.filter_by(user_id=user_id).all()
+
+        if orders is None:
+            return jsonify({"message": "not found"}), 404
+        else:
+            response = jsonify(
+                list(map(lambda item: item.serialize(), orders)))
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 200
 
 
 # Ruta para actualizar la foto del perfil
