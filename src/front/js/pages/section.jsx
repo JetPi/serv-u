@@ -49,22 +49,21 @@ export const Section = () => {
                 </div>
                 {/* List of buttons */}
                 <div className="col-3 column selection-box">
-                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
+                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black", "color":"navy" }}>
                         Secciones
                     </div>
-                    <div className="col-12 my-2">
+                    <div className="col-12 my-2 row justify-content-center">
                         {possibleThemes.map((element, index) => {
                             return (
-                                <div className="row my-5 justify-content-center">
-                                    <button
-                                        key={index}
-                                        type="button"
-                                        onClick={() => changeTheme(element)}
-                                        className="btn specials my-1 mx-1">
-                                        {element.charAt(0).toUpperCase() + element.slice(1)}
-                                    </button>
-                                </div>
-
+                                // <div className="row my-5 justify-content-center" key={index}>
+                                <button
+                                    type="button"
+                                    key={index}
+                                    onClick={() => changeTheme(element)}
+                                    className="btn specials my-1 mx-1">
+                                    {element.charAt(0).toUpperCase() + element.slice(1)}
+                                </button>
+                                // </div>
                             )
                         })}
                     </div>

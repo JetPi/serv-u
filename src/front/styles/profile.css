@@ -38,9 +38,16 @@
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.upload-position {
-    left: 90vw;
-    top: 8vh
+.upload-position-1 {
+    left: 53vw;
+    top: -5vh;
+    position: relative;
+}
+
+.upload-position-2 {
+    left: 22vw;
+    bottom: 45vh;
+    position: absolute;
 }
 
 

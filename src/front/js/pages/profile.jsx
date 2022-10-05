@@ -55,8 +55,7 @@ export const Profile = () => {
         <>
             {store.userInfo != "undefined" ?
                 <div className="container-fluid row mt-4">
-                    <div className=" col-4 mx-2"></div>
-                    <div className="col-4 column background position-fixed">
+                    <div className="col-4 column background position-fi">
                         {/* Profile Info */}
                         <div className="col-12  my-3">
                             {profile_photo_url == undefined ?
@@ -67,7 +66,7 @@ export const Profile = () => {
                             {/* Button */}
                             <button
                                 type="button"
-                                className="btn fab-upload-file position-absolute top-50"
+                                className="btn fab-upload-file upload-position-2"
                                 data-bs-toggle="modal"
                                 data-bs-target="#profileModal">
                                 <i className="upload-icon"></i>
@@ -106,7 +105,7 @@ export const Profile = () => {
                         </div>
                         <div className="col-12 fs-5 mb-2">
                             {/* Cambiar la logica para que funcione */}
-                            Rol: {role != "" ? (role == "comprador" ? "Comprador" : "Vendedor") : "Placeholder"}
+                            Rol: {store.userServices.length == 0 ? "Comprador" : "Vendedor"}
                         </div>
                         <div className="col-12 fs-2 d-flex justify-content-center">
                             {profile_photo_url == undefined ?
@@ -136,7 +135,7 @@ export const Profile = () => {
                                 :
                                 <img className="image-square" src={banner_photo_url} alt="" />
                             }
-                            <button type="button" className="btn fab-upload-file  position-absolute upload-position" data-bs-toggle="modal" data-bs-target="#bannerModal"><i className="upload-icon"></i></button>
+                            <button type="button" className="btn fab-upload-file  upload-position-1" data-bs-toggle="modal" data-bs-target="#bannerModal"><i className="upload-icon"></i></button>
                             {/* Modal */}
                             <div className="modal" id="bannerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog">
@@ -171,7 +170,7 @@ export const Profile = () => {
                                             Publica tu servicio
                                         </button>
                                         :
-                                        <Link className="text-center text-reset text-decoration-none btn btn-primary fs-4" aria-current="page" to={'/post_service'}>
+                                        <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
                                             Publica tu Servicio
                                         </Link>
                                     }
@@ -180,14 +179,20 @@ export const Profile = () => {
                             <div className="col-12">
                                 <div className="row d-flex justify-content-center">
                                     <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center">Ordenes Activas</h5>
-                                        <div className="col-6">
+                                        <h5 className="text-center my-1">Ordenes Activas</h5>
+                                        {store.orders.length == 0 ?
+                                            <p className="text-center">No tienes ordenes</p>
+                                            :
                                             <ActiveOrders />
-                                        </div>
+                                        }
                                     </div>
                                     <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center">Servicios</h5>
-                                        <ActiveService />
+                                        <h5 className="text-center my-1">Servicios</h5>
+                                        {store.userServices.length == 0 ?
+                                            <p className="text-center">No tienes servicios</p>
+                                            :
+                                            <ActiveService />
+                                        }
                                     </div>
                                 </div>
                             </div>

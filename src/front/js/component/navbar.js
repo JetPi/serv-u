@@ -28,13 +28,6 @@ export const Navbar = () => {
 		}
 	}
 
-	const userLogout = () => {
-		actions.userLogout()
-		navigate("/login")
-		alert("Succesfully logged out")
-
-	}
-
 	useEffect(() => {
 		{
 			actions.getServices()
@@ -69,6 +62,17 @@ export const Navbar = () => {
 							<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/section'}>
 								Servicios
 							</Link>
+							<li>
+								{store.userInfo.profile_photo_url == undefined ?
+									<button className="btn btn-outline-info bg-light mx-2 boton-disable">
+										Publica tu servicio
+									</button>
+									:
+									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
+										Publica tu servicio
+									</Link>
+								}
+							</li>
 							{store.token == "" ?
 								<>
 									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/login'}>
@@ -85,19 +89,6 @@ export const Navbar = () => {
 										<Link aria-current="page" to={'/login'}>
 											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2">Logout</button>
 										</Link>
-									</li>
-									<li>
-										{store.userInfo.profile_photo_url == undefined ?
-											<button  className="btn btn-outline-info bg-light mx-2 boton-diasble">
-                                            Publica tu servicio
-                                        </button>
-											:
-											<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
-												Publica tu servicio
-											</Link>
-										}
-										
-										
 									</li>
 									<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/profile'}>
 										<i className="fa-solid fa-user"></i>
