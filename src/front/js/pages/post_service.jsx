@@ -162,7 +162,7 @@ export const Post_service = () => {
                     />
                 </div>
                 <button type="button" className="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Click aca para cargar una foto
+                    Click para cargar una foto
                 </button>
 
                 <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,8 +188,8 @@ export const Post_service = () => {
                                         />
                                     )}
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
