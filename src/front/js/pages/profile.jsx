@@ -167,7 +167,7 @@ export const Profile = () => {
                             <div className="row d-flex justify-content-center">
                                 <div className="title-size mx-2 fs-2 text-center my-3">
                                     {profile_photo_url == undefined ?
-                                        <button  className="btn btn-primary boton-diasble fs-4">
+                                        <button className="btn btn-primary boton-diasble fs-4">
                                             Publica tu servicio
                                         </button>
                                         :
