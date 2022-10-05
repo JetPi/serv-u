@@ -171,11 +171,8 @@ export const Profile = () => {
                                         :
                                         <Link className="text-center text-reset text-decoration-none" aria-current="page" to={'/post_service'}>
                                             Publica tu Servicio
-                                            </Link>
+                                        </Link>
                                     }
-                                </div>
-                                <div className="title-size mx-2 fs-2 text-center my-3 background">
-                                    Busca un Servicio
                                 </div>
                             </div>
                             <div className="col-12">
