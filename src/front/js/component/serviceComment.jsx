@@ -22,8 +22,10 @@ export const ServiceComment = (props) => {
     // Functions
     const handleKey = (event) => {
         if (event.key === "Enter") {
-            if (Validar()) {
-                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating });
+            if (store.token == "") {
+                alert("Para hacer un comentario tienes que registrarte o iniciar sesión.")
+            }else if(Validar()){               
+                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating }); 
             }
         }
     };
