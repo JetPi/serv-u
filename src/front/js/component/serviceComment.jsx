@@ -181,7 +181,7 @@ export const ServiceComment = (props) => {
                                                 })}
                                             </div>
                                         </div>
-                                        <p>{comentario.observation}</p>
+                                        <p className="observation">{comentario.observation}</p>
                                     </div>
                                 </div>
                             );

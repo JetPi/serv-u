@@ -77,3 +77,8 @@
     text-align: right;
     color: rgb(5, 5, 63);
 }
+
+.observation{
+    text-align: left;
+    margin-left: 3rem;
+}

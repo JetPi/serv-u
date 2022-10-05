@@ -11,9 +11,9 @@ import "../../styles/footer.css";
 
 export const Footer = () => {
     return (
-        <div className="navbar justify-content-center bg-dark text-light footer-body">
+        <div className="navbar justify-content-center text-dark footer-body">
             <div className="col-5 p-3">
-                <p className="text-light fw-bold">Powered by</p>
+                <p className="text-light fw-bold text-dark">Powered by</p>
                 <div>
                     <img className="powered-photo" src={cssPhoto} alt="" />
                     <img className="powered-photo" src={cloudinaryPhoto} alt="" />
@@ -27,7 +27,14 @@ export const Footer = () => {
                 <div className="text-muted">Serv-U Inc.</div>
             </div>
             <div className="col-5 p-3 d-flex justify-content-end">
-                <p className="text-muted d-flex align-items-end">Brought to you by: <br /> Oriana Calderón <br /> Victor Seidman <br /> Ibrahim Zárraga</p>
+                <div className="justify-content-end">
+                    <div className="row "><p className="text-muted d-flex align-items-end names">Brought to you by: </p></div>
+                <div className="row"><p className="text-muted d-flex align-items-end names">Oriana Calderón</p></div>
+                <div className="row "><p className="text-muted d-flex align-items-end names">Victor Seidman</p></div>
+                <div className="row "><p className="text-muted d-flex align-items-end names">Ibrahim Zárraga</p></div>
+                </div>
+                
+
             </div>
         </div>
     )
