@@ -170,7 +170,7 @@ export const Profile = () => {
                                             Publica tu servicio
                                         </button>
                                         :
-                                        <Link className="text-center text-reset text-decoration-none btn btn-primary fs-4" aria-current="page" to={'/post_service'}>
+                                        <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
                                             Publica tu Servicio
                                         </Link>
                                     }

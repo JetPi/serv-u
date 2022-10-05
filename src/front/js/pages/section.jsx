@@ -49,7 +49,7 @@ export const Section = () => {
                 </div>
                 {/* List of buttons */}
                 <div className="col-3 column selection-box">
-                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
+                    <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black", "color":"navy" }}>
                         Secciones
                     </div>
                     <div className="col-12 my-2 row justify-content-center">
