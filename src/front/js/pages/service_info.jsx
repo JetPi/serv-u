@@ -44,17 +44,18 @@ export const ServiceInfo = () => {
                                             {element.description}
                                         </div>
                                     </div>
+                                    <div className="col-12 text-center special fs-1">
+                                        Comentarios
+                                    </div>
+                                    <div className="col-12 my-2 d-flex align-items-center">
+                                        <ServiceComment services_id={element.id} />
+                                    </div>
                                 </div>
                             )
                         }
                     }
                     )}
-                    <div className="col-12 text-center special fs-1">
-                        Comentarios
-                    </div>
-                    <div className="col-12 my-2 d-flex align-items-center">
-                        <ServiceComment services_id={params.id} />
-                    </div>
+
                 </div>
                 :
                 <div>Loading...</div>

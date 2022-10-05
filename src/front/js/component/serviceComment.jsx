@@ -24,8 +24,8 @@ export const ServiceComment = (props) => {
         if (event.key === "Enter") {
             if (store.token == "") {
                 alert("Para hacer un comentario tienes que registrarte o iniciar sesión.")
-            }else if(Validar()){               
-                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating }); 
+            } else if (Validar()) {
+                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating });
             }
         }
     };
