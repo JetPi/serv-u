@@ -53,14 +53,14 @@ export const Section = () => {
                     <div className="col-12 text-center fs-4" style={{ "borderBottom": "1px solid black" }}>
                         Secciones
                     </div>
-                    <div className="col-12 my-2">
+                    <div className="col-12 my-2 wrap">
                         {possibleThemes.map((element, index) => {
                             return (
                                 <button
                                     key={index}
                                     type="button"
                                     onClick={() => changeTheme(element)}
-                                    className="btn special my-1 mx-1">
+                                    className="btn specials my-1 mx-1">
                                     {element.charAt(0).toUpperCase() + element.slice(1)}
                                 </button>
                             )

@@ -431,6 +431,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+
+			addOrders: async (ordersData) => {
+				let store = getStore()
+				console.log(ordersData)
+				try {
+
+					let response = await fetch(`${store.backendUrl}/api/user/orders`, {
+						method: 'POST',
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + store.token
+						},
+						body: JSON.stringify(ordersData)
+
+					});
+					if (response.ok) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (error) {
+					console.log(`Error: ${error}`);
+				}
+			},
+
 		}
 	};
 };

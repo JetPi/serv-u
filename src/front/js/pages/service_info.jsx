@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { ServiceComment } from "../component/serviceComment.jsx"
 import { Context } from "../store/appContext";
 import "../../styles/service_info.css";
+import { OrderModal } from "../component/ordenes.jsx";
 
 export const ServiceInfo = () => {
     const { store, actions } = useContext(Context);
@@ -31,6 +32,9 @@ export const ServiceInfo = () => {
                                             <div className="col-5 background my-1 mx-2 p-2 fs-5">
                                                 Dirección: {element.location} <br />
                                                 Precio Base: {element.base_price} $
+                                            </div>
+                                            <div>
+                                                <OrderModal services_id={element.id} />
                                             </div>
                                         </div>
                                         <div className="col-12 fs-3 text-center special my-3">

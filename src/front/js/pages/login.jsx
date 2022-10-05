@@ -34,14 +34,11 @@ export const Login = () => {
 	useEffect(() => { { store.token != "" && actions.userLogout() } }, [])
 
 	return (
-		<div className="container-fluid container-fitter fondo">
-			<div className="row view-fitter mt-4">
-				{/* Imagen */}
-				<div className="col-sm-12 col-md-6 d-flex justify-content-center ">
-					<img className="image-fitter" src="https://picsum.photos/700/500" alt="" />
-				</div>
+
+		<div className="container-fluid container-fitter">
+			<div className="row view-fitter mt-4 justify-content-center">
 				{/* Form */}
-				<div className="col-sm-12 col-md-6 d-flex flex-column">
+				<div className="col-sm-12 col-md-6 d-flex flex-column ">
 					<div className="d-flex justify-content-center align-items-top col-12">
 						<h1>Iniciar Sesión</h1>
 					</div>
@@ -72,17 +69,19 @@ export const Login = () => {
 								/>
 							</div>
 							{/* Botón de enviado */}
-							<button type="submit" className="btn btn-primary fs-5">Iniciar Sesión</button>
+							<button type="submit" className="btn btn-primary w-100 fs-5 my-2">Iniciar Sesión</button>
 							{/* Redirigir a vista de signup */}
 							<div className="col-12 row mt-3">
-								<div className="col-6 d-flex justify-content-start fs-4">
-									¿No estás registrado?
-								</div>
-								<div className="col-6 d-flex justify-content-end fs-4 align-items-center">
-									<Link to="/signup">
+								<div className="row fs-5 d-flex">
+									<div className="col-12 d-flex ">
+										<p className="parrafo-not-registered">¿No estás registrado?</p>
+
+										<Link to="/signup">
 										<span>Regístrate</span>
 									</Link>
+									</div>
 								</div>
+								
 							</div>
 						</form>
 					</div>

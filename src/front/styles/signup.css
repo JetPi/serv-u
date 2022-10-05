@@ -16,8 +16,21 @@
 }
 .div-registrarse{
     margin-left: 1rem;
+    justify-content: center;
 }
 .parrafo-password{
     margin-top: 0.3rem;
     color: grey;
+}
+
+.div-form{
+    justify-content: center;
+}
+
+.parrafo-go-to-register{
+    padding-right: 0.3rem;
+}
+
+.parrafo-conditions{
+    text-align: left;
 }
