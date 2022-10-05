@@ -22,7 +22,13 @@ export const OrderModal = ({ services_id }) => {
             return alert("Completa los campos vacios")
         } else {
             const orderData = { ...orderState, services_id }
-            actions.addOrders(orderData)
+            actions.addOrders(orderData).then((response) => {
+                if (response) {
+                    return alert("Servicio contratado")
+                } else
+                    return alert("Hubo un error")
+            }
+            )
         }
     }
 
