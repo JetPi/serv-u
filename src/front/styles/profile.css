@@ -68,6 +68,27 @@
     cursor: not-allowed;
 }
 
+.card-active-order, .card-active-service{
+    height: 10rem;
+    overflow: auto;
+}
+
+.card-profile-datos{
+    margin-bottom: 2rem;
+    height: auto;
+}
+
+
+
+.div-button-publish-service{
+    padding: 0rem;
+    margin-left: 0rem;
+}
+
+.div-button-publish{
+    margin-left: 0rem;
+}
+
 .upload-icon {
     width: 10px;
     height: 10px;
@@ -99,4 +120,5 @@
     margin-top: 5px;
     position: absolute;
     background-color: currentColor;
+
 }
