@@ -4,10 +4,15 @@
     border-radius: 15%;
     margin-right: 10px;
     margin-bottom: 10px;
-    background-color: rgb(236, 232, 232);
+    background-color: transparent
 }
 
 .footer-body{
     max-height: 200px;
     margin-top: 1rem;
+    background-color: transparent;
+}
+
+.names{
+    margin: 0rem;
 }
