@@ -70,3 +70,10 @@
     height: 10rem;
     overflow: auto;
 }
+
+.paragraph-under-comments{
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    text-align: right;
+    color: rgb(5, 5, 63);
+}

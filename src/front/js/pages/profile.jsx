@@ -180,7 +180,7 @@ export const Profile = () => {
                             <div className="col-12">
                                 <div className="row d-flex justify-content-center">
                                     <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center">Ordenes Activas</h5>
+                                        <h5 className="text-center">Ordenes activas</h5>
                                         <div className="col-6">
                                             <ActiveOrders />
                                         </div>
