@@ -4,8 +4,6 @@ import { Link, useResolvedPath, useNavigate } from "react-router-dom";
 import logo from "../../img/logo.png"
 import "../../styles/navbar.css";
 
-
-
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	let navigate = useNavigate()
