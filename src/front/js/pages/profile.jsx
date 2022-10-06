@@ -102,17 +102,10 @@ export const Profile = () => {
                                 </div>
                             </div>
 
-                            <div className="col-12 fs-2">
-                                Usuario:  {username == "" ? "Placeholder" : username}
+                            <div className="col-12 fs-2 text-center">
+                                {username == "" ? "Placeholder" : username}
                             </div>
 
-                            <div className="col-12 fs-5 mb-2">
-                                Correo: {email == "" ? "Placeholder" : email}
-                            </div>
-                            <div className="col-12 fs-5 mb-2">
-                                {/* Cambiar la logica para que funcione */}
-                                Rol: {store.userServices.length == 0 ? "Comprador" : "Vendedor"}
-                            </div>
                             <div className="col-12 fs-2 d-flex justify-content-center">
                                 {profile_photo_url == undefined ?
                                     <div>
@@ -132,23 +125,33 @@ export const Profile = () => {
                             </div>
                         </div>
                         {/* orders and services */}
+
                         <div className="col-8 row d-flex margin-p">
+                            <div className="my-4 div-datos">
+                                <div className="col-12 fs-5 mb-2">
+                                    <i class="fa-solid fa-envelope"></i> : {email == "" ? "Placeholder" : email}
+                                </div>
+                                <div className="col-12 fs-5 mb-2">
+                                    {/* Cambiar la logica para que funcione */}
+                                    <i class="fa-solid fa-user"></i> : {store.userServices.length == 0 ? "Comprador" : "Vendedor"}
+                                </div>
+                            </div>
                             <div className="col-12">
                                 <div className="row d-flex">
                                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link active color-p" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Ordenes Activas</button>
+                                            <button className="nav-link active color-p button-active-order" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Ordenes Activas</button>
                                         </li>
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link color-p" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Servicios Cargados</button>
+                                            <button className="nav-link color-p" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Mis Servicios</button>
                                         </li>
                                     </ul>
                                     <div className="tab-content" id="myTabContent">
                                         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
                                             <div className="title-size fs-4 background-card card-active-order ">
-                                                <h5 className="text-center my-1">Ordenes</h5>
+
                                                 {store.orders.length == 0 ?
-                                                    <p className="text-center">No tienes ordenes</p>
+                                                    <p className="text-center d-flex justify-content-center align-items-center text-tab-content">No tienes ordenes activas</p>
                                                     :
                                                     <ActiveOrders />
                                                 }
@@ -156,9 +159,9 @@ export const Profile = () => {
                                         </div>
                                         <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
                                             <div className="title-size fs-4 background-card card-active-service ">
-                                                <h5 className="text-center my-1">Servicios</h5>
+
                                                 {store.userServices.length == 0 ?
-                                                    <p className="text-center">No tienes servicios</p>
+                                                    <p className="text-center d-flex justify-content-center align-items-center text-tab-content">Nos has publicado servicios</p>
                                                     :
                                                     <ActiveService />
                                                 }

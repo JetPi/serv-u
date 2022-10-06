@@ -1,6 +1,6 @@
 .image-style {
-    height: 25vh;
-    width: 18vw;
+    height: 35vh;
+    width: 20vw;
     max-width: 70%;
     max-height: 100%;
     border-radius: 50%;
@@ -136,4 +136,20 @@
     position: absolute;
     background-color: currentColor;
 
+}
+
+.button-active-order{
+    margin-left: 0.8rem;
+}
+
+.nav-tabs{
+    border: 0rem;
+}
+
+.div-datos{
+    padding-top: 3rem;
+}
+
+.text-tab-content{
+    padding-top: 3rem;
 }
