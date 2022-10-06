@@ -8,7 +8,7 @@ export const Faq = () => {
 
 	return (
 		<div className="container text-center mt-5">
-			<h1>FAQ</h1>
+			<h1>Busca un Servicio</h1>
 		</div>
 	);
 };
