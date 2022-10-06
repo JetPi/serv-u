@@ -96,8 +96,8 @@ export const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="col-12 fs-2 d-flex justify-content-center">
-                            {username == "" ? "Placeholder" : username}
+                        <div className="col-12 fs-2">
+                            Usuario:  {username == "" ? "Placeholder" : username}
                         </div>
 
                         <div className="col-12 fs-5 mb-2">
@@ -124,12 +124,10 @@ export const Profile = () => {
                                 null
                             }
                         </div>
-                        {/* <button type="button" onClick={() => userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button> */}
                     </div>
-                    {/* Banner and services */}
+                    {/* orders and services */}
                     <div className="col-8 row d-flex margin-p">
                         <div className="col-12">
-                            {/* Think about this */}
                             <div className="row d-flex">
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                                     <li className="nav-item" role="presentation">
@@ -140,22 +138,26 @@ export const Profile = () => {
                                     </li>
                                 </ul>
                                 <div className="tab-content" id="myTabContent">
-                                    <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0"><div className="title-size mx-2 fs-4 background card-active-order ">
-                                        <h5 className="text-center my-1">Ordenes</h5>
-                                        {store.orders.length == 0 ?
-                                            <p className="text-center">No tienes ordenes</p>
-                                            :
-                                            <ActiveOrders />
-                                        }
-                                    </div></div>
-                                    <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0"><div className="title-size mx-2 fs-4 background card-active-service ">
-                                        <h5 className="text-center my-1">Servicios</h5>
-                                        {store.userServices.length == 0 ?
-                                            <p className="text-center">No tienes servicios</p>
-                                            :
-                                            <ActiveService />
-                                        }
-                                    </div></div>
+                                    <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
+                                        <div className="title-size fs-4 background-card card-active-order ">
+                                            <h5 className="text-center my-1">Ordenes</h5>
+                                            {store.orders.length == 0 ?
+                                                <p className="text-center">No tienes ordenes</p>
+                                                :
+                                                <ActiveOrders />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
+                                        <div className="title-size fs-4 background-card card-active-service ">
+                                            <h5 className="text-center my-1">Servicios</h5>
+                                            {store.userServices.length == 0 ?
+                                                <p className="text-center">No tienes servicios</p>
+                                                :
+                                                <ActiveService />
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {/* Modal */}

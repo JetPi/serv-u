@@ -1,8 +1,9 @@
 .image-style {
     height: 25vh;
     width: 18vw;
-    max-width: 100%;
+    max-width: 70%;
     max-height: 100%;
+    border-radius: 50%;
     background-size: contain;
 }
 
