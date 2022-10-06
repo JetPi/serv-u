@@ -80,7 +80,7 @@ export const Navbar = () => {
 												Publica tu servicio
 											</button>
 											:
-											<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
+											<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/post_service'}>
 												Publica tu servicio
 											</Link>
 										}
