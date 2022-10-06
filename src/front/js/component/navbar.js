@@ -16,6 +16,9 @@ export const Navbar = () => {
 		setSearch(e.target.value)
 	}
 
+	// Pasar resultados de busqueda al URL
+	// Luego sacar del URL la palabra
+	// Y finalmente cambiar los servicio acorde con eso
 	const results = () => {
 		if (search.trim() !== "") {
 			let filteredResult = []
@@ -24,7 +27,7 @@ export const Navbar = () => {
 				filteredResult = filteredResult.concat(filtered)
 			})
 			actions.searchService(filteredResult)
-			navigate("/services/search")
+			navigate(`/services/search/${search}`)
 		}
 	}
 
@@ -54,43 +57,43 @@ export const Navbar = () => {
 						<form className="d-flex mx-5" onSubmit={(e) => e.preventDefault()} role="search">
 							<input value={search} onChange={searcher} className="form-control me-2 searching" type="search" placeholder="Encuentra tu servicio" aria-label="Search" />
 							<button onClick={results}
-								className="btn btn-outline-info bg-light" type="submit"><i className="fa-solid fa-magnifying-glass"></i>
+								className="btn btn-outline-info bg-light especiales-lupa" type="submit"><i className="fa-solid fa-magnifying-glass"></i>
 							</button>
 						</form>
 
 						<ul className="navbar-nav justify-content-end my-2">
-							<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/section'}>
+							<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/section'}>
 								Servicios
 							</Link>
-							<li>
-								{store.userInfo.profile_photo_url == undefined ?
-									<button className="btn btn-outline-info bg-light mx-2 boton-disable">
-										Publica tu servicio
-									</button>
-									:
-									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/post_service'}>
-										Publica tu servicio
-									</Link>
-								}
-							</li>
 							{store.token == "" ?
 								<>
-									<Link className="btn btn-outline-info bg-light mx-2" aria-current="page" to={'/login'}>
+									<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/login'}>
 										Login
 									</Link>
 
-									<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/signup'}>
+									<Link className="btn btn-outline-info bg-light especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/signup'}>
 										Signup
 									</Link>
 								</>
 								:
 								<>
+									<li>
+										{store.userInfo.profile_photo_url == undefined ?
+											<button className="btn btn-outline-info bg-light mx-2 especiales">
+												Publica tu servicio
+											</button>
+											:
+											<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/post_service'}>
+												Publica tu servicio
+											</Link>
+										}
+									</li>
 									<li className="nav-item">
 										<Link aria-current="page" to={'/login'}>
-											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2">Logout</button>
+											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2 especiales">Logout</button>
 										</Link>
 									</li>
-									<Link className="btn btn-outline-info bg-light" aria-current="page" to={'/profile'}>
+									<Link className="btn btn-outline-info bg-light especiales-profile mx-2 d-flex justify-content-center align-items-center" aria-current="page" to={'/profile'}>
 										<i className="fa-solid fa-user"></i>
 									</Link>
 								</>

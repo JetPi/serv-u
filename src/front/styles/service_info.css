@@ -1,8 +1,47 @@
-.image-rounder{
+
+.image-rounder {
     height: 35vh;
-    width: 35vw;
+    width: 35vw;}
+
+.image-rounder{
+    height: 40vh;
+    width: 20vw;
+
     max-width: 100%;
     max-height: 100%;
     border-radius: 100%;
     background-size: contain;
+}
+
+.title-service{
+ padding-right: 5rem;
+ color:navy
+}
+
+.description{
+    padding-top: 0rem !important;
+}
+
+.order-modal{
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+   
+}
+
+.div-image{
+    padding-top: 2rem;
+    padding-left: 6rem;
+}
+
+.color-datos{
+    color:rgb(3, 3, 52);
+
+}
+
+.color-x{
+    color: red;
+}
+
+.color-check{
+    color:green
 }

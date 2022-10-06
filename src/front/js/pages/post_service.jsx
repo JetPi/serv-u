@@ -70,10 +70,19 @@ export const Post_service = () => {
         formData.append("base_price", serviceData.base_price)
         formData.append("description", serviceData.description)
         formData.append("owner", serviceData.owner)
-        const response = await actions.addService(formData);
-        if (response) {
-            navigate('/profile')
+        if (serviceData.name.trim() !== "" &&
+            serviceData.type_service.trim() !== "" && serviceData.location.trim() !== "" &&
+            serviceData.base_price.trim() !== "" &&
+            serviceData.description.trim() !== "") {
+                const response = await actions.addService(formData);
+                if (response) {
+                    navigate('/profile')
+                }
+        } else {
+            alert("Error: Completa los campos correctamente.");
+					return false;
         }
+
     };
 
     return (

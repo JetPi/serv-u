@@ -14,26 +14,30 @@ body {
     background-position: center; */
 }
 
-.button-styler{
-    background: rgb(22,89,117)
+.button-styler {
+    background: rgb(22, 89, 117)
 }
 
 .testFooter {
-    
-    min-height:100vh; 
-    display:flex; 
-    flex-direction:column; 
-    justify-content:space-between;
-  }
 
-.background{
-    background-color: rgb(116, 206, 168);
-    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.background {
+    color: black;
+}
+
+.background-card {
+    background-color: white;
+    color: black;
     border-radius: 10px;
 }
 
 .special {
     background-color: rgb(45, 126, 92);
     color: white;
-    border-radius: 10px;
+    border-radius: 15px;
 }
