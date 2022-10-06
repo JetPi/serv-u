@@ -10,13 +10,25 @@ export const ActiveOrders = () => {
     useEffect(() => { { actions.getOrders() } }, [])
 
     if (store.orders.length > 0) {
-        return <ul>{store.orders.map((order) => <li key={order.id}><span>Estatus de la orden: {order.status}</span>
-            <div className="col-6 d-flex justify-content-end fs-4 m-auto ">
-                {order.status === "pendiente" ? <button className="btn btn-outline-success"
-                    onClick={() => actions.updateOrder(order.id)}
-                    type="submit"><i class="fa-solid fa-check color-check"></i></button> : <></>}
-            </div>
-        </li>)}</ul>
+        return <ul>{store.orders.map((order) =>
+            <li key={order.id}>
+
+                <div className="col-12 d-flex justify-content-start fs-4 m-auto ">
+                    <span>Estatus de la orden: {order.status}</span>
+                    {order.status === "pendiente" ?
+                        <button className="btn btn-outline-success mx-3"
+                            onClick={() => actions.updateOrder(order.id)}
+                            type="submit">
+                            <i class="fa-solid fa-check color-check"></i>
+                        </button>
+
+                        :
+                        <></>
+                    }
+                </div>
+            </li>
+            )}
+            </ul>
     }
 
 

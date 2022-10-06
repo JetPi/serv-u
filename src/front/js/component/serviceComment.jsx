@@ -158,6 +158,7 @@ export const ServiceComment = (props) => {
                                 className="w-100 text-center p-1 "
                                 placeholder="Presiona enter para añadir un comentario"
                                 onKeyDown={handleKey}
+                                value={commentData.comment}
                             />
 
                             <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center">
@@ -165,7 +166,7 @@ export const ServiceComment = (props) => {
                                 {/* Published Comments */}
                                 <div className="container-fluid row div-service-comment">
                                     {/* Header */}
-                                    <div className="border-bottom items border-0">
+                                    <div className="border-bottom items border-0 d-flex justify-content-end align-items-center">
                                         {store.comments.length <= 0
                                             ? "No hay comentarios en esta publicación"
                                             : `${store.comments.length} Comentarios`}
@@ -201,7 +202,7 @@ export const ServiceComment = (props) => {
                                                             })}
                                                         </div>
                                                     </div>
-                                                    <p>{comentario.observation}</p>
+                                                    <p className="d-flex justify-content-start align-items-center mx-5">{comentario.observation}</p>
                                                 </div>
                                             </div>
                                         );
