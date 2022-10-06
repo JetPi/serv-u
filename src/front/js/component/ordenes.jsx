@@ -32,7 +32,6 @@ export const OrderModal = ({ services_id }) => {
             const orderData = { ...orderState, services_id }
             actions.addOrders(orderData).then((response) => {
                 if (response) {
-                    //return alert("Servicio contratado")
                     toast("Éxito", {
                         position: 'top-center',
                         autoClose: true,

@@ -55,13 +55,17 @@ export const Profile = () => {
         <>
             {store.userInfo != "undefined" ?
                 <div className="container-fluid row mt-4">
+
+                    <div className="col-4 column background card-profile-datos">
+
                     <div className="col-4 column background position-fi">
+
                         {/* Profile Info */}
-                        <div className="col-12  my-3">
+                        <div className="col-12 d-flex justify-content-center margin-photo">
                             {profile_photo_url == undefined ?
-                                <AdvancedImage className="image-rounder" cldImg={imageFiles.profileImage} />
+                                <AdvancedImage className="image-style" cldImg={imageFiles.profileImage} />
                                 :
-                                <img className="image-rounder" src={profile_photo_url} alt="" />
+                                <img className="image-style" src={profile_photo_url} alt="" />
                             }
                             {/* Button */}
                             <button
@@ -96,8 +100,8 @@ export const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="col-12 fs-2 d-flex justify-content-center">
-                            {username == "" ? "Placeholder" : username}
+                        <div className="col-12 fs-2">
+                            Usuario:  {username == "" ? "Placeholder" : username}
                         </div>
 
                         <div className="col-12 fs-5 mb-2">
@@ -124,18 +128,42 @@ export const Profile = () => {
                                 null
                             }
                         </div>
-                        <button type="button" onClick={() => userLogout()} className="btn my-2 col-12 fs-5 special">Logout</button>
                     </div>
-                    {/* Banner and services */}
-                    <div className="col-8 row d-flex align-content-center">
+                    {/* orders and services */}
+                    <div className="col-8 row d-flex margin-p">
                         <div className="col-12">
-                            {/* Think about this */}
-                            {banner_photo_url == undefined ?
-                                <AdvancedImage className="image-square" cldImg={imageFiles.bannerImage} />
-                                :
-                                <img className="image-square" src={banner_photo_url} alt="" />
-                            }
-                            <button type="button" className="btn fab-upload-file  upload-position-1" data-bs-toggle="modal" data-bs-target="#bannerModal"><i className="upload-icon"></i></button>
+                            <div className="row d-flex">
+                                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                                    <li className="nav-item" role="presentation">
+                                        <button className="nav-link active color-p" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Ordenes Activas</button>
+                                    </li>
+                                    <li className="nav-item" role="presentation">
+                                        <button className="nav-link color-p" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Servicios Cargados</button>
+                                    </li>
+                                </ul>
+                                <div className="tab-content" id="myTabContent">
+                                    <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
+                                        <div className="title-size fs-4 background-card card-active-order ">
+                                            <h5 className="text-center my-1">Ordenes</h5>
+                                            {store.orders.length == 0 ?
+                                                <p className="text-center">No tienes ordenes</p>
+                                                :
+                                                <ActiveOrders />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
+                                        <div className="title-size fs-4 background-card card-active-service ">
+                                            <h5 className="text-center my-1">Servicios</h5>
+                                            {store.userServices.length == 0 ?
+                                                <p className="text-center">No tienes servicios</p>
+                                                :
+                                                <ActiveService />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {/* Modal */}
                             <div className="modal" id="bannerModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog">
@@ -161,44 +189,15 @@ export const Profile = () => {
                             </div>
                         </div>
 
-                        {/* Botones de redirección a otras vistas */}
-                        <div className="col-12">
-                            <div className="row d-flex justify-content-center">
-                                <div className="title-size mx-2 fs-2 text-center my-3">
-                                    {profile_photo_url == undefined ?
-                                        <button className="btn btn-primary boton-diasble fs-4">
-                                            Publica tu servicio
-                                        </button>
-                                        :
-                                        <Link className="text-center text-reset text-decoration-none btn btn-info fs-5" aria-current="page" to={'/post_service'}>
-                                            Publica tu Servicio
-                                        </Link>
-                                    }
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="row d-flex justify-content-center">
-                                    <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center my-1">Ordenes Activas</h5>
-                                        {store.orders.length == 0 ?
-                                            <p className="text-center">No tienes ordenes</p>
-                                            :
-                                            <ActiveOrders />
-                                        }
-                                    </div>
-                                    <div className="title-size mx-2 fs-4 background  ">
-                                        <h5 className="text-center my-1">Servicios</h5>
-                                        {store.userServices.length == 0 ?
-                                            <p className="text-center">No tienes servicios</p>
-                                            :
-                                            <ActiveService />
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+
+                    </div>
+
+
+                        
                         </div>
 
                     </div>
+
                 </div> :
                 navigate("/login")
             }
