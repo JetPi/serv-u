@@ -56,7 +56,7 @@ export const OrderModal = ({ services_id }) => {
     return (
         <>
             <ToastContainer />
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Contratar</button>
+            <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Contratar</button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -65,7 +65,7 @@ export const OrderModal = ({ services_id }) => {
                             <h5 className="modal-title" id="exampleModalLabel">Información del cliente</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body justify-content-left">
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">Dirección: </label>
