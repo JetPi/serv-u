@@ -30,22 +30,22 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <div className="testFooter">
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Signup />} path="/signup" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Section />} path="/section" />
-                        <Route element={<Faq />} path="/faq" />
-                        <Route element={<Post_service />} path="/post_service" />
-                        <Route element={<Profile />} path="/profile" />
-                        <Route element={<ServiceInfo />} path="/service/:id" />
-                        <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
-                        <Route element={<ActiveUser />} path="/user" />
-                        <Route element={<SearchResult />} path="/services/search" />
-                        <Route element={<OrderModal />} path="/ordenes" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
+                        <Routes>
+                            <Route element={<Home />} path="/" />
+                            <Route element={<Signup />} path="/signup" />
+                            <Route element={<Login />} path="/login" />
+                            <Route element={<Section />} path="/section" />
+                            <Route element={<Faq />} path="/faq" />
+                            <Route element={<Post_service />} path="/post_service" />
+                            <Route element={<Profile />} path="/profile" />
+                            <Route element={<ServiceInfo />} path="/service/:id" />
+                            <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
+                            <Route element={<ActiveUser />} path="/user" />
+                            <Route element={<SearchResult />} path="/services/search/:service_name" />
+                            <Route element={<OrderModal />} path="/ordenes" />
+                            <Route element={<h1>Not found!</h1>} />
+                        </Routes>
+                        <Footer />
                     </div>
                 </ScrollToTop>
             </BrowserRouter>

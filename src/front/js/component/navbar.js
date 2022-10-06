@@ -16,6 +16,9 @@ export const Navbar = () => {
 		setSearch(e.target.value)
 	}
 
+	// Pasar resultados de busqueda al URL
+	// Luego sacar del URL la palabra
+	// Y finalmente cambiar los servicio acorde con eso
 	const results = () => {
 		if (search.trim() !== "") {
 			let filteredResult = []
@@ -24,7 +27,7 @@ export const Navbar = () => {
 				filteredResult = filteredResult.concat(filtered)
 			})
 			actions.searchService(filteredResult)
-			navigate("/services/search")
+			navigate(`/services/search/${search}`)
 		}
 	}
 
@@ -59,16 +62,16 @@ export const Navbar = () => {
 						</form>
 
 						<ul className="navbar-nav justify-content-end my-2">
-							<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/section'}>
+							<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/section'}>
 								Servicios
 							</Link>
 							{store.token == "" ?
 								<>
-									<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/login'}>
+									<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/login'}>
 										Login
 									</Link>
 
-									<Link className="btn btn-outline-info bg-light especiales" aria-current="page" to={'/signup'}>
+									<Link className="btn btn-outline-info bg-light especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/signup'}>
 										Signup
 									</Link>
 								</>
@@ -76,7 +79,7 @@ export const Navbar = () => {
 								<>
 									<li>
 										{store.userInfo.profile_photo_url == undefined ?
-											<button className="btn btn-outline-info bg-light mx-2 boton-disable">
+											<button className="btn btn-outline-info bg-light mx-2 especiales">
 												Publica tu servicio
 											</button>
 											:
@@ -90,7 +93,7 @@ export const Navbar = () => {
 											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2 especiales">Logout</button>
 										</Link>
 									</li>
-									<Link className="btn btn-outline-info bg-light especiales-profile mx-2" aria-current="page" to={'/profile'}>
+									<Link className="btn btn-outline-info bg-light especiales-profile mx-2 d-flex justify-content-center align-items-center" aria-current="page" to={'/profile'}>
 										<i className="fa-solid fa-user"></i>
 									</Link>
 								</>

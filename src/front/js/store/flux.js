@@ -135,7 +135,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loginValidityChecker: (user) => {
 				if (user.email.trim() != "" && user.password.trim() != "") {
 					return true
-				}else{
+				} else {
 					alert("Porfavor completa los campos correctamente.")
 				}
 			},
@@ -219,6 +219,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					if (response.ok) {
 						let data = await response.json()
+						console.log(data)
 						setStore({
 							orders: data
 						})
