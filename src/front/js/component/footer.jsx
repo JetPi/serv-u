@@ -13,7 +13,7 @@ export const Footer = () => {
     return (
         <div className="navbar justify-content-center text-dark footer-body">
             <div className="col-5 p-3">
-                <p className="text-light fw-bold text-dark">Powered by</p>
+                <p className="text-light fw-bold text-light">Powered by</p>
                 <div>
                     <img className="powered-photo" src={cssPhoto} alt="" />
                     <img className="powered-photo" src={cloudinaryPhoto} alt="" />
@@ -24,16 +24,16 @@ export const Footer = () => {
                 </div>
             </div>
             <div className="col-2 d-flex justify-content-center">
-                <div className="text-muted">Serv-U Inc.</div>
+                <div className="text-light">Serv-U Inc.</div>
             </div>
             <div className="col-5 p-3 d-flex justify-content-end">
                 <div className="justify-content-end">
-                    <div className="row "><p className="text-muted d-flex align-items-end names">Brought to you by: </p></div>
-                <div className="row"><p className="text-muted d-flex align-items-end names">Oriana Calderón</p></div>
-                <div className="row "><p className="text-muted d-flex align-items-end names">Victor Seidman</p></div>
-                <div className="row "><p className="text-muted d-flex align-items-end names">Ibrahim Zárraga</p></div>
+                    <div className="row "><p className="text-light d-flex align-items-end names">Brought to you by: </p></div>
+                    <div className="row"><p className="text-light d-flex align-items-end names">Oriana Calderón</p></div>
+                    <div className="row "><p className="text-light d-flex align-items-end names">Victor Seidman</p></div>
+                    <div className="row "><p className="text-light d-flex align-items-end names">Ibrahim Zárraga</p></div>
                 </div>
-                
+
 
             </div>
         </div>

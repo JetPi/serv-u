@@ -74,13 +74,13 @@ export const Post_service = () => {
             serviceData.type_service.trim() !== "" && serviceData.location.trim() !== "" &&
             serviceData.base_price.trim() !== "" &&
             serviceData.description.trim() !== "") {
-                const response = await actions.addService(formData);
-                if (response) {
-                    navigate('/profile')
-                }
+            const response = await actions.addService(formData);
+            if (response) {
+                navigate('/profile')
+            }
         } else {
             alert("Error: Completa los campos correctamente.");
-					return false;
+            return false;
         }
 
     };
@@ -189,11 +189,11 @@ export const Post_service = () => {
                                         className="form-input"
                                     />
                                 </div>
-                                <div className="col-md-10 my-2">
+                                <div className="col-md-12 my-2">
                                     {previewSource && (
                                         <img
                                             src={previewSource} alt="choosen"
-                                            style={{ height: '300px' }}
+                                            style={{ height: '100%', width: "100%" }}
                                         />
                                     )}
                                 </div>
