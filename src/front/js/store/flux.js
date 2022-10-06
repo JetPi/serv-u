@@ -135,6 +135,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loginValidityChecker: (user) => {
 				if (user.email.trim() != "" && user.password.trim() != "") {
 					return true
+				}else{
+					alert("Porfavor completa los campos correctamente.")
 				}
 			},
 

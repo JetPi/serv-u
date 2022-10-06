@@ -21,9 +21,12 @@ export const Signup = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		if (actions.userSignup(userData)) {
-			navigate("/login")
+		if (actions.signupValidityChecker(userData)) {
+			if(actions.userSignup(userData)){
+				navigate("/login")
 			return true
+			}
+			
 		}
 		else {
 			return false
