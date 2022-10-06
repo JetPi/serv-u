@@ -55,7 +55,11 @@ export const Profile = () => {
         <>
             {store.userInfo != "undefined" ?
                 <div className="container-fluid row mt-4">
+
                     <div className="col-4 column background card-profile-datos">
+
+                    <div className="col-4 column background position-fi">
+
                         {/* Profile Info */}
                         <div className="col-12 d-flex justify-content-center margin-photo">
                             {profile_photo_url == undefined ?
@@ -183,6 +187,13 @@ export const Profile = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+
+                    </div>
+
+
+                        
                         </div>
 
                     </div>

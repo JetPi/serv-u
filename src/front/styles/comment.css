@@ -79,3 +79,23 @@
     text-align: right;
     color: rgb(5, 5, 63);
 }
+
+.observation{
+    text-align: left;
+    margin-left: 3rem;
+}
+
+.comment-card{
+    width: 60rem;
+}
+
+.comment-counter{
+    text-align: right;
+}
+
+.input-comment{
+    text-align: right;
+    background-color: #f7f9f9;
+    border-radius: 2%;
+    border-color: #F2F2F2;
+}

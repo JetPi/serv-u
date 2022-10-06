@@ -47,56 +47,56 @@ export const Comment = () => {
 
     return (
         <>
-        <div className="container d-flex flex-column text-center justify-content-center align-items-center">
-            <div className="my-3">
-                <h2 className="title_comment_component">
-                    Experiencias de nuestros clientes
+            <div className="container d-flex flex-column text-center justify-content-center align-items-center">
+                <div className="my-3">
+                    <h2 className="title_comment_component">
+                        Experiencias de nuestros clientes
                 </h2>
-            </div>
+                </div>
 
-            <div className="row my-3 w-100" >
-                {goodComments.map((comment, index) => {
-                    return (
-                        <div className="col-6 d-flex my-1 div_comentario" key={index}>
-                            <div className="col-4 div_foto_comentario">
-                                <img src={comment.user_data.profile_photo_url == undefined ? "https://picsum.photos/50/50" : comment.user_data.profile_photo_url} className="img_comment_home" alt="foto" />
-                            </div>
-                            <div className="col-8">
-                                <div className="row div-username-and-stars">
-                                    <div className="col-5">
-                                        <h5 className="card-user-title">
-                                            {comment.user_data.username}
-                                        </h5>
+                <div className="row my-3 w-100" >
+                    {goodComments.map((comment, index) => {
+                        return (
+                            <div className="col-6 d-flex my-1 div_comentario" key={index}>
+                                <div className="col-4 div_foto_comentario">
+                                    <img src={comment.user_data.profile_photo_url == undefined ? "https://picsum.photos/50/50" : comment.user_data.profile_photo_url} className="img_comment_home" alt="foto" />
+                                </div>
+                                <div className="col-8">
+                                    <div className="row div-username-and-stars">
+                                        <div className="col-5">
+                                            <h5 className="card-user-title">
+                                                {comment.user_data.username}
+                                            </h5>
+                                        </div>
+                                        <div className="col-7">
+                                            <div className="card-text rating_stars d-flex flex-row">
+                                                {comment.rating == 4 ?
+                                                    star4.map((element, index) => { return (<div key={index}>{element}</div>) })
+                                                    :
+                                                    star5.map((element, index) => { return (<div key={index}>{element}</div>) })
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="col-7">
-                                        <div className="card-text rating_stars d-flex flex-row">
-                                            {comment.rating == 4 ?
-                                                star4.map((element, index) => { return (<div key={index}>{element}</div>) })
-                                                :
-                                                star5.map((element, index) => { return (<div key={index}>{element}</div>) })
-                                            }
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <p className="card-text-observation">
+                                                {comment.observation}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-12">
-                                        <p className="card-text-observation">
-                                            {comment.observation}
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                    );
+                        );
 
-                })}
-                
+                    })}
+
+                </div>
+
+
             </div>
-            
-
-        </div>
-        <div >
-               <p className="paragraph-under-comments fs-5"> con más de {goodComments.length} clientes satisfechos...</p>
+            <div >
+                <p className="paragraph-under-comments fs-5"> con más de {store.comments.length} clientes satisfechos...</p>
             </div>
         </>
 

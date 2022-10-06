@@ -33,7 +33,8 @@ export const ServiceComment = (props) => {
                     closeOnClick: true
                 })
             } else if (Validar()) {
-                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating });
+                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating })
+                setCommentData({comment: ""});
             }
         }
     };
@@ -129,6 +130,7 @@ export const ServiceComment = (props) => {
         <>
             <ToastContainer />
 
+
             <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center ">
                 <div className="row card py-2 shadow-lg w-100">
                     <div className="col-12 d-flex justify-content-center flex-column">
@@ -157,6 +159,28 @@ export const ServiceComment = (props) => {
                                 placeholder="Presiona enter para añadir un comentario"
                                 onKeyDown={handleKey}
                             />
+
+        <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center">
+            <div className="row card py-2 shadow-lg comment-card">
+                <div className="col-12 d-flex justify-content-center flex-column">
+                    <div className="col-12 d-flex flex-row p-1">
+                        {/* Stars, its good how I made them */}
+                        {starsState.stars.map((element, index) => {
+                            return (
+                                <button
+                                    className="button-clearer"
+                                    key={index}
+                                    onMouseOver={() => changeStars(index + 1)}
+                                    onMouseOut={() => changeStars(0)}
+                                    onClick={() => changeRating(index + 1)}>
+                                    <i className={`${element} fa-star`}></i>
+                                    
+                                </button>
+                            )
+                        })}
+                    </div>
+                    </div>
+
                         </div>
                         {/* Published Comments */}
                         <div className="container-fluid row div-service-comment">
@@ -199,7 +223,7 @@ export const ServiceComment = (props) => {
                                             </div>
                                             <p>{comentario.observation}</p>
                                         </div>
-                                    </div>
+
                                 );
                             })}
                         </div>
