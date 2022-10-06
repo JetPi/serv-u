@@ -161,27 +161,27 @@ export const ServiceComment = (props) => {
                             />
 
                             <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center">
-                                <div className="row card py-2 shadow-lg comment-card">
-                                    <div className="col-12 d-flex justify-content-center flex-column">
-                                        <div className="col-12 d-flex flex-row p-1">
-                                            {/* Stars, its good how I made them */}
-                                            {starsState.stars.map((element, index) => {
-                                                return (
-                                                    <button
-                                                        className="button-clearer"
-                                                        key={index}
-                                                        onMouseOver={() => changeStars(index + 1)}
-                                                        onMouseOut={() => changeStars(0)}
-                                                        onClick={() => changeRating(index + 1)}>
-                                                        <i className={`${element} fa-star`}></i>
+                                {/* <div className="row card py-2 shadow-lg comment-card"> */}
+                                {/* <div className="col-12 d-flex justify-content-center flex-column">
+                                    <div className="col-12 d-flex flex-row p-1"> */}
+                                {/* Stars, its good how I made them */}
+                                {/* {starsState.stars.map((element, index) => {
+                                    return (
+                                        <button
+                                            className="button-clearer"
+                                            key={index}
+                                            onMouseOver={() => changeStars(index + 1)}
+                                            onMouseOut={() => changeStars(0)}
+                                            onClick={() => changeRating(index + 1)}>
+                                            <i className={`${element} fa-star`}></i>
 
-                                                    </button>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        </div> */}
 
-                                </div>
+                                {/* </div> */}
                                 {/* Published Comments */}
                                 <div className="container-fluid row div-service-comment">
                                     {/* Header */}
@@ -231,7 +231,7 @@ export const ServiceComment = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };

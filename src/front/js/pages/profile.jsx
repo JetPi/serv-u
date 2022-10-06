@@ -26,6 +26,8 @@ export const Profile = () => {
 
     }
 
+    useEffect(() => { { actions.getOrders() } }, [])
+
     const { username, role, email, id, banner_photo_url, profile_photo_url } = store.userInfo
     const cld = new Cloudinary({ cloud: { cloudName: 'dboidjsun' } });
 
@@ -56,7 +58,7 @@ export const Profile = () => {
             {store.userInfo != "undefined" ?
                 <div className="container-fluid row mt-4">
 
-                    <div className="col-4 column background card-profile-datos">
+                    <div className="row background card-profile-datos">
 
                         <div className="col-4 column background position-fi">
 
@@ -188,19 +190,13 @@ export const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
-
                 </div>
 
-                 :
-    navigate("/login")
-}
+                :
+                navigate("/login")
+            }
         </>
     )
 };
