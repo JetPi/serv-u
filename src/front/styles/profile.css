@@ -84,8 +84,9 @@
 
 .card-active-order,
 .card-active-service {
-    height: 10rem;
+    height: 12rem;
     overflow: auto;
+    padding: 1rem;
 }
 
 .card-profile-datos {
