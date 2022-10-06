@@ -93,4 +93,7 @@
 
 .input-comment{
     text-align: right;
+    background-color: #f7f9f9;
+    border-radius: 2%;
+    border-color: #F2F2F2;
 }
