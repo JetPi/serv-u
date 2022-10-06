@@ -112,8 +112,8 @@ export const Profile = () => {
                                         <div className="col-12 alert alert-danger  justify-content-center" role="alert">
                                             <p className="alert_profile">
 
-                                                <i className="fas fa-exclamation-triangle"></i>
-                                                Agrega una foto de perfil para publicar un servicio
+                                                <i className="fas fa-exclamation-triangle mx-2"></i>
+                                                Agrega una foto de perfil para publicar un servicio.
 
                                             </p>
 
@@ -128,10 +128,10 @@ export const Profile = () => {
 
                         <div className="col-8 row d-flex margin-p">
                             <div className="my-4 div-datos">
-                                <div className="col-12 fs-5 mb-2">
+                                <div className="col-12 fs-4 mb-2">
                                     <i class="fa-solid fa-envelope"></i> : {email == "" ? "Placeholder" : email}
                                 </div>
-                                <div className="col-12 fs-5 mb-2">
+                                <div className="col-12 fs-4 mb-2">
                                     {/* Cambiar la logica para que funcione */}
                                     <i class="fa-solid fa-user"></i> : {store.userServices.length == 0 ? "Comprador" : "Vendedor"}
                                 </div>
