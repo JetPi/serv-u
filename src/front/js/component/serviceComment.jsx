@@ -25,7 +25,8 @@ export const ServiceComment = (props) => {
             if (store.token == "") {
                 alert("Para hacer un comentario tienes que registrarte o iniciar sesión.")
             } else if (Validar()) {
-                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating });
+                actions.sendComment({ observation: commentData.comment, services_id: services_id, rating: commentData.rating })
+                setCommentData({comment: ""});
             }
         }
     };
@@ -114,7 +115,7 @@ export const ServiceComment = (props) => {
     return (
 
         <div className="container-fluid d-flex flex-column text-center justify-content-center align-items-center">
-            <div className="row card py-2 shadow-lg w-100">
+            <div className="row card py-2 shadow-lg comment-card">
                 <div className="col-12 d-flex justify-content-center flex-column">
                     <div className="col-12 d-flex flex-row p-1">
                         {/* Stars, its good how I made them */}
@@ -127,6 +128,7 @@ export const ServiceComment = (props) => {
                                     onMouseOut={() => changeStars(0)}
                                     onClick={() => changeRating(index + 1)}>
                                     <i className={`${element} fa-star`}></i>
+                                    
                                 </button>
                             )
                         })}
@@ -137,15 +139,16 @@ export const ServiceComment = (props) => {
                             name="comment"
                             onChange={handleChange}
                             type="text"
-                            className="w-100 text-center p-1 border-0"
+                            className="w-100 text-center p-1 border-0 input-comment"
                             placeholder="Presiona enter para añadir un comentario"
                             onKeyDown={handleKey}
+                            value={commentData.comment}
                         />
                     </div>
                     {/* Published Comments */}
                     <div className="container-fluid row div-service-comment">
                         {/* Header */}
-                        <div className="border-bottom items border-0">
+                        <div className="border-bottom items border-0 comment-counter">
                             {store.comments.length <= 0
                                 ? "No hay comentarios en esta publicación"
                                 : `${store.comments.length} Comentarios`}

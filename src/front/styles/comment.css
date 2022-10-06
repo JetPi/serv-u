@@ -82,3 +82,15 @@
     text-align: left;
     margin-left: 3rem;
 }
+
+.comment-card{
+    width: 60rem;
+}
+
+.comment-counter{
+    text-align: right;
+}
+
+.input-comment{
+    text-align: right;
+}
