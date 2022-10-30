@@ -49,7 +49,7 @@ export const ServiceInfo = () => {
                                     </div>
 
                                     <div className="col-12 my-2 d-flex align-items-center">
-                                        <CommentTextBox services_id={1} ExtraComponent={CommentList} />
+                                        <CommentTextBox services_id={element.id} ExtraComponent={CommentList} />
                                     </div>
                                 </div>
                             )
