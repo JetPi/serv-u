@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { ServiceComment } from "../component/serviceComment.jsx"
+import { ServiceComment } from "../component/commentList.jsx"
 import "../../styles/home.css";
 
 export const Faq = () => {

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
+import { Testing } from "./pages/testing_suite.jsx";
 import { Signup } from "./pages/signup.jsx";
 import { Section } from "./pages/section.jsx";
 import { Login } from "./pages/login.jsx";
@@ -15,7 +16,7 @@ import { ActiveUser } from "./pages/user_register.jsx";
 import { SearchResult } from "./pages/results.jsx";
 
 import { Navbar } from "./component/navbar";
-import { ServiceComment } from "./component/serviceComment.jsx";
+import { CommentList } from "./component/commentList.jsx";
 import { Footer } from "./component/footer.jsx";
 import { OrderModal } from "./component/ordenes.jsx";
 
@@ -32,6 +33,7 @@ const Layout = () => {
                     <div className="testFooter">
                         <Routes>
                             <Route element={<Home />} path="/" />
+                            <Route element={<Testing />} path="/testing" />
                             <Route element={<Signup />} path="/signup" />
                             <Route element={<Login />} path="/login" />
                             <Route element={<Section />} path="/section" />
@@ -39,7 +41,7 @@ const Layout = () => {
                             <Route element={<Post_service />} path="/post_service" />
                             <Route element={<Profile />} path="/profile" />
                             <Route element={<ServiceInfo />} path="/service/:id" />
-                            <Route element={<ServiceComment services_id={1} />} path="/user/comments" />
+                            <Route element={<CommentList services_id={1} />} path="/user/comments" />
                             <Route element={<ActiveUser />} path="/user" />
                             <Route element={<SearchResult />} path="/services/search/:service_name" />
                             <Route element={<OrderModal />} path="/ordenes" />
