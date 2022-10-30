@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ServiceComment } from "../component/serviceComment.jsx"
+import { CommentList } from "../component/commentList.jsx"
+import { CommentTextBox } from "../component/commentTextBox.jsx";
 import { Context } from "../store/appContext";
 import "../../styles/service_info.css";
 import { OrderModal } from "../component/ordenes.jsx";
@@ -48,7 +49,7 @@ export const ServiceInfo = () => {
                                     </div>
 
                                     <div className="col-12 my-2 d-flex align-items-center">
-                                        <ServiceComment services_id={element.id} />
+                                        <CommentTextBox services_id={1} ExtraComponent={CommentList} />
                                     </div>
                                 </div>
                             )
