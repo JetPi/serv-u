@@ -14,7 +14,6 @@ export const Home = () => {
 	const { actions } = useContext(Context)
 	const { getRatedComments } = actions
 	return (
-		// Here there is something fishy
 		<div className="container text-center mt-5 container-home">
 			<div className="d-flex ">
 				<div className="col-6 ">
