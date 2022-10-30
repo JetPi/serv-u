@@ -4,11 +4,15 @@ import { Link } from "react-router-dom"
 import "../../styles/home.css";
 
 import servicios from "../../img/service_home.png"
+import { CommentList } from "../component/commentList.jsx";
 
-import { Comment } from "../component/comment.jsx"
-import { ServiceComment } from "../component/serviceComment.jsx";
+const commentHeader = (comments = []) => {
+	return `${comments.length} Clientes Satisfechos`
+}
 
 export const Home = () => {
+	const { actions } = useContext(Context)
+	const { getRatedComments } = actions
 	return (
 		// Here there is something fishy
 		<div className="container text-center mt-5 container-home">
@@ -29,7 +33,13 @@ export const Home = () => {
 			</div>
 
 			<div>
-				<Comment />
+				<CommentList
+					services_id={1}
+					header={commentHeader}
+					commentGetter={{ action: getRatedComments, data: 4 }}
+					props={{ height: "auto" }}
+					commentModifier={(comment) => { return comment.slice(0, 4) }}
+				/>
 			</div>
 		</div>
 	);
