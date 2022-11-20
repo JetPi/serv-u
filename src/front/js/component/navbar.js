@@ -31,11 +31,48 @@ export const Navbar = () => {
 		}
 	}
 
-	useEffect(() => {
-		{
-			actions.getServices()
-		}
-	}, [])
+	function UserButtons() {
+		return (
+			<ul className="navbar-nav justify-content-end my-2">
+				<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/section'}>
+					Servicios
+				</Link>
+				{store.token == "" ?
+					<>
+						<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/login'}>
+							Login
+						</Link>
+
+						<Link className="btn btn-outline-info bg-light especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/signup'}>
+							Signup
+						</Link>
+					</>
+					:
+					<>
+						<li>
+							{store.userInfo.profile_photo_url == undefined ?
+								<button className="btn btn-outline-info bg-light mx-2 especiales">
+									Publica tu servicio
+								</button>
+								:
+								<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/post_service'}>
+									Publica tu servicio
+								</Link>
+							}
+						</li>
+						<li className="nav-item">
+							<Link aria-current="page" to={'/login'}>
+								<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2 especiales">Logout</button>
+							</Link>
+						</li>
+						<Link className="btn btn-outline-info bg-light especiales-profile mx-2 d-flex justify-content-center align-items-center" aria-current="page" to={'/profile'}>
+							<i className="fa-solid fa-user"></i>
+						</Link>
+					</>
+				}
+			</ul>
+		)
+	}
 
 	return (
 		<>
@@ -43,10 +80,7 @@ export const Navbar = () => {
 				<div className="container-fluid container-navbar">
 					<div className="div-nav-logo">
 						<Link className="navbar-brand" to={`/`}>
-							<img src={logo}
-								alt="Logo"
-								width="240"
-								height="40"
+							<img src={logo} alt="Logo" width="240" height="40"
 							/>
 						</Link>
 					</div>
@@ -60,45 +94,7 @@ export const Navbar = () => {
 								className="btn btn-outline-info bg-light especiales-lupa" type="submit"><i className="fa-solid fa-magnifying-glass"></i>
 							</button>
 						</form>
-
-						<ul className="navbar-nav justify-content-end my-2">
-							<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/section'}>
-								Servicios
-							</Link>
-							{store.token == "" ?
-								<>
-									<Link className="btn btn-outline-info bg-light mx-2 especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/login'}>
-										Login
-									</Link>
-
-									<Link className="btn btn-outline-info bg-light especiales d-flex justify-content-center align-items-center" aria-current="page" to={'/signup'}>
-										Signup
-									</Link>
-								</>
-								:
-								<>
-									<li>
-										{store.userInfo.profile_photo_url == undefined ?
-											<button className="btn btn-outline-info bg-light mx-2 especiales">
-												Publica tu servicio
-											</button>
-											:
-											<Link className="btn btn-outline-info bg-light mx-2 especiales" aria-current="page" to={'/post_service'}>
-												Publica tu servicio
-											</Link>
-										}
-									</li>
-									<li className="nav-item">
-										<Link aria-current="page" to={'/login'}>
-											<button type="button" onClick={() => actions.userLogout()} className="btn btn-outline-info bg-light mx-2 especiales">Logout</button>
-										</Link>
-									</li>
-									<Link className="btn btn-outline-info bg-light especiales-profile mx-2 d-flex justify-content-center align-items-center" aria-current="page" to={'/profile'}>
-										<i className="fa-solid fa-user"></i>
-									</Link>
-								</>
-							}
-						</ul>
+						<UserButtons />
 					</div>
 				</div>
 			</nav>
